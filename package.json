@@ -1,14 +1,14 @@
 {
-  "name": "Owa Web Service Template",
+  "name": "DarkNight",
   "version": "0.0.1",
-  "description": "CallNext",
+  "description": "Membership system",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cfsghost/owa.git"
+    "url": "https://github.com/cfsghost/DarkNight.git"
   },
   "keywords": [
     "web"
@@ -16,9 +16,9 @@
   "author": "Fred Chien",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cfsghost/owa/issues"
+    "url": "https://github.com/cfsghost/DarkNight/issues"
   },
-  "homepage": "https://github.com/cfsghost/owa",
+  "homepage": "https://github.com/cfsghost/DarkNight",
   "dependencies": {
     "fluxerjs": "0.0.2",
     "jade": "^1.8.1",
