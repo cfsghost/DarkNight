@@ -13,7 +13,7 @@ var Header = React.createClass({
 		return (
 			<Navbar>
 				<Nav>
-					<NavItem eventKey={1} href="#">PiStreet</NavItem>
+					<NavItem eventKey={1} href="#">DarkNight</NavItem>
 					<NavItem eventKey={2} href="#">Link</NavItem>
 					<DropdownButton eventKey={3} title="Dropdown">
 						<MenuItem eventKey="1">Action</MenuItem>

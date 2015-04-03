@@ -12,7 +12,7 @@ var paths = {
 	js: './src/js/**',
 	views: [
 		'./src/apps/*.jsx',
-		'./src/libs/**/*.jsx'
+		'./src/libs/**/*.jsx',
 		'./src/libs/**/*.js'
 	],
 	apps: [

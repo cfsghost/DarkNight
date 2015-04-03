@@ -42,6 +42,7 @@ app.use(session());
 
 // Routes
 app.use(require('./routes/home').middleware());
+app.use(require('./routes/admin').middleware());
 app.use(require('./routes/apis/endpoints').middleware());
 app.use(require('./routes/apis/members').middleware());
 
