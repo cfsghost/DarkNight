@@ -9,22 +9,61 @@ var EndpointStore = require('../../stores/Endpoint');
 var EndpointActions = require('../../actions/Endpoint');
 
 var NewEndpointModal = React.createClass({
+	getInitialState: function() {
+		return {
+			isOpen: false,
+			isBusy: false
+		};
+	},
+	componentDidMount: function() {
+		EndpointStore.on('OpenNewModal', this.open);
+		EndpointStore.on('CloseNewModal', this.close);
+	},
+	componentWillUnmount: function() {
+		EndpointStore.removeListener('OpenNewModal', this.open);
+		EndpointStore.removeListener('CloseNewModal', this.close);
+	},
+	open: function() {
+		this.setState({
+			isOpen: true
+		});
+	},
 	close: function() {
-		this.props.hidden = true;
-		this.forceUpdate();
+		this.setState({
+			isOpen: false,
+			isBusy: false
+		});
 	},
 	add: function() {
-		console.log(this.refs.name.getValue());
-		this.close();
+		var name = this.refs.name.getValue() || null;
+		if (!name)
+			return;
+
+		this.setState({
+			isBusy: true
+		});
+
+		$.ajax({
+			type: 'post',
+			url: '/endpoints',
+			processData: false,
+			contentType: 'application/json',
+			data: JSON.stringify({
+				name: this.refs.name.getValue()
+			}),
+			success: function(r) {
+				this.close();
+			}.bind(this)
+		});
 	},
 	render: function() {
-		if (this.props.hidden)
+		if (!this.state.isOpen)
 			return (
-				<div />
+				<span />
 			);
 
 		return (
-			<Modal hidden={true} bsStyle='primary' title='New Endpoint' onRequestHide={this.close} animation={true}>
+			<Modal bsStyle='primary' title='New Endpoint' onRequestHide={this.close} animation={true}>
 				<div className='modal-body'>
 					<form>
 						<Input type='text' ref='name' label='Endpoint Name' placeholder='Hackathon Taiwan Entry' autoFocus />
@@ -32,7 +71,7 @@ var NewEndpointModal = React.createClass({
 				</div>
 				<div className='modal-footer'>
 					<Button onClick={this.close}>Cancel</Button>
-					<Button bsStyle='primary' onClick={this.add}>Add</Button>
+					<Button bsStyle='primary' onClick={this.add} disabled={this.state.isBusy}>Add</Button>
 				</div>
 			</Modal>
 		);

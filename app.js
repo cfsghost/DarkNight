@@ -8,6 +8,8 @@ var views = require('koa-views');
 var serve = require('koa-static');
 var session = require('koa-session');
 
+var Database = require('./libs/database');
+
 var app = koa();
 
 // Static file path
@@ -17,14 +19,9 @@ app.use(serve(__dirname + '/public'));
 app.use(bodyParser());
 
 // Loading settings
-try {
-
-	var settings = {
-		general: require(path.join(__dirname, 'configs', 'general.json'))
-	};
-} catch(e) {
+var settings = require('./libs/config.js');
+if (!settings) {
 	console.error('Failed to load settings');
-	console.error(e);
 	process.exit(1);
 }
 
@@ -46,4 +43,8 @@ app.use(require('./routes/admin').middleware());
 app.use(require('./routes/apis/endpoints').middleware());
 app.use(require('./routes/apis/members').middleware());
 
-app.listen(3000);
+// Conenct to database
+var dbTask = Database();
+dbTask(function() {
+	app.listen(3000);
+});

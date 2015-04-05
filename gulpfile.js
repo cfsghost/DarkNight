@@ -9,6 +9,7 @@ var paths = {
 	less: './src/less/*.less',
 	less_watch: './src/less/**/*.less',
 	images: './src/img/*',
+	fonts: './src/fonts/*',
 	js: './src/js/**',
 	views: [
 		'./src/apps/*.jsx',
@@ -82,4 +83,4 @@ gulp.task('watch', function() {
 	gulp.watch(paths.views, [ 'views' ]);
 });
 
-gulp.task('build', [ 'less', 'images', 'js', 'views' ]);
+gulp.task('build', [ 'less', 'images', 'js', 'fonts', 'views' ]);
