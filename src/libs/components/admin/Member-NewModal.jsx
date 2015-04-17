@@ -37,10 +37,11 @@ var NewMemberModal = React.createClass({
 	add: function() {
 		var name = this.refs.name.getValue() || null;
 		var email = this.refs.email.getValue() || null;
-		var gender = this.refs.gender.getValue() || null;
-		console.log(gender);
-		return;
-		if (!name)
+		var gender = this.refs.male.getInputDOMNode().checked ? 0 : 1
+		var cardno = this.refs.cardno.getValue() || null;
+		var token = this.refs.token.getValue() || null;
+
+		if (!name || !email)
 			return;
 
 		this.setState({
@@ -53,10 +54,25 @@ var NewMemberModal = React.createClass({
 			processData: false,
 			contentType: 'application/json',
 			data: JSON.stringify({
-				name: this.refs.name.getValue(),
-				email: this.refs.email.getValue()
+				name: name,
+				email: email,
+				gender: gender,
+				cardno: cardno,
+				token: token
 			}),
 			success: function(r) {
+
+				// Notify all of components that the endpoint was changed
+				MemberActions.Updated([
+					{
+						_id: r._id,
+						name: name,
+						email: email,
+						gender: gender,
+						cardno: cardno,
+						token: token
+					}
+				]);
 				this.close();
 			}.bind(this)
 		});
@@ -75,8 +91,8 @@ var NewMemberModal = React.createClass({
 						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' />
 
 						<Input label='Gender'>
-							<Input type='radio' ref='gender' name='gender' label='Male' />
-							<Input type='radio' ref='gender' name='gender' label='Female' />
+							<Input type='radio' ref='male' name='gender' label='Male' />
+							<Input type='radio' ref='female' name='gender' label='Female' />
 						</Input>
 
 						<Input type='text' ref='cardno' label='Card Number' placeholder='1' />

@@ -22,7 +22,7 @@ var Item = React.createClass({
 				<td>{this.props.serialno}</td>
 				<td>{this.props.member._id}</td>
 				<td>{this.props.member.name}</td>
-				<td>{this.props.member.gender ? 'male' : 'female'}</td>
+				<td>{(this.props.member.gender == 0) ? 'male' : 'female'}</td>
 				<td>{this.props.member.email}</td>
 			</tr>
 		);

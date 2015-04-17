@@ -13,7 +13,9 @@ module.exports = {
 		});
 
 		return function(done) {
-			member.save(done);
+			member.save(function(err) {
+				done(err, member);
+			});
 		};
 	},
 	save: function(id, member) {

@@ -15,6 +15,10 @@ var EditModal = React.createClass({
 			isBusy: false,
 			id: null,
 			name: '',
+			email: '',
+			gender: 0,
+			cardno: '',
+			token: ''
 		};
 	},
 	componentDidMount: function() {
@@ -29,7 +33,11 @@ var EditModal = React.createClass({
 		this.setState({
 			isOpen: true,
 			id: member._id,
-			name: member.name
+			name: member.name,
+			email: member.email,
+			gender: member.gender,
+			cardno: member.cardno,
+			token: member.token
 		});
 	},
 	close: function() {
@@ -39,6 +47,8 @@ var EditModal = React.createClass({
 		});
 	},
 	save: function() {
+		var gender = this.refs.male.getInputDOMNode().checked ? 0 : 1
+
 		if (!this.state.id)
 			return;
 
@@ -55,7 +65,11 @@ var EditModal = React.createClass({
 			processData: false,
 			contentType: 'application/json',
 			data: JSON.stringify({
-				name: this.state.name
+				name: this.state.name,
+				email: this.state.email,
+				gender: gender,
+				cardno: this.state.cardno,
+				token: this.state.token
 			}),
 			success: function(r) {
 
@@ -63,7 +77,11 @@ var EditModal = React.createClass({
 				MemberActions.Updated([
 					{
 						_id: this.state.id,
-						name: this.state.name
+						name: this.state.name,
+						email: this.state.email,
+						gender: gender,
+						cardno: this.state.cardno,
+						token: this.state.token
 					}
 				]);
 				this.close();
@@ -72,7 +90,11 @@ var EditModal = React.createClass({
 	},
 	handleChange: function() {
 		this.setState({
-			name: this.refs.name.getValue()
+			name: this.refs.name.getValue(),
+			email: this.refs.email.getValue(),
+			gender: this.refs.male.getInputDOMNode().checked ? 0 : 1,
+			cardno: this.refs.cardno.getValue(),
+			token: this.refs.token.getValue()
 		});
 	},
 	render: function() {
@@ -87,13 +109,17 @@ var EditModal = React.createClass({
 					<form>
 						<label>ID</label>
 						<div>{this.state.id}</div>
-						<Input
-							type='text'
-							ref='name'
-							label='Member Name'
-							placeholder='Hackathon Taiwan Entry'
-							onChange={this.handleChange}
-							value={this.state.name} />
+
+						<Input type='text' ref='name' label='Name' placeholder='Fred Chien' value={this.state.name} onChange={this.handleChange} autoFocus />
+						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' value={this.state.email} onChange={this.handleChange} />
+
+						<Input label='Gender'>
+							<Input type='radio' ref='male' name='gender' label='Male' defaultChecked={this.state.gender ? false : true}  />
+							<Input type='radio' ref='female' name='gender' label='Female' defaultChecked={this.state.gender ? true : false} />
+						</Input>
+
+						<Input type='text' ref='cardno' label='Card Number' placeholder='1' value={this.state.cardno} onChange={this.handleChange} />
+						<Input type='text' ref='token' label='Token' placeholder='0a020e01' value={this.state.token} onChange={this.handleChange} />
 					</form>
 				</div>
 				<div className='modal-footer'>
