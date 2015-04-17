@@ -4,6 +4,8 @@ var React = require('react');
 var AdminHeader = require('./AdminHeader.jsx');
 var Endpoint = require('./admin/Endpoint.jsx');
 var EndpointComponent = Endpoint.Component;
+var Member = require('./admin/Member.jsx');
+var MemberComponent = Member.Component;
 
 var AdminApp = React.createClass({
 	render: function() {
@@ -11,6 +13,7 @@ var AdminApp = React.createClass({
 			<div>
 				<AdminHeader />
 				<EndpointComponent />
+				<MemberComponent />
 			</div>
 		);
 	}

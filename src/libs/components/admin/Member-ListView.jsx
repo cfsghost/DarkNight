@@ -3,14 +3,14 @@
 var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Table = Bootstrap.Table;
-var EndpointStore = require('../../stores/Endpoint');
-var EndpointActions = require('../../actions/Endpoint');
+var MemberStore = require('../../stores/Member');
+var MemberActions = require('../../actions/Member');
 
-var EditModal = require('./Endpoint-EditModal');
+var EditModal = require('./Member-EditModal');
 
 var Item = React.createClass({
 	editModal: function() {
-		EndpointActions.Open(this.props.endpoint);
+		MemberActions.Open(this.props.member);
 	},
 	render: function() {
 		var styles = {
@@ -20,8 +20,10 @@ var Item = React.createClass({
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
-				<td>{this.props.endpoint._id}</td>
-				<td>{this.props.endpoint.name}</td>
+				<td>{this.props.member._id}</td>
+				<td>{this.props.member.name}</td>
+				<td>{this.props.member.gender ? 'male' : 'female'}</td>
+				<td>{this.props.member.email}</td>
 			</tr>
 		);
 	}
@@ -30,37 +32,37 @@ var Item = React.createClass({
 var ListView = React.createClass({
 	getInitialState: function() {
 		return {
-			endpoints: {}
+			members: {}
 		};
 	},
 	componentDidMount: function() {
-		$.get('/endpoints', function(results) {
+		$.get('/members', function(results) {
 			if (this.isMounted()) {
-				var endpoints = {};
+				var members = {};
 
 				for (var index in results) {
-					var endpoint = results[index];
-					endpoints[endpoint._id] = endpoint;
+					var member = results[index];
+					members[member._id] = member;
 				}
 
 				this.setState({
-					endpoints: endpoints
+					members: members
 				});
 			}
 		}.bind(this));
 
-		EndpointStore.on('EndpointsUpdated', this._update);
+		MemberStore.on('MembersUpdated', this._update);
 	},
 	componentWillUnmount: function() {
-		EndpointStore.removeListener('EndpointsUpdated', this._update);
+		MemberStore.removeListener('MembersUpdated', this._update);
 	},
 	render: function() {
 		var rows = [];
 
 		var serialno = 1;
-		for (var id in this.state.endpoints) {
-			var endpoint = this.state.endpoints[id];
-			rows.push(<Item serialno={serialno} endpoint={endpoint}/>);
+		for (var id in this.state.members) {
+			var member = this.state.members[id];
+			rows.push(<Item serialno={serialno} member={member}/>);
 			serialno++;
 		}
 
@@ -73,6 +75,8 @@ var ListView = React.createClass({
 							<th>#</th>
 							<th>ID</th>
 							<th>Name</th>
+							<th>Gender</th>
+							<th>Email</th>
 						</tr>
 					</thead>
 					<tbody>{rows}</tbody>
@@ -80,21 +84,21 @@ var ListView = React.createClass({
 			</div>
 		);
 	},
-	_update: function(endpoints) {
-		for (var index in endpoints) {
-			var endpoint = endpoints[index];
+	_update: function(members) {
+		for (var index in members) {
+			var member = members[index];
 
-			this.state.endpoints[endpoint._id] = endpoint;
+			this.state.members[member._id] = member;
 		}
 
 		this.forceUpdate();
 	},
 	_change: function() {
 
-		$.get('/endpoints', function(results) {
+		$.get('/members', function(results) {
 			if (this.isMounted()) {
 				this.setState({
-					endpoints: results
+					members: results
 				});
 			}
 		}.bind(this));

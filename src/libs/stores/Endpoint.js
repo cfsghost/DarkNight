@@ -17,3 +17,7 @@ Fluxer.on('Endpoint.Updated', function(endpoints) {
 Fluxer.on('Endpoint.Manage', function() {
 	EndpointStore.emit('OpenManagement');
 });
+
+Fluxer.on('Endpoint.Blur', function() {
+	EndpointStore.emit('CloseManagement');
+});
