@@ -37,7 +37,7 @@ var EditModal = React.createClass({
 			email: member.email,
 			gender: member.gender,
 			cardno: member.cardno,
-			token: member.tokens[0] || ''
+			token: member.tokens ? member.tokens[0] || '' : ''
 		});
 	},
 	close: function() {
