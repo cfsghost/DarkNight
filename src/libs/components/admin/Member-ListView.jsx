@@ -24,6 +24,7 @@ var Item = React.createClass({
 				<td>{this.props.member.name}</td>
 				<td>{(this.props.member.gender == 0) ? 'male' : 'female'}</td>
 				<td>{this.props.member.email}</td>
+				<td>{this.props.member.cardno}</td>
 			</tr>
 		);
 	}
@@ -77,6 +78,7 @@ var ListView = React.createClass({
 							<th>Name</th>
 							<th>Gender</th>
 							<th>Email</th>
+							<th>Card Number</th>
 						</tr>
 					</thead>
 					<tbody>{rows}</tbody>

@@ -15,26 +15,42 @@ router.post('/members', function *() {
 	var email = this.request.body.email;
 	var gender = this.request.body.gender;
 	var cardno = this.request.body.cardno;
-	var tokens = this.request.body.tokens;
+	var token = this.request.body.token;
 
-	var result = yield Member.create({
+	var memberData = {
 		name: name,
 		email: email,
 		gender: gender,
 		cardno: cardno,
-		tokens: tokens
-	});
+		tokens: [
+			token
+		]
+	};
 
-	this.body = result;
+	this.body = yield Member.create(memberData);
 });
 
 router.put('/member/:id', function *() {
 
 	var memberId = this.params.id;
 
-	var result = yield Member.save(memberId, this.request.body);
+	var name = this.request.body.name;
+	var email = this.request.body.email;
+	var gender = this.request.body.gender;
+	var cardno = this.request.body.cardno;
+	var token = this.request.body.token;
 
-	this.body = result;
+	var memberData = {
+		name: name,
+		email: email,
+		gender: gender,
+		cardno: cardno,
+		tokens: [
+			token
+		]
+	};
+
+	this.body = yield Member.save(memberId, memberData);
 });
 
 router.get('/members', function *() {

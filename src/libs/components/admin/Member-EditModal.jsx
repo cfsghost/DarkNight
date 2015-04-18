@@ -37,7 +37,7 @@ var EditModal = React.createClass({
 			email: member.email,
 			gender: member.gender,
 			cardno: member.cardno,
-			token: member.token
+			token: member.tokens[0] || ''
 		});
 	},
 	close: function() {
@@ -53,6 +53,9 @@ var EditModal = React.createClass({
 			return;
 
 		if (!this.state.name)
+			return;
+
+		if (!this.state.email)
 			return;
 
 		this.setState({

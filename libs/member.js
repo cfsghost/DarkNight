@@ -25,7 +25,8 @@ module.exports = {
 				name: member.name,
 				email: member.email,
 				gender: member.gender,
-				cardno: member.cardno
+				cardno: member.cardno,
+				tokens: member.tokens
 			}, done);
 		};
 	},
