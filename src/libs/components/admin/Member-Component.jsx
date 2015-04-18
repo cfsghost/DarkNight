@@ -67,4 +67,4 @@ var Member = React.createClass({
 	}
 });
 
-module.exports = React.createFactory(Member);
+module.exports = Member;

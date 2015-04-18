@@ -114,4 +114,4 @@ var ListView = React.createClass({
 	}
 });
 
-module.exports = React.createFactory(ListView);
+module.exports = ListView;

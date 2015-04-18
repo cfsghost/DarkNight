@@ -19,4 +19,4 @@ var AdminApp = React.createClass({
 	}
 });
 
-module.exports = React.createFactory(AdminApp);
+module.exports = AdminApp;

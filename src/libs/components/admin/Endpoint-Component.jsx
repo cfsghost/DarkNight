@@ -67,4 +67,4 @@ var Endpoint = React.createClass({
 	}
 });
 
-module.exports = React.createFactory(Endpoint);
+module.exports = Endpoint;
