@@ -7,7 +7,9 @@ module.exports = {
 		var endpoint = new Endpoint({ name: name });
 
 		return function(done) {
-			endpoint.save(done);
+			endpoint.save(function(err) {
+				done(err, endpoint);
+			});
 		};
 	},
 	save: function(id, endpoint) {

@@ -52,6 +52,14 @@ var NewEndpointModal = React.createClass({
 				name: this.refs.name.getValue()
 			}),
 			success: function(r) {
+
+				// Notify all of components that the endpoint was changed
+				EndpointActions.Updated([
+					{
+						_id: r._id,
+						name: name
+					}
+				]);
 				this.close();
 			}.bind(this)
 		});
