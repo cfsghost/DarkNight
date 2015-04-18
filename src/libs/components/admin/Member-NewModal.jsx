@@ -70,7 +70,7 @@ var NewMemberModal = React.createClass({
 						email: email,
 						gender: gender,
 						cardno: cardno,
-						token: token
+						tokens: [ token ]
 					}
 				]);
 				this.close();

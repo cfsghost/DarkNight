@@ -84,7 +84,7 @@ var EditModal = React.createClass({
 						email: this.state.email,
 						gender: gender,
 						cardno: this.state.cardno,
-						token: this.state.token
+						tokens: [ this.state.token ]
 					}
 				]);
 				this.close();
