@@ -3,6 +3,7 @@
 var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Table = Bootstrap.Table;
+var Label = Bootstrap.Label;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
 
@@ -17,12 +18,18 @@ var Item = React.createClass({
 			cursor: 'pointer'
 		};
 
+		var gender;
+		if (this.props.member.gender == 0)
+			gender = <Label bsStyle='primary'>male</Label>;
+		else
+			gender = <Label bsStyle='danger'>female</Label>;
+
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
 				<td>{this.props.member._id}</td>
 				<td>{this.props.member.name}</td>
-				<td>{(this.props.member.gender == 0) ? 'male' : 'female'}</td>
+				<td>{gender}</td>
 				<td>{this.props.member.email}</td>
 				<td>{this.props.member.cardno}</td>
 			</tr>
