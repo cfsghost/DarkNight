@@ -11,9 +11,15 @@ router.get('/endpoints', function *() {
 
 router.post('/endpoints', function *() {
 
-	console.log(this.request.body.name);
+	var name = this.request.body.name;
 
-	this.body = 'DONE';
+	if (!name) {
+		this.status = 400;
+		this.body = 'Required name';
+		return;
+	}
+
+	this.body = yield Endpoint.create(name);
 });
 
 router.put('/endpoint/:id', function *() {
