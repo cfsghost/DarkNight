@@ -18,7 +18,7 @@ var Item = React.createClass({
 		};
 
 		return (
-			<tr href='#' style={styles} onClick={this.editModal}>
+			<tr style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
 				<td>{this.props.endpoint._id}</td>
 				<td>{this.props.endpoint.name}</td>

@@ -32,7 +32,8 @@ var Toolbar = React.createClass({
 var Member = React.createClass({
 	getInitialState: function() {
 		return {
-			isOpen: false
+			//isOpen: false
+			isOpen: true
 		};
 	},
 	componentDidMount: function() {

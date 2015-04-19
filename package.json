@@ -29,7 +29,8 @@
     "koa-static": "^1.4.8",
     "koa-views": "^2.1.2",
     "mongoose": "^4.0.1",
-    "mongoose-uuid": "0.0.2"
+    "mongoose-uuid": "0.0.2",
+    "react-router": "~0.13.2"
   },
   "devDependencies": {
     "gulp": "^3.7.0",
@@ -37,7 +38,7 @@
     "gulp-less": "^3.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-shell": "^0.2.11",
-    "react": "^0.12.0",
+    "react": "^0.13.0",
     "reactify": "^0.15.0",
     "react-bootstrap": "^0.13.2"
   }

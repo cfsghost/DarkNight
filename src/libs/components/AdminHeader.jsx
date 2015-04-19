@@ -1,6 +1,12 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+
+// Router
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
+
+// UI Components
 var Bootstrap = require('react-bootstrap');
 var Navbar = Bootstrap.Navbar;
 var Nav = Bootstrap.Nav;
@@ -12,6 +18,9 @@ var EndpointActions = require('../actions/Endpoint');
 var MemberActions = require('../actions/Member');
 
 var AdminHeader = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.func
+	},
 	getInitialState: function() {
 		return {
 			endpoint: false,
@@ -24,8 +33,8 @@ var AdminHeader = React.createClass({
 			member: false
 		});
 
-		MemberActions.Blur();
-		EndpointActions.Manage();
+//		MemberActions.Blur();
+//		EndpointActions.Manage();
 	},
 	manageMember: function() {
 		this.setState({
@@ -33,15 +42,15 @@ var AdminHeader = React.createClass({
 			member: true
 		});
 
-		EndpointActions.Blur();
-		MemberActions.Manage();
+//		EndpointActions.Blur();
+//		MemberActions.Manage();
 	},
 	render: function() {
 		return (
 			<Navbar brand='DarkNight' inverse staticTop>
 				<Nav>
-					<NavItem eventKey={1} onClick={this.manageEndpoint} active={this.state.endpoint}>Endpoint</NavItem>
-					<NavItem eventKey={2} onClick={this.manageMember} active={this.state.member}>Member</NavItem>
+					<NavItem eventKey={1} href='#/endpoints' onClick={this.manageEndpoint} active={this.state.endpoint}>Endpoint</NavItem>
+					<NavItem eventKey={2} href='#/members' onClick={this.manageMember} active={this.state.member}>Member</NavItem>
 				</Nav>
 			</Navbar>
 		);
