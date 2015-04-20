@@ -7,6 +7,7 @@ module.exports = {
 		var member = new Member({
 			name: member.name,
 			email: member.email,
+			phone: member.phone,
 			gender: member.gender,
 			cardno: member.cardno,
 			tokens: member.tokens
@@ -24,6 +25,7 @@ module.exports = {
 			Member.update({ _id: id }, {
 				name: member.name,
 				email: member.email,
+				phone: member.phone,
 				gender: member.gender,
 				cardno: member.cardno,
 				tokens: member.tokens

@@ -16,6 +16,7 @@ var EditModal = React.createClass({
 			id: null,
 			name: '',
 			email: '',
+			phone: '',
 			gender: 0,
 			cardno: '',
 			token: ''
@@ -35,6 +36,7 @@ var EditModal = React.createClass({
 			id: member._id,
 			name: member.name,
 			email: member.email,
+			phone: member.phone,
 			gender: member.gender,
 			cardno: member.cardno,
 			token: member.tokens ? member.tokens[0] || '' : ''
@@ -70,6 +72,7 @@ var EditModal = React.createClass({
 			data: JSON.stringify({
 				name: this.state.name,
 				email: this.state.email,
+				phone: this.state.phone,
 				gender: gender,
 				cardno: this.state.cardno,
 				token: this.state.token
@@ -82,6 +85,7 @@ var EditModal = React.createClass({
 						_id: this.state.id,
 						name: this.state.name,
 						email: this.state.email,
+						phone: this.state.phone,
 						gender: gender,
 						cardno: this.state.cardno,
 						tokens: [ this.state.token ]
@@ -95,6 +99,7 @@ var EditModal = React.createClass({
 		this.setState({
 			name: this.refs.name.getValue(),
 			email: this.refs.email.getValue(),
+			phone: this.refs.phone.getValue(),
 			gender: this.refs.male.getInputDOMNode().checked ? 0 : 1,
 			cardno: this.refs.cardno.getValue(),
 			token: this.refs.token.getValue()
@@ -114,12 +119,14 @@ var EditModal = React.createClass({
 						<div>{this.state.id}</div>
 
 						<Input type='text' ref='name' label='Name' placeholder='Fred Chien' value={this.state.name} onChange={this.handleChange} autoFocus />
-						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' value={this.state.email} onChange={this.handleChange} />
 
 						<Input label='Gender'>
 							<Input type='radio' ref='male' name='gender' label='Male' defaultChecked={this.state.gender ? false : true}  />
 							<Input type='radio' ref='female' name='gender' label='Female' defaultChecked={this.state.gender ? true : false} />
 						</Input>
+
+						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' value={this.state.email} onChange={this.handleChange} />
+						<Input type='text' ref='phone' label='Phone' placeholder='0926333572' value={this.state.phone} onChange={this.handleChange} />
 
 						<Input type='text' ref='cardno' label='Card Number' placeholder='1' value={this.state.cardno} onChange={this.handleChange} />
 						<Input type='text' ref='token' label='Token' placeholder='0a020e01' value={this.state.token} onChange={this.handleChange} />

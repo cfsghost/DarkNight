@@ -37,6 +37,7 @@ var NewMemberModal = React.createClass({
 	add: function() {
 		var name = this.refs.name.getValue() || null;
 		var email = this.refs.email.getValue() || null;
+		var phone = this.refs.phone.getValue() || null;
 		var gender = this.refs.male.getInputDOMNode().checked ? 0 : 1
 		var cardno = this.refs.cardno.getValue() || null;
 		var token = this.refs.token.getValue() || null;
@@ -56,6 +57,7 @@ var NewMemberModal = React.createClass({
 			data: JSON.stringify({
 				name: name,
 				email: email,
+				phone: phone,
 				gender: gender,
 				cardno: cardno,
 				token: token
@@ -68,6 +70,7 @@ var NewMemberModal = React.createClass({
 						_id: r._id,
 						name: name,
 						email: email,
+						phone: phone,
 						gender: gender,
 						cardno: cardno,
 						tokens: [ token ]
@@ -88,12 +91,14 @@ var NewMemberModal = React.createClass({
 				<div className='modal-body'>
 					<form>
 						<Input type='text' ref='name' label='Name' placeholder='Fred Chien' autoFocus />
-						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' />
 
 						<Input label='Gender'>
 							<Input type='radio' ref='male' name='gender' label='Male' />
 							<Input type='radio' ref='female' name='gender' label='Female' />
 						</Input>
+
+						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' />
+						<Input type='text' ref='phone' label='Phone' placeholder='0926333572' />
 
 						<Input type='text' ref='cardno' label='Card Number' placeholder='1' />
 						<Input type='text' ref='token' label='Token' placeholder='0a020e01' />
