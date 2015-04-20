@@ -10,10 +10,16 @@ var AdminHeader = require('./AdminHeader.jsx');
 
 var AdminApp = React.createClass({
 	render: function() {
+		var contentStyle = {
+			'padding-top': '50px'
+		};
+
 		return (
 			<div>
 				<AdminHeader />
-				<RouteHandler />
+				<div style={contentStyle}>
+					<RouteHandler />
+				</div>
 			</div>
 		);
 	}

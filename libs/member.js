@@ -19,6 +19,12 @@ module.exports = {
 			});
 		};
 	},
+	insert: function(members) {
+		return function(done) {
+
+			Member.collection.insert(members, done);
+		};
+	},
 	save: function(id, member) {
 
 		return function(done) {

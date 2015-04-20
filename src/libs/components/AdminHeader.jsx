@@ -47,7 +47,7 @@ var AdminHeader = React.createClass({
 	},
 	render: function() {
 		return (
-			<Navbar brand='DarkNight' inverse staticTop>
+			<Navbar brand='DarkNight' inverse fixedTop>
 				<Nav>
 					<NavItem eventKey={1} href='#/endpoints' onClick={this.manageEndpoint} active={this.state.endpoint}>Endpoint</NavItem>
 					<NavItem eventKey={2} href='#/members' onClick={this.manageMember} active={this.state.member}>Member</NavItem>
