@@ -28,8 +28,7 @@
     "koa-session": ">=2.0.0",
     "koa-static": ">=1.4.8",
     "koa-views": ">=2.1.2",
-    "mongoose": ">=4.0.1",
-    "mongoose-uuid": ">=0.0.2"
+    "mongoose": ">=4.0.1"
   },
   "devDependencies": {
     "gulp": ">=3.7.0",

@@ -21,8 +21,10 @@ var Item = React.createClass({
 		var gender;
 		if (this.props.member.gender == 0)
 			gender = <Label bsStyle='primary'>male</Label>;
-		else
+		else if (this.props.member.gender == 1)
 			gender = <Label bsStyle='danger'>female</Label>;
+		else
+			gender = <Label bsStyle='default'>unknown</Label>;
 
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
@@ -31,7 +33,9 @@ var Item = React.createClass({
 				<td>{gender}</td>
 				<td>{this.props.member.birthday ? this.props.member.birthday.substring(0, 10) : ''}</td>
 				<td>{this.props.member.email}</td>
+				<td>{this.props.member.phone}</td>
 				<td>{this.props.member.cardno}</td>
+				<td>{this.props.member.created}</td>
 			</tr>
 		);
 	}
@@ -85,7 +89,9 @@ var ListView = React.createClass({
 							<th>Gender</th>
 							<th>Birthday</th>
 							<th>Email</th>
+							<th>Phone</th>
 							<th>Card Number</th>
+							<th>Created</th>
 						</tr>
 					</thead>
 					<tbody>{rows}</tbody>

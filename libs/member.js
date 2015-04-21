@@ -1,6 +1,7 @@
 var settings = require('./config');
 var mongoose = require('mongoose');
 var Member = require('../models/member');
+var uuid = require('node-uuid');
 
 module.exports = {
 	create: function(member) {
@@ -9,6 +10,8 @@ module.exports = {
 			email: member.email,
 			phone: member.phone,
 			gender: member.gender,
+			idno: member.idno,
+			birthday: member.birthday,
 			cardno: member.cardno,
 			tokens: member.tokens
 		});
@@ -25,11 +28,14 @@ module.exports = {
 			Member.collection.insert(members, done);
 		};
 	},
-	updateByEmail: function(email, member) {
+	updateByEmail: function(email, member, opts) {
 		
 		return function(done) {
 
-			Member.update({ email: email }, member, done);
+			// Update time
+			member.updated = Date.now();
+
+			Member.update({ email: email }, member, opts, done);
 		};
 	},
 	save: function(id, member) {
@@ -43,7 +49,8 @@ module.exports = {
 				idno: member.idno,
 				birthday: member.birthday,
 				cardno: member.cardno,
-				tokens: member.tokens
+				tokens: member.tokens,
+				updated: Date.now()
 			}, done);
 		};
 	},
