@@ -35,7 +35,7 @@ app.use(views(__dirname + '/views', {
 
 // Initializing session mechanism
 app.keys = settings.general.session.keys || [];
-app.use(session());
+app.use(session(app));
 
 // Routes
 app.use(require('./routes/home').middleware());

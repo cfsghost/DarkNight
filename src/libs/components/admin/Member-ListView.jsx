@@ -27,9 +27,9 @@ var Item = React.createClass({
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
-				<td>{this.props.member._id}</td>
 				<td>{this.props.member.name}</td>
 				<td>{gender}</td>
+				<td>{this.props.member.birthday ? this.props.member.birthday.substring(0, 10) : ''}</td>
 				<td>{this.props.member.email}</td>
 				<td>{this.props.member.cardno}</td>
 			</tr>
@@ -81,9 +81,9 @@ var ListView = React.createClass({
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>ID</th>
 							<th>Name</th>
 							<th>Gender</th>
+							<th>Birthday</th>
 							<th>Email</th>
 							<th>Card Number</th>
 						</tr>

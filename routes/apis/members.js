@@ -14,6 +14,8 @@ router.post('/members', function *() {
 	var name = this.request.body.name;
 	var email = this.request.body.email;
 	var gender = this.request.body.gender;
+	var idno = this.request.body.idno;
+	var birthday = this.request.body.birthday;
 	var cardno = this.request.body.cardno;
 	var token = this.request.body.token;
 
@@ -21,6 +23,8 @@ router.post('/members', function *() {
 		name: name,
 		email: email,
 		gender: gender,
+		idno: idno,
+		birthday: birthday,
 		cardno: cardno,
 		tokens: [
 			token
@@ -37,6 +41,8 @@ router.put('/member/:id', function *() {
 	var name = this.request.body.name;
 	var email = this.request.body.email;
 	var gender = this.request.body.gender;
+	var idno = this.request.body.idno;
+	var birthday = this.request.body.birthday;
 	var cardno = this.request.body.cardno;
 	var token = this.request.body.token;
 
@@ -44,6 +50,8 @@ router.put('/member/:id', function *() {
 		name: name,
 		email: email,
 		gender: gender,
+		idno: idno,
+		birthday: birthday,
 		cardno: cardno,
 		tokens: [
 			token

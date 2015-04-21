@@ -25,6 +25,13 @@ module.exports = {
 			Member.collection.insert(members, done);
 		};
 	},
+	updateByEmail: function(email, member) {
+		
+		return function(done) {
+
+			Member.update({ email: email }, member, done);
+		};
+	},
 	save: function(id, member) {
 
 		return function(done) {
@@ -33,6 +40,8 @@ module.exports = {
 				email: member.email,
 				phone: member.phone,
 				gender: member.gender,
+				idno: member.idno,
+				birthday: member.birthday,
 				cardno: member.cardno,
 				tokens: member.tokens
 			}, done);
