@@ -29,6 +29,57 @@ var Toolbar = React.createClass({
 	}
 });
 
+var Pagination = React.createClass({
+	getInitialState: function() {
+		return {
+			page: 1,
+			pageCount: 1,
+			perPage: 100
+		};
+	},
+	componentDidMount: function() {
+		MemberStore.on('InfoUpdated', this._update);
+
+		MemberActions.GetInfo();
+	},
+	componentWillUnmount: function() {
+		MemberStore.removeListener('InfoUpdated', this._update);
+	},
+	render: function() {
+		var pageItems = [];
+
+		for (var i = this.state.page; i <= this.state.pageCount; i++) {
+			if (i == this.state.page)
+				pageItems.push(<li className='active'><a href='#'>{i}</a></li>);
+			else
+				pageItems.push(<li><a href='#'>{i}</a></li>);
+		}
+
+		return (
+			<nav>
+				<ul className='pagination'>
+					<li className='disabled'>
+						<a href='#' aria-label='Previous'>
+							<span aria-hidden='true'>&laquo;</span>
+						</a>
+					</li>
+					{pageItems}
+				</ul>
+			</nav>
+		);
+	},
+	_update: function(info) {
+
+		if (this.isMounted()) {
+			this.setState({
+				pageCount: info.pageCount,
+				page: info.page,
+				perPage: info.perPage
+			});
+		}
+	},
+});
+
 var Member = React.createClass({
 	getInitialState: function() {
 		return {
@@ -52,6 +103,7 @@ var Member = React.createClass({
 			<div>
 				<NewModal />
 				<Toolbar />
+				<Pagination />
 				<ListView />
 			</div>
 		);

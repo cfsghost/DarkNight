@@ -6,7 +6,20 @@ var router = module.exports = new Router();
 
 router.get('/members', function *() {
 
-	this.body = yield Member.list();
+	var page = parseInt(this.request.query.page) || 1;
+	var perPage = parseInt(this.request.query.perpage) || 100;
+
+	var data = yield Member.list({
+		skip: (page - 1) * perPage,
+		limit: perPage
+	});
+
+	this.body = {
+		page: page,
+		perPage: perPage,
+		pageCount: Math.ceil(data.count / perPage),
+		members: data.members
+	}
 });
 
 router.post('/members', function *() {
@@ -59,10 +72,6 @@ router.put('/member/:id', function *() {
 	};
 
 	this.body = yield Member.save(memberId, memberData);
-});
-
-router.get('/members', function *() {
-	this.body = 'DONE';
 });
 
 router.get('/member/:id', function *() {

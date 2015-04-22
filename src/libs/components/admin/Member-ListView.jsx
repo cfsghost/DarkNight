@@ -44,29 +44,41 @@ var Item = React.createClass({
 var ListView = React.createClass({
 	getInitialState: function() {
 		return {
+			pageCount: 1,
+			perPage: 100,
+			page: 1,
 			members: {}
 		};
 	},
 	componentDidMount: function() {
-		$.get('/members', function(results) {
+/*
+		$.get('/members?page=' + this.state.page + '&perpage=' + this.state.perPage, function(results) {
 			if (this.isMounted()) {
 				var members = {};
 
-				for (var index in results) {
-					var member = results[index];
+				for (var index in results.members) {
+					var member = results.members[index];
 					members[member._id] = member;
 				}
 
 				this.setState({
+					pageCount: results.pageCount,
+					page: results.page,
+					perPage: perPage,
 					members: members
 				});
 			}
 		}.bind(this));
-
+*/
+		MemberStore.on('Refresh', this._refresh);
 		MemberStore.on('MembersUpdated', this._update);
+
+		// Fetching member list 
+		MemberActions.Fetch(this.state.page, this.state.perPage);
 	},
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);
+		MemberStore.removeListener('Refresh', this._refresh);
 	},
 	render: function() {
 		var rows = [];
@@ -107,6 +119,17 @@ var ListView = React.createClass({
 		}
 
 		this.forceUpdate();
+	},
+	_refresh: function(info, members) {
+
+		if (this.isMounted()) {
+			this.setState({
+				pageCount: info.pageCount,
+				page: info.page,
+				perPage: info.perPage,
+				members: members
+			});
+		}
 	},
 	_change: function() {
 

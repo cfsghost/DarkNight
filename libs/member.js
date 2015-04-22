@@ -54,10 +54,20 @@ module.exports = {
 			}, done);
 		};
 	},
-	list: function() {
+	list: function(opts) {
 
 		return function(done) {
-			Member.find(done);
+
+			Member.count({}, function(err, count) {
+
+				Member.find({}, {}, opts, function(err, members) {
+
+					done(err, {
+						count: count,
+						members: members
+					});
+				});
+			});
 		};
 	}
 };

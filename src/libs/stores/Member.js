@@ -2,6 +2,13 @@ var Fluxer = require('fluxerjs');
 
 var MemberStore = module.exports = Fluxer.createStore('Member');
 
+var info = {
+	pageCount: 1,
+	perPage: 100,
+	page: 1
+};
+var members = {};
+
 Fluxer.on('Member.New', function() {
 	MemberStore.emit('OpenNewModal');
 });
@@ -10,7 +17,38 @@ Fluxer.on('Member.Open', function(member) {
 	MemberStore.emit('OpenEditModal', member);
 });
 
+Fluxer.on('Member.GetInfo', function() {
+	MemberStore.emit('InfoUpdated', info);
+});
+
+Fluxer.on('Member.Fetch', function(page, perPage) {
+
+	$.get('/members?page=' + page + '&perpage=' + perPage, function(results) {
+
+		info.page = results.page;
+		info.perPage = results.perPage;
+		info.pageCount = results.pageCount;
+
+		// Refresh list
+		members = {};
+		for (var index in results.members) {
+			var member = results.members[index];
+			members[member._id] = member;
+		}
+
+		MemberStore.emit('Refresh', info, members);
+		MemberStore.emit('InfoUpdated', info);
+
+	}.bind(this));
+});
+
 Fluxer.on('Member.Updated', function(members) {
+
+	for (var index in members) {
+		var member = members[index];
+		members[member._id] = member;
+	}
+
 	MemberStore.emit('MembersUpdated', members);
 });
 
