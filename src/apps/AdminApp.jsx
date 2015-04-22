@@ -22,6 +22,7 @@ var routes = (
 			<Route name='endpoint' path='/endpoint/:endpointId' />
 		</Route>
 		<Route path='/members' name='members' handler={MemberComponent} />
+		<Route path='/members/:page/:perPage' name='members-page' handler={MemberComponent} />
 		<Redirect to='endpoints' />
 	</Route>
 );

@@ -1,7 +1,6 @@
 var settings = require('./config');
 var mongoose = require('mongoose');
 var Member = require('../models/member');
-var uuid = require('node-uuid');
 
 module.exports = {
 	create: function(member) {

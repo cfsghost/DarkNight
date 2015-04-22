@@ -74,7 +74,7 @@ var ListView = React.createClass({
 		MemberStore.on('MembersUpdated', this._update);
 
 		// Fetching member list 
-		MemberActions.Fetch(this.state.page, this.state.perPage);
+		MemberActions.Fetch(this.props.page, this.props.perPage);
 	},
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);

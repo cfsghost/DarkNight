@@ -50,9 +50,9 @@ var Pagination = React.createClass({
 
 		for (var i = this.state.page; i <= this.state.pageCount; i++) {
 			if (i == this.state.page)
-				pageItems.push(<li className='active'><a href='#'>{i}</a></li>);
+				pageItems.push(<li className='active'><a href={'#/members/' + this.state.page + '/' + this.state.perPage}>{i}</a></li>);
 			else
-				pageItems.push(<li><a href='#'>{i}</a></li>);
+				pageItems.push(<li><a href={'#/members/' + this.state.page + '/' + this.state.perPage}>{i}</a></li>);
 		}
 
 		return (
@@ -81,6 +81,9 @@ var Pagination = React.createClass({
 });
 
 var Member = React.createClass({
+	contextTypes: {
+		router: React.PropTypes.func
+	},
 	getInitialState: function() {
 		return {
 			//isOpen: false
@@ -99,12 +102,15 @@ var Member = React.createClass({
 		if (!this.state.isOpen)
 			return (<span />);
 
+		var page = this.context.router.getCurrentQuery().page || 1;
+		var perPage = this.context.router.getCurrentQuery.perPage || 100;
+
 		return (
 			<div>
 				<NewModal />
 				<Toolbar />
 				<Pagination />
-				<ListView />
+				<ListView page={page} perPage={perPage} />
 			</div>
 		);
 	},
