@@ -48,11 +48,25 @@ var Pagination = React.createClass({
 	render: function() {
 		var pageItems = [];
 
-		for (var i = this.state.page; i <= this.state.pageCount; i++) {
+		var start = 1;
+		var end = this.state.pageCount;
+		var range = this.state.pageCount - this.state.page;
+		if (this.state.page < 10) {
+			start = 1;
+			end = start + 9;
+		} else if (this.state.page > this.state.pageCount - 10) {
+			start = this.state.pageCount - 9;
+			end = this.state.pageCount;
+		} else {
+			start = this.state.page - 5;
+			end = this.state.page + 4;
+		}
+
+		for (var i = start; i <= end; i++) {
 			if (i == this.state.page)
-				pageItems.push(<li className='active'><a href={'#/members/' + this.state.page + '/' + this.state.perPage}>{i}</a></li>);
+				pageItems.push(<li className='active'><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}</a></li>);
 			else
-				pageItems.push(<li><a href={'#/members/' + this.state.page + '/' + this.state.perPage}>{i}</a></li>);
+				pageItems.push(<li><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}</a></li>);
 		}
 
 		return (
@@ -103,7 +117,7 @@ var Member = React.createClass({
 			return (<span />);
 
 		var page = this.context.router.getCurrentQuery().page || 1;
-		var perPage = this.context.router.getCurrentQuery.perPage || 100;
+		var perPage = this.context.router.getCurrentQuery().perPage || 100;
 
 		return (
 			<div>
