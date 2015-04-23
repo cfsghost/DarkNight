@@ -102,7 +102,7 @@ var ListView = React.createClass({
 		return (
 			<div>
 				<EditModal />
-				<Table responsive striped>
+				<Table responsive striped hover>
 					<thead>
 						<tr>
 							<th>#</th>
