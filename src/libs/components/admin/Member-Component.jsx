@@ -23,7 +23,7 @@ var Toolbar = React.createClass({
 	render: function() {
 		return (
 			<ButtonToolbar>
-				<Button onClick={this.newModal}><Glyphicon glyph='plus' /> Add</Button>
+				<Button bsStyle='primary' onClick={this.newModal}><Glyphicon glyph='plus' /> Add</Button>
 			</ButtonToolbar>
 		);
 	}
@@ -136,8 +136,10 @@ var Member = React.createClass({
 		return (
 			<div>
 				<NewModal />
-				<Toolbar />
-				<Pagination />
+				<div className='text-center'>
+					<Toolbar />
+					<Pagination />
+				</div>
 				<ListView page={page} perPage={perPage} />
 			</div>
 		);
