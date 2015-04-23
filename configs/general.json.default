@@ -3,5 +3,8 @@
 		"keys": [
 			"YOUneverKnowWhoYOUaRe1234567890"
 		]
+	},
+	"database": {
+		"uri": "mongodb://localhost:27017/darknight"
 	}
 }
