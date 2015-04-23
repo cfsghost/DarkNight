@@ -78,8 +78,6 @@ var ListView = React.createClass({
 
 		// Fetching member list 
 		MemberActions.Fetch(this.props.page, this.props.perPage);
-
-		console.log(this.props);
 	},
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);

@@ -54,6 +54,9 @@ var Pagination = React.createClass({
 		if (this.state.page < 6) {
 			start = 1;
 			end = start + 9;
+			if (end > this.state.pageCount) {
+				end = this.state.pageCount;
+			}
 		} else if (this.state.page > this.state.pageCount - 4) {
 			start = this.state.pageCount - 9;
 			end = this.state.pageCount;
