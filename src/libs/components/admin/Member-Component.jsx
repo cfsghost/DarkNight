@@ -48,13 +48,13 @@ var Pagination = React.createClass({
 	render: function() {
 		var pageItems = [];
 
+		// Figure out range
 		var start = 1;
 		var end = this.state.pageCount;
-		var range = this.state.pageCount - this.state.page;
-		if (this.state.page < 10) {
+		if (this.state.page < 6) {
 			start = 1;
 			end = start + 9;
-		} else if (this.state.page > this.state.pageCount - 10) {
+		} else if (this.state.page > this.state.pageCount - 4) {
 			start = this.state.pageCount - 9;
 			end = this.state.pageCount;
 		} else {
@@ -62,9 +62,18 @@ var Pagination = React.createClass({
 			end = this.state.page + 4;
 		}
 
+		var next = this.state.page + 10;
+		if (next > this.state.pageCount)
+			next = this.state.pageCount;
+
+		var prev = this.state.page - 10;
+		if (prev < 1) {
+			prev = 1;
+		}
+
 		for (var i = start; i <= end; i++) {
 			if (i == this.state.page)
-				pageItems.push(<li className='active'><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}</a></li>);
+				pageItems.push(<li className='active'><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}<span class='sr-only'></span></a></li>);
 			else
 				pageItems.push(<li><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}</a></li>);
 		}
@@ -72,12 +81,17 @@ var Pagination = React.createClass({
 		return (
 			<nav>
 				<ul className='pagination'>
-					<li className='disabled'>
-						<a href='#' aria-label='Previous'>
+					<li>
+						<a href={'#/members?page=' + prev + '&perPage=' + this.state.perPage} aria-label='Previous'>
 							<span aria-hidden='true'>&laquo;</span>
 						</a>
 					</li>
 					{pageItems}
+					<li>
+						<a href={'#/members?page=' + next + '&perPage=' + this.state.perPage} aria-label='Next'>
+							<span aria-hidden='true'>&raquo;</span>
+						</a>
+					</li>
 				</ul>
 			</nav>
 		);
