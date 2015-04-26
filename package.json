@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/cfsghost/DarkNight",
   "dependencies": {
+    "dropzone": "^4.0.1",
     "fluxerjs": ">=0.0.2",
     "jade": ">=1.8.1",
     "koa": ">=0.13.0",

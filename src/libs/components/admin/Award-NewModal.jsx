@@ -5,6 +5,7 @@ var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
 var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
+
 var AwardStore = require('../../stores/Award');
 var AwardActions = require('../../actions/Award');
 
@@ -81,6 +82,7 @@ var NewAwardModal = React.createClass({
 						<Input type='text' ref='name' label='Name' placeholder='Top Hero' autoFocus />
 
 						<Input type='text' ref='points' label='Points' placeholder='1' />
+
 					</form>
 				</div>
 				<div className='modal-footer'>
