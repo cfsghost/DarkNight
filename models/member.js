@@ -9,6 +9,8 @@ var Member = new mongoose.Schema({
 	idno: String,
 	cardno: Number,
 	tokens: [ String ],
+	awards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MemberAward' }],
+	points: Number,
 	created: { type: Date, default: Date.now },
 	updated: { type: Date, default: Date.now }
 });

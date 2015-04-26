@@ -11,7 +11,7 @@ var AdminHeader = require('./AdminHeader.jsx');
 var AdminApp = React.createClass({
 	render: function() {
 		var contentStyle = {
-			'padding-top': '50px'
+			'paddingTop': '50px'
 		};
 
 		return (

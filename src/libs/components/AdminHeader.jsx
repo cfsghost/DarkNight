@@ -24,26 +24,30 @@ var AdminHeader = React.createClass({
 	getInitialState: function() {
 		return {
 			endpoint: false,
-			member: false
+			member: false,
+			award: false
 		};
 	},
 	manageEndpoint: function() {
 		this.setState({
 			endpoint: true,
-			member: false
+			member: false,
+			award: false
 		});
-
-//		MemberActions.Blur();
-//		EndpointActions.Manage();
 	},
 	manageMember: function() {
 		this.setState({
 			endpoint: false,
-			member: true
+			member: true,
+			award: false
 		});
-
-//		EndpointActions.Blur();
-//		MemberActions.Manage();
+	},
+	manageAward: function() {
+		this.setState({
+			endpoint: false,
+			member: false,
+			award: true
+		});
 	},
 	render: function() {
 		return (
@@ -51,6 +55,7 @@ var AdminHeader = React.createClass({
 				<Nav>
 					<NavItem eventKey={1} href='#/endpoints' onClick={this.manageEndpoint} active={this.state.endpoint}>Endpoint</NavItem>
 					<NavItem eventKey={2} href='#/members' onClick={this.manageMember} active={this.state.member}>Member</NavItem>
+					<NavItem eventKey={2} href='#/awards' onClick={this.manageAward} active={this.state.award}>Award</NavItem>
 				</Nav>
 			</Navbar>
 		);

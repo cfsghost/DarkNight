@@ -15,6 +15,8 @@ var Endpoint = require('../libs/components/admin/Endpoint.jsx');
 var EndpointComponent = Endpoint.Component;
 var Member = require('../libs/components/admin/Member.jsx');
 var MemberComponent = Member.Component;
+var Award = require('../libs/components/admin/Award.jsx');
+var AwardComponent = Award.Component;
 
 var routes = (
 	<Route name='app' path='/' handler={AdminApp}>
@@ -23,6 +25,7 @@ var routes = (
 		</Route>
 		<Route path='/members' name='members' handler={MemberComponent} />
 		<Route path='/members/:page/:perPage' name='members-page' handler={MemberComponent} />
+		<Route path='/awards' name='awards' handler={AwardComponent} />
 		<Redirect to='endpoints' />
 	</Route>
 );

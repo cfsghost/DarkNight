@@ -44,7 +44,8 @@ var Item = React.createClass({
 var ListView = React.createClass({
 	getInitialState: function() {
 		return {
-			members: {}
+			members: {},
+			loading: false
 		};
 	},
 	getDefaultProps: function() {
@@ -75,6 +76,7 @@ var ListView = React.createClass({
 */
 		MemberStore.on('Refresh', this._refresh);
 		MemberStore.on('MembersUpdated', this._update);
+		MemberStore.on('Loading', this._loading);
 
 		// Fetching member list 
 		MemberActions.Fetch(this.props.page, this.props.perPage);
@@ -82,6 +84,7 @@ var ListView = React.createClass({
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);
 		MemberStore.removeListener('Refresh', this._refresh);
+		MemberStore.removeListener('Loading', this._loading);
 	},
 	componentWillReceiveProps: function(nextProps) {
 
@@ -118,6 +121,11 @@ var ListView = React.createClass({
 			</div>
 		);
 	},
+	_loading: function() {
+		this.setState({
+			loading: true
+		});
+	},
 	_update: function(members) {
 		for (var index in members) {
 			var member = members[index];
@@ -131,19 +139,10 @@ var ListView = React.createClass({
 
 		if (this.isMounted()) {
 			this.setState({
-				members: members
+				members: members,
+				loading: false
 			});
 		}
-	},
-	_change: function() {
-
-		$.get('/members', function(results) {
-			if (this.isMounted()) {
-				this.setState({
-					members: results
-				});
-			}
-		}.bind(this));
 	}
 });
 
