@@ -5,6 +5,8 @@ var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
 var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
+var Col = Bootstrap.Col;
+var Dropzone = require('../Dropzone');
 
 var AwardStore = require('../../stores/Award');
 var AwardActions = require('../../actions/Award');
@@ -82,8 +84,11 @@ var NewAwardModal = React.createClass({
 						<Input type='text' ref='name' label='Name' placeholder='Top Hero' autoFocus />
 
 						<Input type='text' ref='points' label='Points' placeholder='1' />
-
 					</form>
+
+					<Input label='Icon' help='Drop icon file here or click to upload' wrapperClassName='wrapper'>
+						<Dropzone style={{ height: '140px', width: '100%', display: 'block', border: '2px dashed #0087f7', borderRadius: '5px', background: '#f0f0f0' }}/>
+					</Input>
 				</div>
 				<div className='modal-footer'>
 					<Button onClick={this.close}>Cancel</Button>
