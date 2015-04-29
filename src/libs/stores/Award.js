@@ -59,3 +59,7 @@ Fluxer.on('Award.Manage', function() {
 Fluxer.on('Award.Blur', function() {
 	AwardStore.emit('CloseManagement');
 });
+
+Fluxer.on('Award.UpdateNewModal', function(status) {
+	AwardStore.emit('UpdateNewModal', status);
+});

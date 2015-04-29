@@ -4,11 +4,25 @@ var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Table = Bootstrap.Table;
 var Panel = Bootstrap.Panel;
+var Col = Bootstrap.Col;
+var Grid = Bootstrap.Grid;
 var Dropzone = require('dropzone');
 
 var PreviewTemplate = React.createClass({
 	render: function() {
 
+		return (
+			<div>
+				<Col xs={6} md={4}>
+
+					<img data-dz-thumbnail />
+					<div className='progress progress-striped active' role='progressbar' aria-valuemin='0' aria-valuemax='100' aria-valuenow='0'>
+						<div className='progress-bar progress-bar-success' style={{ width: '0%'}} data-dz-uploadprogress></div>
+					</div>
+				</Col>
+			</div>
+		);
+/*
 		return (
 			<Table responsive striped>
 				<tbody>
@@ -19,15 +33,16 @@ var PreviewTemplate = React.createClass({
 							<strong className='error text-danger' data-dz-errormessage></strong>
 						</td>
 						<td>
-							<p className="size" data-dz-size></p>
-							<div className="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-								<div className="progress-bar progress-bar-success" style={{ width: '0%'}} data-dz-uploadprogress></div>
+							<p className='size' data-dz-size></p>
+							<div className='progress progress-striped active' role='progressbar' aria-valuemin='0' aria-valuemax='100' aria-valuenow='0'>
+								<div className='progress-bar progress-bar-success' style={{ width: '0%'}} data-dz-uploadprogress></div>
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</Table>
 		);
+*/
 	}
 });
 /*
@@ -66,9 +81,10 @@ var PreviewTemplate = React.createClass({
 var ReactDropzone = React.createClass({
 	getDefaultProps: function() {
 		return {
-			url: '/uploads',
+			url: '/uploads/award',
 			previewTemplate: '',
-			previewsContainer: null
+			previewsContainer: null,
+			maxFiles: 1
 		};
 	},
 	componentDidMount: function() {
@@ -86,7 +102,28 @@ var ReactDropzone = React.createClass({
 
 		this.props.previewTemplate = this.refs.previewTemplate.getDOMNode().innerHTML;
 
-		this.dropzone = new Dropzone(React.findDOMNode(this), this.props);
+		var dropzone = this.dropzone = new Dropzone(React.findDOMNode(this), this.props);
+
+		this.dropzone.on('addedfile', function(file) {
+			if (this.props.onSending)
+				this.props.onSending();
+		}.bind(this));
+
+		this.dropzone.on('complete', function(file) {
+			file.previewElement.querySelector('.progress').style.display = 'none';
+
+			if (this.props.onCompleted)
+				this.props.onCompleted();
+		}.bind(this));
+
+		this.dropzone.on('success', function(file, response) {
+			if (this.props.onSuccess)
+				this.props.onSuccess(response);
+		}.bind(this));
+
+		this.dropzone.on('maxfilesexceeded', function(file) {
+			dropzone.removeFile(file);
+		});
 	},
 	componentWillUnmount: function() {
 		this.dropzone.destroy();
@@ -94,22 +131,14 @@ var ReactDropzone = React.createClass({
 	},
 	render: function() {
 		var children = this.props.children;
+
 		return (
-			<div style={this.props.style}>
+			<Grid style={this.props.style}>
 				<span style={{display: 'none'}}>
 					<PreviewTemplate ref='previewTemplate' />
 				</span>
-			</div>
+			</Grid>
 		);
-/*
-		return (
-			<Panel>
-				<form className='dropzone'>
-					{children ? <div className='fallback'>{children}</div> : null}
-				</form>
-			</Panel>
-		);
-*/
 	}
 });
 

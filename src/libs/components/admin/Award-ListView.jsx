@@ -23,6 +23,7 @@ var Item = React.createClass({
 				<td>{this.props.serialno}</td>
 				<td>{this.props.award.name}</td>
 				<td>{this.props.award.points}</td>
+				<td>{this.props.award.created}</td>
 			</tr>
 		);
 	}
