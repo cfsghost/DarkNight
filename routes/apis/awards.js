@@ -1,4 +1,5 @@
 var fs = require('fs');
+var cofs = require('co-fs');
 var path = require('path');
 var parse = require('co-busboy');
 var Router = require('koa-router');
@@ -82,3 +83,30 @@ router.post('/uploads/award', function *() {
 		id: Id 
 	};
 });
+
+router.get('/award/:id/icon', function *() {
+
+	// Getting target path to put icons
+	var awardIconsDir = Award.getIconsDir();
+	var awardId = this.params.id;
+	var filename = path.join(awardIconsDir, awardId);
+
+	if (!awardId)
+		return;
+	console.log(filename);
+
+	if (yield cofs.exists(filename + '.jpg')) {
+		this.type = '.jpg';
+		this.body = fs.createReadStream(filename + '.jpg');
+	} else if (yield cofs.exists(filename + '.png')) {
+		this.type = '.png';
+		this.body = fs.createReadStream(filename + '.png');
+	} else if (yield cofs.exists(filename + '.gif')) {
+		this.type = '.gif';
+		this.body = fs.createReadStream(filename + '.gif');
+	} else {
+		this.status = 404;
+		this.body = 'Not Found';
+	}
+});
+

@@ -21,6 +21,7 @@ var Item = React.createClass({
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
+				<td><img src={'/award/' + this.props.award.icon + '/icon'} width='20%' /></td>
 				<td>{this.props.award.name}</td>
 				<td>{this.props.award.points}</td>
 				<td>{this.props.award.created}</td>
@@ -77,6 +78,7 @@ var ListView = React.createClass({
 					<thead>
 						<tr>
 							<th>#</th>
+							<th>Icon</th>
 							<th>Name</th>
 							<th>Points</th>
 							<th>Created</th>

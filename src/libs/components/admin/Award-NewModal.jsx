@@ -61,7 +61,7 @@ var NewAwardModal = React.createClass({
 				name: name,
 				points: points,
 				desc: desc,
-				icon: this.iconId
+				icon: this.state.iconId
 			}),
 			success: function(r) {
 
@@ -72,7 +72,7 @@ var NewAwardModal = React.createClass({
 						name: name,
 						desc: desc,
 						points: points,
-						icon: this.iconId,
+						icon: this.state.iconId,
 						created: r.created
 					}
 				]);
