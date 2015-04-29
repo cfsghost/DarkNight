@@ -72,7 +72,8 @@ var NewAwardModal = React.createClass({
 						name: name,
 						desc: desc,
 						points: points,
-						icon: this.iconId
+						icon: this.iconId,
+						created: r.created
 					}
 				]);
 				this.close();
