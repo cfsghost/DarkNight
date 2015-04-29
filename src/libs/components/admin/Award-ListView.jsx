@@ -24,7 +24,6 @@ var Item = React.createClass({
 				<td><img src={'/award/' + this.props.award.icon + '/icon'} width='20%' /></td>
 				<td>{this.props.award.name}</td>
 				<td>{this.props.award.points}</td>
-				<td>{this.props.award.created}</td>
 			</tr>
 		);
 	}
@@ -81,7 +80,6 @@ var ListView = React.createClass({
 							<th>Icon</th>
 							<th>Name</th>
 							<th>Points</th>
-							<th>Created</th>
 						</tr>
 					</thead>
 					<tbody>{rows}</tbody>

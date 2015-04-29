@@ -17,6 +17,8 @@ var EditModal = React.createClass({
 			isBusy: false,
 			id: null,
 			name: '',
+			desc: '',
+			icon: '',
 			points: 0
 		};
 	},
@@ -33,6 +35,8 @@ var EditModal = React.createClass({
 			isOpen: true,
 			id: award._id,
 			name: award.name,
+			desc: award.desc,
+			icon: award.icon,
 			points: award.points
 		});
 	},
@@ -64,16 +68,19 @@ var EditModal = React.createClass({
 			contentType: 'application/json',
 			data: JSON.stringify({
 				name: this.state.name,
+				desc: this.state.desc,
 				points: this.state.points
 			}),
 			success: function(r) {
-
+console.log(r);
 				// Notify all of components that the award was changed
 				AwardActions.Updated([
 					{
 						_id: this.state.id,
 						name: this.state.name,
-						points: this.state.points
+						desc: this.state.desc,
+						points: this.state.points,
+						icon: this.state.icon
 					}
 				]);
 				this.close();
@@ -83,6 +90,7 @@ var EditModal = React.createClass({
 	handleChange: function() {
 		this.setState({
 			name: this.refs.name.getValue(),
+			desc: this.refs.desc.getValue(),
 			points: this.refs.points.getValue()
 		});
 	},
@@ -100,6 +108,7 @@ var EditModal = React.createClass({
 						<div>{this.state.id}</div>
 
 						<Input type='text' ref='name' label='Name' placeholder='Top Hero' value={this.state.name} onChange={this.handleChange} autoFocus />
+						<Input type='text' ref='desc' label='Description' placeholder='You are best' value={this.state.desc} onChange={this.handleChange} />
 						<Input type='text' ref='points' label='Points' placeholder='1' value={this.state.points} onChange={this.handleChange} />
 					</form>
 				</div>
