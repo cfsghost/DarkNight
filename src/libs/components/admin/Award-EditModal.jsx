@@ -6,6 +6,7 @@ var Modal = Bootstrap.Modal;
 var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
 //var Select = require('react-bootstrap-select');
+var Dropzone = require('../Dropzone');
 var AwardStore = require('../../stores/Award');
 var AwardActions = require('../../actions/Award');
 
@@ -72,7 +73,7 @@ var EditModal = React.createClass({
 				points: this.state.points
 			}),
 			success: function(r) {
-console.log(r);
+
 				// Notify all of components that the award was changed
 				AwardActions.Updated([
 					{
@@ -104,13 +105,17 @@ console.log(r);
 			<Modal bsStyle='primary' title='Award Details' onRequestHide={this.close} animation={true} backdrop='static'>
 				<div className='modal-body'>
 					<form>
-						<label>ID</label>
-						<div>{this.state.id}</div>
-
 						<Input type='text' ref='name' label='Name' placeholder='Top Hero' value={this.state.name} onChange={this.handleChange} autoFocus />
 						<Input type='text' ref='desc' label='Description' placeholder='You are best' value={this.state.desc} onChange={this.handleChange} />
 						<Input type='text' ref='points' label='Points' placeholder='1' value={this.state.points} onChange={this.handleChange} />
 					</form>
+
+					<Input label='Icon' help='Drop icon file here or click to upload' wrapperClassName='wrapper'>
+						<Dropzone style={{ height: '140px', width: '100%', display: 'block', border: '2px dashed #0087f7', borderRadius: '5px', background: '#f0f0f0' }}
+							onSending={this.upload}
+							onCompleted={this.uploaded}
+							onSuccess={this.uploadSuccess}/>
+					</Input>
 				</div>
 				<div className='modal-footer'>
 					<Button onClick={this.close}>Cancel</Button>
