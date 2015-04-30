@@ -59,3 +59,11 @@ Fluxer.on('Member.Manage', function() {
 Fluxer.on('Member.Blur', function() {
 	MemberStore.emit('CloseManagement');
 });
+
+Fluxer.on('Member.FetchAwards', function(memberId) {
+
+console.log(2222);
+	$.get('/member/' + memberId + '/awards', function(results) {
+		MemberStore.emit('AwardsUpdated', results);
+	});
+});

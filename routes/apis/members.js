@@ -74,11 +74,14 @@ router.put('/member/:id', function *() {
 	this.body = yield Member.save(memberId, memberData);
 });
 
-router.get('/member/:id', function *() {
+router.get('/member/:id/awards', function *() {
 
 	var memberId = this.params.id || null;
 
-	console.log(memberId);
-
-    this.body = 'done';
+	try {
+		this.body = yield Member.getAwards(memberId);
+	} catch(e) {
+		this.status = 404;
+		this.body = 'Not Found';
+	}
 });

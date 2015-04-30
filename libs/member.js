@@ -1,6 +1,7 @@
 var settings = require('./config');
 var mongoose = require('mongoose');
 var Member = require('../models/member');
+var MemberAward = require('../models/member-award');
 
 module.exports = {
 	create: function(member) {
@@ -66,6 +67,15 @@ module.exports = {
 						members: members
 					});
 				});
+			});
+		};
+	},
+	getAwards: function(id) {
+
+		return function(done) {
+
+			MemberAward.find({ member: id }, function(err, awards) {
+				done(err, awards);
 			});
 		};
 	}
