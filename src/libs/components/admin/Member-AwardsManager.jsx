@@ -45,7 +45,6 @@ var MemberAwardsManager = React.createClass({
 		MemberStore.removeListener('AwardsUpdated', this._update);
 	},
 	componentWillReceiveProps: function(nextProps) {
-console.log(nextProps);
 		MemberActions.FetchAwards(nextProps.memberId);
 	},
 	render: function() {
@@ -56,19 +55,17 @@ console.log(nextProps);
 		}
 
 		items.push(
-			<Col sm={6} xs={2} md={4}>
-				<div className='thumbnail'>
+			<Col sm={2} xs={2} md={3}>
+				<div className='thumbnail' style={{ height: '150px' }}>
 					<Glyphicon glyph='plus' />
 				</div>
 			</Col>
 		);
 
 		return (
-			<Grid>
-				<Row>
+			<div>
 					{items}
-				</Row>
-			</Grid>
+			</div>
 		);
 	},
 	_update: function(awards) {
