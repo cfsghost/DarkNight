@@ -6,6 +6,8 @@ var Glyphicon = Bootstrap.Glyphicon;
 var Panel = Bootstrap.Panel;
 var Col = Bootstrap.Col;
 var Button = Bootstrap.Button;
+var OverlayTrigger = Bootstrap.OverlayTrigger;
+var Popover = Bootstrap.Popover;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
 
@@ -54,12 +56,18 @@ var MemberAwardsManager = React.createClass({
 			items.push(<Item award={this.state.awards[id]}/>);
 		}
 
+		var awardList = (
+			<Popover title='Add Award'></Popover>
+		);
+
 		items.push(
 			<Col sm={2} xs={2} md={4}>
-				<Button bsStyle='success' style={{ 'text-align': 'center' }}>
-					<Glyphicon glyph='plus' style={{ 'font-size': '60px', margin: '20px' }} />
-					<div>Add</div>
-				</Button>
+				<OverlayTrigger trigger='click' placement='right' overlay={awardList}>
+					<Button bsStyle='success' style={{ 'text-align': 'center' }}>
+						<Glyphicon glyph='plus' style={{ 'font-size': '60px', margin: '20px' }} />
+						<div>Add</div>
+					</Button>
+				</OverlayTrigger>
 			</Col>
 		);
 
