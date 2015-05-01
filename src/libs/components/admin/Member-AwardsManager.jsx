@@ -3,9 +3,9 @@
 var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Glyphicon = Bootstrap.Glyphicon;
-var Grid = Bootstrap.Grid;
+var Panel = Bootstrap.Panel;
 var Col = Bootstrap.Col;
-var Row = Bootstrap.Row;
+var Button = Bootstrap.Button;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
 
@@ -55,17 +55,18 @@ var MemberAwardsManager = React.createClass({
 		}
 
 		items.push(
-			<Col sm={2} xs={2} md={3}>
-				<div className='thumbnail' style={{ height: '150px' }}>
-					<Glyphicon glyph='plus' />
-				</div>
+			<Col sm={2} xs={2} md={4}>
+				<Button bsStyle='success' style={{ 'text-align': 'center' }}>
+					<Glyphicon glyph='plus' style={{ 'font-size': '60px', margin: '20px' }} />
+					<div>Add</div>
+				</Button>
 			</Col>
 		);
 
 		return (
-			<div>
-					{items}
-			</div>
+			<Panel className='well'>
+				{items}
+			</Panel>
 		);
 	},
 	_update: function(awards) {
