@@ -62,8 +62,24 @@ Fluxer.on('Member.Blur', function() {
 
 Fluxer.on('Member.FetchAwards', function(memberId) {
 
-console.log(2222);
 	$.get('/member/' + memberId + '/awards', function(results) {
 		MemberStore.emit('AwardsUpdated', results);
+	});
+});
+
+Fluxer.on('Member.AddAwards', function(memberId, awards) {
+
+	$.ajax({
+		type: 'post',
+		url: '/member/' + memberId + '/awards',
+		processData: false,
+		contentType: 'application/json',
+		data: JSON.stringify({
+			awards: awards
+		}),
+		success: function(r) {
+			console.log(r);
+			MemberStore.emit('AwardsUpdated', r);
+		}
 	});
 });

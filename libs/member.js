@@ -74,8 +74,42 @@ module.exports = {
 
 		return function(done) {
 
-			MemberAward.find({ member: id }, function(err, awards) {
-				done(err, awards);
+			MemberAward
+				.find({ member: id })
+				.populate('award')
+				.exec(function(err, awards) {
+					done(err, awards);
+				});
+		};
+	},
+	addAward: function(id, awardId) {
+
+		return function(done) {
+
+			console.log('WAT');
+			MemberAward.find({ member: id, award: awardId }, function(err, awards) {
+			console.log(awards);
+				if (!awards) {
+					done(null, []);
+					return;
+				}
+
+				// Create a new one
+				var award = new MemberAward({
+					member: id,
+					award: awardId
+				});
+
+				award.save(function(err) {
+					if (err) {
+						done(err);
+						return;
+					}
+
+					award.populate('award', function(err, award) {
+						done(err, award);
+					});
+				});
 			});
 		};
 	}

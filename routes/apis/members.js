@@ -85,3 +85,26 @@ router.get('/member/:id/awards', function *() {
 		this.body = 'Not Found';
 	}
 });
+
+router.post('/member/:id/awards', function *() {
+
+	var memberId = this.params.id || null;
+	var awards = this.request.body.awards || [];
+
+	try {
+		var results = [];
+		for (var index in awards) {
+			var award = awards[index];
+
+			var result = yield Member.addAward(memberId, award);
+
+			results.push(result);
+		}
+	} catch(e) {
+		this.status = 404;
+		this.body = 'Not Found';
+		return;
+	}
+
+	this.body = results;
+});

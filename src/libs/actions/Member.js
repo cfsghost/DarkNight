@@ -8,7 +8,8 @@ var MemberActions = Fluxer.createActions('Member', [
 	'Open',
 	'Fetch',
 	'Updated',
-	'FetchAwards'
+	'FetchAwards',
+	'AddAwards'
 ]);
 
 module.exports = MemberActions;
