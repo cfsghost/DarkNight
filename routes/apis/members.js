@@ -97,6 +97,8 @@ router.post('/member/:id/awards', function *() {
 			var award = awards[index];
 
 			var result = yield Member.addAward(memberId, award);
+			if (!result)
+				continue;
 
 			results.push(result);
 		}

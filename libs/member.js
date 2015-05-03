@@ -86,11 +86,9 @@ module.exports = {
 
 		return function(done) {
 
-			console.log('WAT');
 			MemberAward.find({ member: id, award: awardId }, function(err, awards) {
-			console.log(awards);
-				if (!awards) {
-					done(null, []);
+				if (awards.length) {
+					done(null);
 					return;
 				}
 
