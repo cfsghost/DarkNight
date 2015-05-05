@@ -86,6 +86,14 @@ module.exports = {
 
 		return function(done) {
 
+			MemberAward.update({ member: id, award: awardId }, { $inc: { count: 1 } }, { upsert: true }, function(err, awards) {
+
+				MemberAward.findOne({ member: id, award: awardId })
+					.populate('award')
+					.exec(function(err, award) {
+						done(err, award);
+					});
+/*
 			MemberAward.find({ member: id, award: awardId }, function(err, awards) {
 				if (awards.length) {
 					done(null);
@@ -108,6 +116,7 @@ module.exports = {
 						done(err, award);
 					});
 				});
+*/
 			});
 		};
 	}
