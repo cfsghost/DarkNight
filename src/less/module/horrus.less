@@ -1,0 +1,74 @@
+/*
+ * Button :: Transparent
+ */
+.btn-transparent {
+  border-color: #FFF;
+  color: #FFF;
+}
+.btn-transparent:hover,
+.btn-transparent:focus {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFF;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* 5.3 CountDown Timer
+---------------------------------------------------------------------------*/
+/* 5.3.1 Wrapper
+---------------------------------------------------------------------------*/
+#countdown_dashboard {
+  max-width: 900px;
+  overflow: hidden;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+@media (max-width: @screen-md-min) {
+    #countdown_dashboard {
+      margin: 0 auto;
+    }
+}
+
+/* 5.3.2 Digit
+---------------------------------------------------------------------------*/
+.digit {
+  height: 65px;
+  color: #ffffff;
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 65px;
+  text-align: center;
+  position: relative;
+  font-style: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 5.3.3 Title
+---------------------------------------------------------------------------*/
+.dash_title {
+  color: #ffffff;
+  display: block;
+  font-size: 20px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+/* 5.3.4 Separator
+---------------------------------------------------------------------------*/
+.days_dash,
+.hours_dash,
+.minutes_dash {
+  position: relative;
+  margin-bottom: 30px;
+}
+.days_dash:after,
+.minutes_dash:after {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  right: -15px;
+  height: 100%;
+  content: '';
+  background-color: #ffffff;
+}

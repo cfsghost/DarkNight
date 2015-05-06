@@ -1,0 +1,26 @@
+.frame-base(@hide_width: 0) {
+    border-color: @golden;
+    border-style: solid;
+    border-top-width: 0;
+    border-bottom-width: @hide_width;
+    border-left-width: 12px;
+    border-right-width: 12px;
+}
+.frame {
+    .frame-base
+}
+.frame-bottom {
+    .frame-base(12px)
+}
+
+@media (min-width: @screen-sm-min) {
+    .no-padding {
+        padding: 0!important;
+    }
+}
+
+@media (max-width: @screen-sm-min) {
+    .frame, .frame-bottom  {
+        border: 0;
+    }
+}
