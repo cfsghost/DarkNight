@@ -35,6 +35,7 @@ var Item = React.createClass({
 				<td>{this.props.member.email}</td>
 				<td>{this.props.member.phone}</td>
 				<td>{this.props.member.cardno}</td>
+				<td>{this.props.member.points ? this.props.member.points : 0}</td>
 				<td>{this.props.member.created}</td>
 			</tr>
 		);
@@ -113,6 +114,7 @@ var ListView = React.createClass({
 							<th>Email</th>
 							<th>Phone</th>
 							<th>Card Number</th>
+							<th>Points</th>
 							<th>Created</th>
 						</tr>
 					</thead>

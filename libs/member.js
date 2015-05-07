@@ -93,30 +93,6 @@ module.exports = {
 					.exec(function(err, award) {
 						done(err, award);
 					});
-/*
-			MemberAward.find({ member: id, award: awardId }, function(err, awards) {
-				if (awards.length) {
-					done(null);
-					return;
-				}
-
-				// Create a new one
-				var award = new MemberAward({
-					member: id,
-					award: awardId
-				});
-
-				award.save(function(err) {
-					if (err) {
-						done(err);
-						return;
-					}
-
-					award.populate('award', function(err, award) {
-						done(err, award);
-					});
-				});
-*/
 			});
 		};
 	}
