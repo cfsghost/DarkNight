@@ -1,0 +1,14 @@
+.banner(@style: cover) {
+    background-repeat: no-repeat;
+    background-size: @style;
+    background-position: top center;
+    height: auto;
+}
+
+.cover-banner {
+    .banner;
+}
+
+.contain-banner {
+    .banner(contain);
+}

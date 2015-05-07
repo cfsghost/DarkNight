@@ -1,0 +1,35 @@
+.navbar-custom {
+    z-index: 3;
+    background-color: transparent!important;
+    border: transparent;
+    .container-fluid {
+        background-color: @golden!important;
+        padding-right: 3%;
+    }
+    .nav {
+        li {
+            a {
+                font-size: 1.2em;
+                letter-spacing: 1px;
+                color: white!important;
+            }
+        }
+    }
+}
+.navbar-default {
+    .navbar-toggle {
+        .icon-bar {
+            background-color: @gray;
+        }
+    }
+}
+
+@media (max-width: @screen-sm-min) {
+    .nav {
+        li {
+            a {
+                margin-right: 5px;
+            }
+        }
+    }
+}

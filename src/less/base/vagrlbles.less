@@ -1,0 +1,77 @@
+// screen size
+@screen-sm-min: 767px;
+@screen-md-min: 991px;
+@screen-lg-min: 1199px;
+
+// colors
+@golden: #dbbd2f;
+@deep_gray: #35363d;
+@gray: #e7e7e6;
+@brown: #8b775a;
+@orange: #ff9600;
+
+.color-golden {
+    color: @golden!important;
+}
+.color-orange {
+    color: @orange!important;
+}
+.color-white {
+    color: white!important;
+}
+.color-gary {
+    color: @gray!important;
+}
+.color-deep-gary {
+    color: @deep_gray!important;
+}
+.bg-white {
+    background-color: white!important;
+}
+
+body {
+    background-image: url('../../img/witewall_3.png');
+    background-repeat: repeat;
+}
+
+// border
+.border {
+	border: solid 1px;
+}
+.text-border {
+    text-shadow: 1px 1px 2px @deep_gray, -1px -1px 2px @deep_gray;
+}
+
+// img
+.picasso {
+	background-image: url('../../img/picasso.jpg');
+}
+.blue-ball {
+    padding-top: 10%;
+    background-image: url('../../img/blue-ball.png');
+}
+.sketch-ball {
+    background-image: url('../../img/sketch-ball.png');
+    background-repeat: no-repeat;
+}
+.logo {
+    position: relative;
+    left: 30px;
+}
+
+.title-mark {
+    position: relative;
+    top: 27px;
+    height: 5px;
+    width: 30px;
+    background-color: @deep_gray;
+    display: block;
+}
+
+@media (max-width: @screen-sm-min) {
+    .logo {
+        position: absolute;
+        left: 34%;
+    }
+}
+
