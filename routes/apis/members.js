@@ -4,6 +4,27 @@ var Member = require('../../libs/member');
 
 var router = module.exports = new Router();
 
+router.get('/ranking', function *() {
+
+	var page = parseInt(this.request.query.page) || 1;
+	var perPage = parseInt(this.request.query.perpage) || 100;
+
+	var data = yield Member.list([
+		'name', 'cardno', 'points'
+	] , {
+		skip: (page - 1) * perPage,
+		limit: perPage,
+		sort: { points: 1 }
+	});
+
+	this.jsonp = this.body = {
+		page: page,
+		perPage: perPage,
+		pageCount: Math.ceil(data.count / perPage),
+		members: data.members
+	}
+});
+
 router.get('/members', function *() {
 
 	var page = parseInt(this.request.query.page) || 1;

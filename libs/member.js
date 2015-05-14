@@ -54,13 +54,17 @@ module.exports = {
 			}, done);
 		};
 	},
-	list: function(opts) {
+	list: function(columns, opts) {
 
 		return function(done) {
 
+			var cols = null;
+			if (columns)
+				cols = columns.join(' ');
+
 			Member.count({}, function(err, count) {
 
-				Member.find({}, {}, opts, function(err, members) {
+				Member.find({}, cols, opts, function(err, members) {
 
 					done(err, {
 						count: count,
