@@ -350,7 +350,7 @@ var Badge = React.createClass({
   },
 
   hasContent: function hasContent() {
-    return ValidComponentChildren.hasValidComponent(this.props.children) || React.Children.count(this.props.children) > 1 || typeof this.props.children === "string" || typeof this.props.children === "number";
+    return ValidComponentChildren.hasValidComponent(this.props.children) || typeof this.props.children === "string" || typeof this.props.children === "number";
   },
 
   render: function render() {
@@ -373,32 +373,32 @@ module.exports = Badge;
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-var styleMaps = _interopRequire(require("./styleMaps"));
+var React = _interopRequire(require("react"));
 
-var CustomPropTypes = _interopRequire(require("./utils/CustomPropTypes"));
+var constants = _interopRequire(require("./constants"));
 
 var BootstrapMixin = {
   propTypes: {
-    bsClass: CustomPropTypes.keyOf(styleMaps.CLASSES),
-    bsStyle: CustomPropTypes.keyOf(styleMaps.STYLES),
-    bsSize: CustomPropTypes.keyOf(styleMaps.SIZES)
+    bsClass: React.PropTypes.oneOf(Object.keys(constants.CLASSES)),
+    bsStyle: React.PropTypes.oneOf(Object.keys(constants.STYLES)),
+    bsSize: React.PropTypes.oneOf(Object.keys(constants.SIZES))
   },
 
   getBsClassSet: function getBsClassSet() {
     var classes = {};
 
-    var bsClass = this.props.bsClass && styleMaps.CLASSES[this.props.bsClass];
+    var bsClass = this.props.bsClass && constants.CLASSES[this.props.bsClass];
     if (bsClass) {
       classes[bsClass] = true;
 
       var prefix = bsClass + "-";
 
-      var bsSize = this.props.bsSize && styleMaps.SIZES[this.props.bsSize];
+      var bsSize = this.props.bsSize && constants.SIZES[this.props.bsSize];
       if (bsSize) {
         classes[prefix + bsSize] = true;
       }
 
-      var bsStyle = this.props.bsStyle && styleMaps.STYLES[this.props.bsStyle];
+      var bsStyle = this.props.bsStyle && constants.STYLES[this.props.bsStyle];
       if (this.props.bsStyle) {
         classes[prefix + bsStyle] = true;
       }
@@ -408,12 +408,12 @@ var BootstrapMixin = {
   },
 
   prefixClass: function prefixClass(subClass) {
-    return styleMaps.CLASSES[this.props.bsClass] + "-" + subClass;
+    return constants.CLASSES[this.props.bsClass] + "-" + subClass;
   }
 };
 
 module.exports = BootstrapMixin;
-},{"./styleMaps":53,"./utils/CustomPropTypes":54}],8:[function(require,module,exports){
+},{"./constants":52,"react":217}],8:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -989,7 +989,7 @@ var React = _interopRequire(require("react"));
 
 var classNames = _interopRequire(require("classnames"));
 
-var styleMaps = _interopRequire(require("./styleMaps"));
+var constants = _interopRequire(require("./constants"));
 
 var Col = React.createClass({
   displayName: "Col",
@@ -1024,8 +1024,8 @@ var Col = React.createClass({
     var ComponentClass = this.props.componentClass;
     var classes = {};
 
-    Object.keys(styleMaps.SIZES).forEach(function (key) {
-      var size = styleMaps.SIZES[key];
+    Object.keys(constants.SIZES).forEach(function (key) {
+      var size = constants.SIZES[key];
       var prop = size;
       var classPart = size + "-";
 
@@ -1061,7 +1061,7 @@ var Col = React.createClass({
 });
 
 module.exports = Col;
-},{"./styleMaps":53,"classnames":61,"react":217}],14:[function(require,module,exports){
+},{"./constants":52,"classnames":61,"react":217}],14:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -1782,7 +1782,7 @@ var classNames = _interopRequire(require("classnames"));
 
 var BootstrapMixin = _interopRequire(require("./BootstrapMixin"));
 
-var styleMaps = _interopRequire(require("./styleMaps"));
+var constants = _interopRequire(require("./constants"));
 
 var Glyphicon = React.createClass({
   displayName: "Glyphicon",
@@ -1790,7 +1790,7 @@ var Glyphicon = React.createClass({
   mixins: [BootstrapMixin],
 
   propTypes: {
-    glyph: React.PropTypes.oneOf(styleMaps.GLYPHS).isRequired
+    glyph: React.PropTypes.oneOf(constants.GLYPHS).isRequired
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -1813,7 +1813,7 @@ var Glyphicon = React.createClass({
 });
 
 module.exports = Glyphicon;
-},{"./BootstrapMixin":7,"./styleMaps":53,"classnames":61,"react":217}],22:[function(require,module,exports){
+},{"./BootstrapMixin":7,"./constants":52,"classnames":61,"react":217}],22:[function(require,module,exports){
 "use strict";
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
@@ -2282,43 +2282,6 @@ var ListGroup = (function (_React$Component) {
           return cloneElement(item, { key: item.key ? item.key : index });
         });
 
-        var childrenAnchors = false;
-
-        if (!this.props.children) {
-          return this.renderDiv(items);
-        } else if (React.Children.count(this.props.children) === 1) {
-          var child = this.props.children;
-
-          childrenAnchors = child.props.href ? true : false;
-        } else {
-
-          childrenAnchors = Array.prototype.some.call(this.props.children, function (child) {
-            return child.props.href;
-          });
-        }
-
-        if (childrenAnchors) {
-          return this.renderDiv(items);
-        } else {
-          return this.renderUL(items);
-        }
-      }
-    },
-    renderUL: {
-      value: function renderUL(items) {
-        var listItems = ValidComponentChildren.map(items, function (item, index) {
-          return cloneElement(item, { listItem: true });
-        });
-
-        return React.createElement(
-          "ul",
-          { className: classNames(this.props.className, "list-group") },
-          listItems
-        );
-      }
-    },
-    renderDiv: {
-      value: function renderDiv(items) {
         return React.createElement(
           "div",
           { className: classNames(this.props.className, "list-group") },
@@ -2360,11 +2323,9 @@ var ListGroupItem = React.createClass({
 
   propTypes: {
     bsStyle: React.PropTypes.oneOf(["danger", "info", "success", "warning"]),
-    className: React.PropTypes.string,
     active: React.PropTypes.any,
     disabled: React.PropTypes.any,
     header: React.PropTypes.node,
-    listItem: React.PropTypes.bool,
     onClick: React.PropTypes.func,
     eventKey: React.PropTypes.any,
     href: React.PropTypes.string,
@@ -2385,16 +2346,14 @@ var ListGroupItem = React.createClass({
 
     if (this.props.href || this.props.target || this.props.onClick) {
       return this.renderAnchor(classes);
-    } else if (this.props.listItem) {
-      return this.renderLi(classes);
     } else {
       return this.renderSpan(classes);
     }
   },
 
-  renderLi: function renderLi(classes) {
+  renderSpan: function renderSpan(classes) {
     return React.createElement(
-      "li",
+      "span",
       _extends({}, this.props, { className: classNames(this.props.className, classes) }),
       this.props.header ? this.renderStructuredContent() : this.props.children
     );
@@ -2406,14 +2365,6 @@ var ListGroupItem = React.createClass({
       _extends({}, this.props, {
         className: classNames(this.props.className, classes)
       }),
-      this.props.header ? this.renderStructuredContent() : this.props.children
-    );
-  },
-
-  renderSpan: function renderSpan(classes) {
-    return React.createElement(
-      "span",
-      _extends({}, this.props, { className: classNames(this.props.className, classes) }),
       this.props.header ? this.renderStructuredContent() : this.props.children
     );
   },
@@ -4031,8 +3982,7 @@ var ProgressBar = React.createClass({
   },
 
   getPercentage: function getPercentage(now, min, max) {
-    var roundPrecision = 1000;
-    return Math.round((now - min) / (max - min) * 100 * roundPrecision) / roundPrecision;
+    return Math.ceil((now - min) / (max - min) * 100);
   },
 
   render: function render() {
@@ -4849,6 +4799,50 @@ module.exports = Well;
 },{"./BootstrapMixin":7,"classnames":61,"react":217}],52:[function(require,module,exports){
 "use strict";
 
+module.exports = {
+  CLASSES: {
+    alert: "alert",
+    button: "btn",
+    "button-group": "btn-group",
+    "button-toolbar": "btn-toolbar",
+    column: "col",
+    "input-group": "input-group",
+    form: "form",
+    glyphicon: "glyphicon",
+    label: "label",
+    "list-group-item": "list-group-item",
+    panel: "panel",
+    "panel-group": "panel-group",
+    "progress-bar": "progress-bar",
+    nav: "nav",
+    navbar: "navbar",
+    modal: "modal",
+    row: "row",
+    well: "well"
+  },
+  STYLES: {
+    "default": "default",
+    primary: "primary",
+    success: "success",
+    info: "info",
+    warning: "warning",
+    danger: "danger",
+    link: "link",
+    inline: "inline",
+    tabs: "tabs",
+    pills: "pills"
+  },
+  SIZES: {
+    large: "lg",
+    medium: "md",
+    small: "sm",
+    xsmall: "xs"
+  },
+  GLYPHS: ["asterisk", "plus", "euro", "eur", "minus", "cloud", "envelope", "pencil", "glass", "music", "search", "heart", "star", "star-empty", "user", "film", "th-large", "th", "th-list", "ok", "remove", "zoom-in", "zoom-out", "off", "signal", "cog", "trash", "home", "file", "time", "road", "download-alt", "download", "upload", "inbox", "play-circle", "repeat", "refresh", "list-alt", "lock", "flag", "headphones", "volume-off", "volume-down", "volume-up", "qrcode", "barcode", "tag", "tags", "book", "bookmark", "print", "camera", "font", "bold", "italic", "text-height", "text-width", "align-left", "align-center", "align-right", "align-justify", "list", "indent-left", "indent-right", "facetime-video", "picture", "map-marker", "adjust", "tint", "edit", "share", "check", "move", "step-backward", "fast-backward", "backward", "play", "pause", "stop", "forward", "fast-forward", "step-forward", "eject", "chevron-left", "chevron-right", "plus-sign", "minus-sign", "remove-sign", "ok-sign", "question-sign", "info-sign", "screenshot", "remove-circle", "ok-circle", "ban-circle", "arrow-left", "arrow-right", "arrow-up", "arrow-down", "share-alt", "resize-full", "resize-small", "exclamation-sign", "gift", "leaf", "fire", "eye-open", "eye-close", "warning-sign", "plane", "calendar", "random", "comment", "magnet", "chevron-up", "chevron-down", "retweet", "shopping-cart", "folder-close", "folder-open", "resize-vertical", "resize-horizontal", "hdd", "bullhorn", "bell", "certificate", "thumbs-up", "thumbs-down", "hand-right", "hand-left", "hand-up", "hand-down", "circle-arrow-right", "circle-arrow-left", "circle-arrow-up", "circle-arrow-down", "globe", "wrench", "tasks", "filter", "briefcase", "fullscreen", "dashboard", "paperclip", "heart-empty", "link", "phone", "pushpin", "usd", "gbp", "sort", "sort-by-alphabet", "sort-by-alphabet-alt", "sort-by-order", "sort-by-order-alt", "sort-by-attributes", "sort-by-attributes-alt", "unchecked", "expand", "collapse-down", "collapse-up", "log-in", "flash", "log-out", "new-window", "record", "save", "open", "saved", "import", "export", "send", "floppy-disk", "floppy-saved", "floppy-remove", "floppy-save", "floppy-open", "credit-card", "transfer", "cutlery", "header", "compressed", "earphone", "phone-alt", "tower", "stats", "sd-video", "hd-video", "subtitles", "sound-stereo", "sound-dolby", "sound-5-1", "sound-6-1", "sound-7-1", "copyright-mark", "registration-mark", "cloud-download", "cloud-upload", "tree-conifer", "tree-deciduous", "cd", "save-file", "open-file", "level-up", "copy", "paste", "alert", "equalizer", "king", "queen", "pawn", "bishop", "knight", "baby-formula", "tent", "blackboard", "bed", "apple", "erase", "hourglass", "lamp", "duplicate", "piggy-bank", "scissors", "bitcoin", "yen", "ruble", "scale", "ice-lolly", "ice-lolly-tasted", "education", "option-horizontal", "option-vertical", "menu-hamburger", "modal-window", "oil", "grain", "sunglasses", "text-size", "text-color", "text-background", "object-align-top", "object-align-bottom", "object-align-horizontal", "object-align-left", "object-align-vertical", "object-align-right", "triangle-right", "triangle-left", "triangle-bottom", "triangle-top", "console", "superscript", "subscript", "menu-left", "menu-right", "menu-down", "menu-up"]
+};
+},{}],53:[function(require,module,exports){
+"use strict";
+
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
 var Accordion = _interopRequire(require("./Accordion"));
@@ -4949,7 +4943,7 @@ var Tooltip = _interopRequire(require("./Tooltip"));
 
 var Well = _interopRequire(require("./Well"));
 
-var styleMaps = _interopRequire(require("./styleMaps"));
+var constants = _interopRequire(require("./constants"));
 
 module.exports = {
   Accordion: Accordion,
@@ -5001,58 +4995,9 @@ module.exports = {
   TabPane: TabPane,
   Tooltip: Tooltip,
   Well: Well,
-  styleMaps: styleMaps
+  constants: constants
 };
-},{"./Accordion":2,"./Affix":3,"./AffixMixin":4,"./Alert":5,"./Badge":6,"./BootstrapMixin":7,"./Button":8,"./ButtonGroup":9,"./ButtonToolbar":10,"./Carousel":11,"./CarouselItem":12,"./Col":13,"./CollapsableMixin":14,"./CollapsableNav":15,"./DropdownButton":16,"./DropdownMenu":17,"./DropdownStateMixin":18,"./FadeMixin":19,"./Glyphicon":21,"./Grid":22,"./Input":23,"./Interpolate":24,"./Jumbotron":25,"./Label":26,"./ListGroup":27,"./ListGroupItem":28,"./MenuItem":29,"./Modal":30,"./ModalTrigger":31,"./Nav":32,"./NavItem":33,"./Navbar":34,"./OverlayMixin":35,"./OverlayTrigger":36,"./PageHeader":37,"./PageItem":38,"./Pager":39,"./Panel":40,"./PanelGroup":41,"./Popover":42,"./ProgressBar":43,"./Row":44,"./SplitButton":45,"./SubNav":46,"./TabPane":47,"./TabbedArea":48,"./Table":49,"./Tooltip":50,"./Well":51,"./styleMaps":53}],53:[function(require,module,exports){
-"use strict";
-
-var styleMaps = {
-  CLASSES: {
-    alert: "alert",
-    button: "btn",
-    "button-group": "btn-group",
-    "button-toolbar": "btn-toolbar",
-    column: "col",
-    "input-group": "input-group",
-    form: "form",
-    glyphicon: "glyphicon",
-    label: "label",
-    "list-group-item": "list-group-item",
-    panel: "panel",
-    "panel-group": "panel-group",
-    "progress-bar": "progress-bar",
-    nav: "nav",
-    navbar: "navbar",
-    modal: "modal",
-    row: "row",
-    well: "well"
-  },
-  STYLES: {
-    "default": "default",
-    primary: "primary",
-    success: "success",
-    info: "info",
-    warning: "warning",
-    danger: "danger",
-    link: "link",
-    inline: "inline",
-    tabs: "tabs",
-    pills: "pills"
-  },
-  addStyle: function addStyle(name) {
-    styleMaps.STYLES[name] = name;
-  },
-  SIZES: {
-    large: "lg",
-    medium: "md",
-    small: "sm",
-    xsmall: "xs"
-  },
-  GLYPHS: ["asterisk", "plus", "euro", "eur", "minus", "cloud", "envelope", "pencil", "glass", "music", "search", "heart", "star", "star-empty", "user", "film", "th-large", "th", "th-list", "ok", "remove", "zoom-in", "zoom-out", "off", "signal", "cog", "trash", "home", "file", "time", "road", "download-alt", "download", "upload", "inbox", "play-circle", "repeat", "refresh", "list-alt", "lock", "flag", "headphones", "volume-off", "volume-down", "volume-up", "qrcode", "barcode", "tag", "tags", "book", "bookmark", "print", "camera", "font", "bold", "italic", "text-height", "text-width", "align-left", "align-center", "align-right", "align-justify", "list", "indent-left", "indent-right", "facetime-video", "picture", "map-marker", "adjust", "tint", "edit", "share", "check", "move", "step-backward", "fast-backward", "backward", "play", "pause", "stop", "forward", "fast-forward", "step-forward", "eject", "chevron-left", "chevron-right", "plus-sign", "minus-sign", "remove-sign", "ok-sign", "question-sign", "info-sign", "screenshot", "remove-circle", "ok-circle", "ban-circle", "arrow-left", "arrow-right", "arrow-up", "arrow-down", "share-alt", "resize-full", "resize-small", "exclamation-sign", "gift", "leaf", "fire", "eye-open", "eye-close", "warning-sign", "plane", "calendar", "random", "comment", "magnet", "chevron-up", "chevron-down", "retweet", "shopping-cart", "folder-close", "folder-open", "resize-vertical", "resize-horizontal", "hdd", "bullhorn", "bell", "certificate", "thumbs-up", "thumbs-down", "hand-right", "hand-left", "hand-up", "hand-down", "circle-arrow-right", "circle-arrow-left", "circle-arrow-up", "circle-arrow-down", "globe", "wrench", "tasks", "filter", "briefcase", "fullscreen", "dashboard", "paperclip", "heart-empty", "link", "phone", "pushpin", "usd", "gbp", "sort", "sort-by-alphabet", "sort-by-alphabet-alt", "sort-by-order", "sort-by-order-alt", "sort-by-attributes", "sort-by-attributes-alt", "unchecked", "expand", "collapse-down", "collapse-up", "log-in", "flash", "log-out", "new-window", "record", "save", "open", "saved", "import", "export", "send", "floppy-disk", "floppy-saved", "floppy-remove", "floppy-save", "floppy-open", "credit-card", "transfer", "cutlery", "header", "compressed", "earphone", "phone-alt", "tower", "stats", "sd-video", "hd-video", "subtitles", "sound-stereo", "sound-dolby", "sound-5-1", "sound-6-1", "sound-7-1", "copyright-mark", "registration-mark", "cloud-download", "cloud-upload", "tree-conifer", "tree-deciduous", "cd", "save-file", "open-file", "level-up", "copy", "paste", "alert", "equalizer", "king", "queen", "pawn", "bishop", "knight", "baby-formula", "tent", "blackboard", "bed", "apple", "erase", "hourglass", "lamp", "duplicate", "piggy-bank", "scissors", "bitcoin", "yen", "ruble", "scale", "ice-lolly", "ice-lolly-tasted", "education", "option-horizontal", "option-vertical", "menu-hamburger", "modal-window", "oil", "grain", "sunglasses", "text-size", "text-color", "text-background", "object-align-top", "object-align-bottom", "object-align-horizontal", "object-align-left", "object-align-vertical", "object-align-right", "triangle-right", "triangle-left", "triangle-bottom", "triangle-top", "console", "superscript", "subscript", "menu-left", "menu-right", "menu-down", "menu-up"]
-};
-
-module.exports = styleMaps;
-},{}],54:[function(require,module,exports){
+},{"./Accordion":2,"./Affix":3,"./AffixMixin":4,"./Alert":5,"./Badge":6,"./BootstrapMixin":7,"./Button":8,"./ButtonGroup":9,"./ButtonToolbar":10,"./Carousel":11,"./CarouselItem":12,"./Col":13,"./CollapsableMixin":14,"./CollapsableNav":15,"./DropdownButton":16,"./DropdownMenu":17,"./DropdownStateMixin":18,"./FadeMixin":19,"./Glyphicon":21,"./Grid":22,"./Input":23,"./Interpolate":24,"./Jumbotron":25,"./Label":26,"./ListGroup":27,"./ListGroupItem":28,"./MenuItem":29,"./Modal":30,"./ModalTrigger":31,"./Nav":32,"./NavItem":33,"./Navbar":34,"./OverlayMixin":35,"./OverlayTrigger":36,"./PageHeader":37,"./PageItem":38,"./Pager":39,"./Panel":40,"./PanelGroup":41,"./Popover":42,"./ProgressBar":43,"./Row":44,"./SplitButton":45,"./SubNav":46,"./TabPane":47,"./TabbedArea":48,"./Table":49,"./Tooltip":50,"./Well":51,"./constants":52}],54:[function(require,module,exports){
 "use strict";
 
 var ANONYMOUS = "<<anonymous>>";
@@ -5070,16 +5015,7 @@ var CustomPropTypes = {
    * @param componentName
    * @returns {Error|undefined}
    */
-  mountable: createMountableChecker(),
-  /**
-   * Checks whether a prop matches a key of an associated object
-   *
-   * @param props
-   * @param propName
-   * @param componentName
-   * @returns {Error|undefined}
-   */
-  keyOf: createKeyOfChecker
+  mountable: createMountableChecker()
 };
 
 /**
@@ -5113,17 +5049,6 @@ function createMountableChecker() {
     }
   }
 
-  return createChainableTypeChecker(validate);
-}
-
-function createKeyOfChecker(obj) {
-  function validate(props, propName, componentName) {
-    var propValue = props[propName];
-    if (!obj.hasOwnProperty(propValue)) {
-      var valuesString = JSON.stringify(Object.keys(obj));
-      return new Error("Invalid prop '" + propName + "' of value '" + propValue + "' " + ("supplied to '" + componentName + "', expected one of " + valuesString + "."));
-    }
-  }
   return createChainableTypeChecker(validate);
 }
 
@@ -5604,13 +5529,6 @@ module.exports = {
   offsetParent: offsetParentFunc
 };
 },{"react":217}],61:[function(require,module,exports){
-/*
-  Copyright (c) 2015 Jed Watson.
-  
-  Licensed under the MIT License (MIT), see
-  https://github.com/JedWatson/classnames/blob/master/LICENSE
-*/
-
 function classNames() {
 	var classes = '';
 	var arg;
@@ -5637,16 +5555,9 @@ function classNames() {
 	return classes.substr(1);
 }
 
-// safely export classNames for node / browserify
+// safely export classNames in case the script is included directly on a page
 if (typeof module !== 'undefined' && module.exports) {
 	module.exports = classNames;
-}
-
-// safely export classNames for RequireJS
-if (typeof define !== 'undefined' && define.amd) {
-	define('classnames', [], function() {
-		return classNames;
-	});
 }
 
 },{}],62:[function(require,module,exports){
@@ -25485,7 +25396,7 @@ var Header = React.createClass({displayName: "Header",
 module.exports = Header;
 
 
-},{"react":217,"react-bootstrap":52}],220:[function(require,module,exports){
+},{"react":217,"react-bootstrap":53}],220:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');

@@ -54,7 +54,23 @@ module.exports = {
 			}, done);
 		};
 	},
-	list: function(columns, opts) {
+	list: function() {
+
+		var conditions = {};
+		var columns;
+		var opts;
+		if (arguments.length == 2) {
+			if (arguments[0] instanceof Array) {
+				columns = arguments[0];
+				opts = arguments[1];
+			} else {
+				conditions = arguments[0];
+				opts = arguments[1];
+			}
+		} else {
+			columns = null;
+			opts = arguments[0];
+		}
 
 		return function(done) {
 
@@ -62,9 +78,9 @@ module.exports = {
 			if (columns)
 				cols = columns.join(' ');
 
-			Member.count({}, function(err, count) {
+			Member.count(conditions, function(err, count) {
 
-				Member.find({}, cols, opts, function(err, members) {
+				Member.find(conditions, cols, opts, function(err, members) {
 
 					done(err, {
 						count: count,
@@ -72,6 +88,15 @@ module.exports = {
 					});
 				});
 			});
+		};
+	},
+	updateCardno: function(id, cardno) {
+
+		return function(done) {
+			Member.update({ _id: id }, {
+				cardno: cardno,
+				updated: Date.now()
+			}, done);
 		};
 	},
 	getAwards: function(id) {

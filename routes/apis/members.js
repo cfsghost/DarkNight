@@ -29,8 +29,23 @@ router.get('/members', function *() {
 
 	var page = parseInt(this.request.query.page) || 1;
 	var perPage = parseInt(this.request.query.perpage) || 100;
+	var q = {};
+	try {
+		q = JSON.parse(this.request.query.q);
+	} catch(e) {}
 
-	var data = yield Member.list({
+	var conditions = {};
+	if (q.name) {
+		conditions.name = new RegExp(q.name, 'i');
+	}
+	if (q.email) {
+		conditions.email = new RegExp(q.email, 'i');
+	}
+	if (q.phone) {
+		conditions.phone = new RegExp(q.phone, 'i');
+	}
+
+	var data = yield Member.list(conditions, {
 		skip: (page - 1) * perPage,
 		limit: perPage
 	});
@@ -93,6 +108,20 @@ router.put('/member/:id', function *() {
 	};
 
 	this.body = yield Member.save(memberId, memberData);
+});
+
+router.put('/member/:id/cardno', function *() {
+
+	var memberId = this.params.id || null;
+	var cardno = this.request.body.cardno;
+
+	if (!this.params.id) {
+		this.status = 404;
+		this.body = 'Not Found'
+		return;
+	}
+
+	this.body = yield Member.updateCardno(memberId, cardno);
 });
 
 router.get('/member/:id/awards', function *() {
