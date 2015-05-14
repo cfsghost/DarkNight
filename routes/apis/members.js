@@ -14,7 +14,7 @@ router.get('/members', function *() {
 		limit: perPage
 	});
 
-	this.body = {
+	this.jsonp = this.body = {
 		page: page,
 		perPage: perPage,
 		pageCount: Math.ceil(data.count / perPage),

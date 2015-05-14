@@ -7,6 +7,7 @@ var bodyParser = require('koa-bodyparser');
 var views = require('koa-views');
 var serve = require('koa-static');
 var session = require('koa-session');
+var jsonp = require('koa-safe-jsonp');
 
 var Database = require('./libs/database');
 
@@ -17,6 +18,9 @@ app.use(serve(__dirname + '/public'));
 
 // Enabling BODY
 app.use(bodyParser());
+
+// Enable JSONP
+jsonp(app);
 
 // Loading settings
 var settings = require('./libs/config.js');
