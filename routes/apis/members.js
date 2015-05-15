@@ -45,7 +45,7 @@ router.get('/members', function *() {
 		conditions.phone = new RegExp(q.phone, 'i');
 	}
 	if (q.token) {
-		conditions.token = new RegExp(q.token, 'i');
+		conditions.tokens = new RegExp(q.token, 'i');
 	}
 
 	var data = yield Member.list(conditions, {
