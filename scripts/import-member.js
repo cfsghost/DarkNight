@@ -14,6 +14,7 @@ for (var index in peopleList) {
 		email: people.email,
 		cardno: people.cardId,
 		tokens: [ people.cardToken ],
+		points: 0,
 		created: new Date('2015-04-11'),
 		updated: new Date('2015-04-11')
 	});

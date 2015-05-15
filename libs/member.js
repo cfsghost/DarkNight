@@ -99,6 +99,16 @@ module.exports = {
 			}, done);
 		};
 	},
+	updateCardnoByEmail: function(email, token, cardno) {
+
+		return function(done) {
+			Member.update({ email: email }, {
+				token: [ token ],
+				cardno: cardno,
+				updated: Date.now()
+			}, done);
+		};
+	},
 	getAwards: function(id) {
 
 		return function(done) {

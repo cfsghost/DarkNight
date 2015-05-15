@@ -163,3 +163,18 @@ router.post('/member/:id/awards', function *() {
 
 	this.body = results;
 });
+
+router.post('/opencard', function *() {
+
+	var email = this.request.body.email;
+	var token = this.request.body.token;
+	var cardno = this.request.body.cardno;
+
+	if (!email) {
+		this.status = 404;
+		this.body = 'Not Found'
+		return;
+	}
+
+	this.body = yield Member.updateCardnoByEmail(email, token, cardno);
+});
