@@ -103,7 +103,7 @@ module.exports = {
 
 		return function(done) {
 			Member.update({ email: email }, {
-				token: [ token ],
+				tokens: [ token ],
 				cardno: cardno,
 				updated: Date.now()
 			}, done);

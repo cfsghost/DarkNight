@@ -52,5 +52,5 @@ app.use(require('./routes/apis/uploads').middleware());
 // Conenct to database
 var dbTask = Database();
 dbTask(function() {
-	app.listen(3000);
+	app.listen(3001);
 });

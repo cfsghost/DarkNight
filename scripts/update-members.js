@@ -5,7 +5,8 @@ var Member = require('../libs/member');
 
 //peopleList = require('/home/fred/下載/csv/6-min.json');
 //peopleList = require('/home/fred/下載/csv/5-min.json');
-peopleList = require('/home/fred/下載/csv/4-min.json');
+//peopleList = require('/home/fred/下載/csv/4-min.json');
+peopleList = require('/home/fred/下載/csv/7-min.json');
 
 // Conenct to database
 var dbTask = Database();
