@@ -11,16 +11,15 @@ var MenuItem = Bootstrap.MenuItem;
 var Header = React.createClass({
 	render: function() {
 		return (
-			<Navbar>
+			<Navbar brand="DarkNight">
 				<Nav>
-					<NavItem eventKey={1} href="#">DarkNight</NavItem>
-					<NavItem eventKey={2} href="#">Link</NavItem>
-					<DropdownButton eventKey={3} title="Dropdown">
-						<MenuItem eventKey="1">Action</MenuItem>
-						<MenuItem eventKey="2">Another action</MenuItem>
-						<MenuItem eventKey="3">Something else here</MenuItem>
-						<MenuItem divider />
-						<MenuItem eventKey="4">Separated link</MenuItem>
+					<NavItem eventKey={1} href="#">Home</NavItem>
+					<NavItem eventKey={2} href="#">Signup</NavItem>
+					<DropdownButton eventKey={3} title="Login">
+						<MenuItem eventKey="1">Login</MenuItem>
+						<MenuItem eventKey="2">Login by Card Number</MenuItem>
+						<MenuItem eventKey="3">Login by Facebook</MenuItem>
+						<MenuItem eventKey="4">Login by Google</MenuItem>
 					</DropdownButton>
 				</Nav>
 			</Navbar>
