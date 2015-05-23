@@ -7,6 +7,7 @@ var bodyParser = require('koa-bodyparser');
 var views = require('koa-views');
 var serve = require('koa-static');
 var session = require('koa-session');
+var passport = require('koa-passport');
 var jsonp = require('koa-safe-jsonp');
 
 var Database = require('./libs/database');
@@ -40,6 +41,10 @@ app.use(views(__dirname + '/views', {
 // Initializing session mechanism
 app.keys = settings.general.session.keys || [];
 app.use(session(app));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use(require('./routes/home').middleware());
