@@ -17,6 +17,8 @@ var app = koa();
 // Static file path
 app.use(serve(__dirname + '/public'));
 
+//require('./libs/passport')(passportt);
+
 // Enabling BODY
 app.use(bodyParser());
 

@@ -17,7 +17,7 @@ var Header = React.createClass({
 					<NavItem eventKey={2} href="#">Signup</NavItem>
 					<DropdownButton eventKey={3} title="Login">
 						<MenuItem eventKey="1">Login</MenuItem>
-						<MenuItem eventKey="2">Login by Card Number</MenuItem>
+						<MenuItem eventKey="2">Login by Card ID</MenuItem>
 						<MenuItem eventKey="3">Login by Facebook</MenuItem>
 						<MenuItem eventKey="4">Login by Google</MenuItem>
 					</DropdownButton>
