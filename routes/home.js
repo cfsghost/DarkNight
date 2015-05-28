@@ -10,3 +10,7 @@ router.get('/', function *() {
 router.post('/', function *() {
     this.body = 'done';
 });
+
+router.get('/login/Local', function * () {
+	yield this.render('login');
+});
