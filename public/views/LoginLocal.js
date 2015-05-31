@@ -26917,7 +26917,12 @@ var Header = React.createClass({displayName: "Header",
 			React.createElement(Navbar, {brand: "DarkNight"}, 
 				React.createElement(Nav, null, 
 					React.createElement(NavItem, {eventKey: 1, href: "/"}, "Home"), 
-					React.createElement(NavItem, {eventKey: 2, href: "/signup"}, "Signup"), 
+					React.createElement(DropdownButton, {eventKey: 2, title: "Signup"}, 
+						React.createElement(MenuItem, {eventKey: "1", href: "/signup/Local"}, "Signup"), 
+						React.createElement(MenuItem, {eventKey: "2", href: "/signup/ID"}, "Signup by Card ID"), 
+						React.createElement(MenuItem, {eventKey: "3", href: "/signup/FB"}, "Signup by Facebook"), 
+						React.createElement(MenuItem, {eventKey: "4", href: "/signup/Google"}, "Signup by Google")
+					), 
 					React.createElement(DropdownButton, {eventKey: 3, title: "Login"}, 
 						React.createElement(MenuItem, {eventKey: "1", href: "/login/Local"}, "Login"), 
 						React.createElement(MenuItem, {eventKey: "2", href: "/login/ID"}, "Login by Card ID"), 
@@ -26954,7 +26959,7 @@ var LoginLocal = React.createClass({displayName: "LoginLocal",
 			    	React.createElement(Col, {sm: 6, smOffset: 3}, 
 			      		React.createElement("h1", null, React.createElement("span", {class: "fa fa-sign-in"}), " Login"), 
 
-			      		React.createElement("form", {action: "/login", method: "post"}, 
+			      		React.createElement("form", {action: "/login/Local", method: "post"}, 
 			      			React.createElement("div", {className: "form-group"}, 
 			      				React.createElement("h3", null, React.createElement(Label, {bsStyle: "info"}, "Email")), 
 			      				React.createElement(Input, {type: "text", className: "form-control", name: "email"})
@@ -26967,7 +26972,7 @@ var LoginLocal = React.createClass({displayName: "LoginLocal",
 			      			React.createElement(Button, {type: "submit", class: "btn btn-warning btn-lg"}, "Login")
 			      		), 
 
-					    React.createElement("p", null, "Need an account? ", React.createElement("a", {href: "/signup"}, "Signup")), 
+					    React.createElement("p", null, "Need an account? ", React.createElement("a", {href: "/signup/Local"}, "Signup")), 
 					    React.createElement("p", null, "Or go ", React.createElement("a", {href: "/"}, "home"), ".")
 			    	)
 				)

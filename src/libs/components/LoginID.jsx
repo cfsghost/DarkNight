@@ -10,7 +10,7 @@ var Input = Bootstrap.Input;
 var Label = Bootstrap.Label;
 var Button = Bootstrap.Button;
 
-var LoginLocal = React.createClass({
+var LoginID = React.createClass({
 	render: function() {
 		return (
 			<div>
@@ -19,10 +19,10 @@ var LoginLocal = React.createClass({
 			    	<Col sm={6} smOffset={3} >
 			      		<h1><span class="fa fa-sign-in"></span> Login</h1>
 
-			      		<form action="/login/Local" method="post">
+			      		<form action="/login/ID" method="post">
 			      			<div className="form-group">
-			      				<h3><Label bsStyle='info'>Email</Label></h3>
-			      				<Input type="text" className="form-control" name="email"/>
+			      				<h3><Label bsStyle='info'>Hackathon Card ID</Label></h3>
+			      				<Input type="text" className="form-control" name="id"/>
 			      			</div>
 			      			<div className="form-group">
 			      				<h3><Label bsStyle='info'>Password</Label></h3>
@@ -32,7 +32,7 @@ var LoginLocal = React.createClass({
 			      			<Button type="submit" class="btn btn-warning btn-lg">Login</Button>
 			      		</form>
 
-					    <p>Need an account? <a href="/signup/Local">Signup</a></p>
+					    <p>Need an account? <a href="/signup/ID">Signup by Card ID</a></p>
 					    <p>Or go <a href="/">home</a>.</p>
 			    	</Col>
 				</Grid>
@@ -41,4 +41,4 @@ var LoginLocal = React.createClass({
 	}
 });
 
-module.exports = LoginLocal;
+module.exports = LoginID;

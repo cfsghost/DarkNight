@@ -26892,15 +26892,15 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
-var HomeApp = require('../libs/components/HomeApp.jsx');
+var SignupID = require('../libs/components/SignupID.jsx');
 
 React.render(
-	React.createElement(HomeApp, null),
+	React.createElement(SignupID, null),
 	document.getElementById('App')
 );
 
 
-},{"../libs/components/HomeApp.jsx":228,"react":225}],227:[function(require,module,exports){
+},{"../libs/components/SignupID.jsx":228,"react":225}],227:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -26942,49 +26942,45 @@ module.exports = Header;
 
 var React = require('react');
 var Header = require('./Header.jsx');
-var HomeMain = require('./HomeMain.jsx');
-
-var HomeApp = React.createClass({displayName: "HomeApp",
-	render: function() {
-		return (
-			React.createElement("div", null, 
-				React.createElement(Header, null), 
-				React.createElement(HomeMain, null)
-			)
-		);
-	}
-});
-
-module.exports = HomeApp;
-
-},{"./Header.jsx":227,"./HomeMain.jsx":229,"react":225}],229:[function(require,module,exports){
-/** @jsx React.DOM */
-
-var React = require('react');
 var Bootstrap = require('react-bootstrap');
 var Grid = Bootstrap.Grid;
 var Row = Bootstrap.Row;
 var Col = Bootstrap.Col;
-var Thumbnail = Bootstrap.Thumbnail;
+var Input = Bootstrap.Input;
+var Label = Bootstrap.Label;
+var Button = Bootstrap.Button;
 
-var HomeMain = React.createClass({displayName: "HomeMain",
+var SignupID = React.createClass({displayName: "SignupID",
 	render: function() {
-		var VideoStyle = {
-			width: window.innerWidth,
-			height: window.innerHeight - 50
-		};
 		return (
-			React.createElement(Grid, {ClassName: "container-fuild"}, 
-			    React.createElement(Row, null, 
-			      React.createElement(Col, {xs: 12, md: 12}, 
-			      	React.createElement("iframe", {width: VideoStyle.width, height: VideoStyle.height, src: "https://www.youtube-nocookie.com/embed/Fs2tyGW1Gyo?rel=0&controls=0&showinfo=0;autoplay=1", frameborder: "0", allowfullscreen: true})
-			      )
-			    )
+			React.createElement("div", null, 
+				React.createElement(Header, null), 
+				React.createElement(Grid, null, 
+			    	React.createElement(Col, {sm: 6, smOffset: 3}, 
+			      		React.createElement("h1", null, React.createElement("span", {class: "fa fa-sign-in"}), " Sign Up"), 
+
+			      		React.createElement("form", {action: "/signup/ID", method: "post"}, 
+			      			React.createElement("div", {className: "form-group"}, 
+			      				React.createElement("h3", null, React.createElement(Label, {bsStyle: "info"}, "Hackathon Card ID")), 
+			      				React.createElement(Input, {type: "text", className: "form-control", name: "id"})
+			      			), 
+			      			React.createElement("div", {className: "form-group"}, 
+			      				React.createElement("h3", null, React.createElement(Label, {bsStyle: "info"}, "Password")), 
+			      				React.createElement(Input, {type: "password", className: "form-control", name: "password"})
+			      			), 
+
+			      			React.createElement(Button, {type: "submit", class: "btn btn-warning btn-lg"}, "Sign Up")
+			      		), 
+
+					    React.createElement("p", null, "Already have an account? ", React.createElement("a", {href: "/login/ID"}, "Login by Card ID")), 
+    					React.createElement("p", null, "Or go ", React.createElement("a", {href: "/"}, "home"), ".")
+			    	)
+				)
 			)
 		);
 	}
 });
 
-module.exports = HomeMain;
+module.exports = SignupID;
 
-},{"react":225,"react-bootstrap":58}]},{},[226])
+},{"./Header.jsx":227,"react":225,"react-bootstrap":58}]},{},[226])

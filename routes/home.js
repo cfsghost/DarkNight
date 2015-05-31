@@ -18,6 +18,9 @@ router.get('/login/ID', function * () {
 	yield this.render('loginid');
 });
 
-router.get('/signp', function * () {
-	yield this.render('signup');
+router.get('/signup/Local', function * () {
+	yield this.render('signuplocal');
+});
+router.get('/signup/ID', function * () {
+	yield this.render('signupid');
 });
