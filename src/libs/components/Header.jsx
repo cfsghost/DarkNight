@@ -14,7 +14,7 @@ var Header = React.createClass({
 			<Navbar brand="DarkNight">
 				<Nav>
 					<NavItem eventKey={1} href="/">Home</NavItem>
-					<NavItem eventKey={2} href="/Signup">Signup</NavItem>
+					<NavItem eventKey={2} href="/signup">Signup</NavItem>
 					<DropdownButton eventKey={3} title="Login">
 						<MenuItem eventKey="1" href="/login/Local">Login</MenuItem>
 						<MenuItem eventKey="2" href="/login/ID">Login by Card ID</MenuItem>

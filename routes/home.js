@@ -12,5 +12,12 @@ router.post('/', function *() {
 });
 
 router.get('/login/Local', function * () {
-	yield this.render('login');
+	yield this.render('loginlocal');
+});
+router.get('/login/ID', function * () {
+	yield this.render('loginid');
+});
+
+router.get('/signp', function * () {
+	yield this.render('signup');
 });

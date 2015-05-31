@@ -2,9 +2,9 @@
 
 var React = require('react');
 
-var LoginPage = require('../libs/components/LoginPage.jsx');
+var LoginLocal = require('../libs/components/LoginLocal.jsx');
 
 React.render(
-	<LoginPage />,
+	<LoginLocal />,
 	document.getElementById('App')
 );
