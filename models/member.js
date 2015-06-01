@@ -7,6 +7,7 @@ var Member = new mongoose.Schema({
 	email: String,
 	phone: String,
 	idno: String,
+	password: String,
 	cardno: Number,
 	tokens: [ String ],
 	awards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MemberAward' }],
@@ -14,5 +15,9 @@ var Member = new mongoose.Schema({
 	created: { type: Date, default: Date.now },
 	updated: { type: Date, default: Date.now }
 });
+
+Member.methods.validPassword = function(password) {
+    return (this.password == password) ? true : false;
+};
 
 module.exports = mongoose.model('Member', Member);
