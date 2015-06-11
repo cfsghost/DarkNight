@@ -8,6 +8,7 @@ var Member = new mongoose.Schema({
 	phone: String,
 	idno: String,
 	password: String,
+	salt: String,
 	cardno: Number,
 	tokens: [ String ],
 	awards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MemberAward' }],

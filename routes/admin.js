@@ -8,6 +8,6 @@ router.get('/admin', function *(next) {
     if (this.isAuthenticated()) {
 	    yield this.render('admin');
 	} else {
-		this.redirect('/')
+		this.redirect('/login')
 	}
 });

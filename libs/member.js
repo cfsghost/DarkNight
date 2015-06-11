@@ -1,24 +1,33 @@
+var crypto = require('crypto');
 var settings = require('./config');
 var mongoose = require('mongoose');
 var Member = require('../models/member');
 var MemberAward = require('../models/member-award');
 
+function encryptPassword(salt, password) {
+	return crypto.createHmac('sha256', password + salt || '').digest('hex');
+}
+
 module.exports = {
 	create: function(member) {
-		var member = new Member({
-			name: member.name,
-			email: member.email,
-			phone: member.phone,
-			gender: member.gender,
-			idno: member.idno,
-			birthday: member.birthday,
-			cardno: member.cardno,
-			tokens: member.tokens
-		});
-
 		return function(done) {
+			var _member = new Member({
+				name: member.name,
+				email: member.email,
+				phone: member.phone,
+				gender: member.gender,
+				idno: member.idno,
+				salt: crypto.randomBytes(12).toString('base64'),
+				birthday: member.birthday,
+				cardno: member.cardno,
+				tokens: member.tokens
+			});
+
+			// Encrypt plain password
+			_member.password = crypto.createHmac('sha256', member.password + _member.salt || '').digest('hex');
+
 			member.save(function(err) {
-				done(err, member);
+				done(err, _member);
 			});
 		};
 	},
@@ -36,6 +45,30 @@ module.exports = {
 			member.updated = Date.now();
 
 			Member.update({ email: email }, member, opts, done);
+		};
+	},
+	changePassword: function(id, password) {
+		return function(done) {
+
+			// Generate a new salt for encryption
+			var salt = crypto.randomBytes(12).toString('base64');
+			Member.update({ _id: id }, {
+				salt: salt,
+				password: crypto.createHmac('sha256', password + salt || '').digest('hex')
+			}, done);
+		};
+	},
+	authorizeMember: function(username, password) {
+		return function(done) {
+			Membe.findOne({ email: username }, function(err, member) {
+				if (err)
+					return done(err);
+
+				if (encryptPassword(member.salt, password) == member.password)
+					return done(null, true);
+				else
+					return done(null, false);
+			});
 		};
 	},
 	save: function(id, member) {

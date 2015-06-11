@@ -1,9 +1,11 @@
-var gulp = require('gulp');
+var gulp = require('gulp-param')(require('gulp'), process.argv);
 var less = require('gulp-less');
 var shell = require('gulp-shell');
 var rename = require('gulp-rename');
 var browserify = require('gulp-browserify');
 var reactify = require('reactify');
+var path = require('path');
+var fs = require('fs');
 
 var paths = {
 	less: './src/less/*.less',
@@ -50,6 +52,27 @@ gulp.task('js', function () {
 });
 
 gulp.task('views', [ 'apps' ], function () {
+});
+
+gulp.task('app', function (app) {
+
+	if (!paths.apps.length)
+		return;
+
+	for (var index in paths.apps) {
+		var pathname = path.dirname(paths.apps[index]);
+		var appPath = pathname + '/' + app + '.jsx';
+
+		if (fs.existsSync(appPath)) {
+			return gulp.src(appPath, { read: false })
+				.pipe(browserify({
+					transform: [ 'reactify' ],
+					extensions: [ '.jsx' ]
+				}))
+				.pipe(rename({ extname: '.js' }))
+				.pipe(gulp.dest('./public/views'));
+		}
+	}
 });
 
 gulp.task('apps', function () {

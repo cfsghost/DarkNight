@@ -12,9 +12,18 @@ router.post('/', function *() {
     this.body = 'done';
 });
 
+router.get('/login', function *() {
+	yield this.render('login');
+});
+
+router.post('/login', function *() {
+	
+});
+
 router.get('/login/Local', function * () {
 	yield this.render('loginlocal');
 });
+
 router.post('/login/Local', passport.authenticate('local-login', {
     successRedirect: '/admin',
     failureRedirect: '/login/Local'
