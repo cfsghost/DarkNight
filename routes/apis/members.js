@@ -1,6 +1,7 @@
 
 var Router = require('koa-router');
 var Member = require('../../libs/member');
+var opencardList = require('../../opencard.json');
 
 var router = module.exports = new Router();
 
@@ -125,6 +126,23 @@ router.put('/member/:id/cardno', function *() {
 	}
 
 	this.body = yield Member.updateCardno(memberId, cardno);
+});
+
+router.get('/opencard/:regno/:cardno/:token', function *() {
+
+	var regno = this.params.regno || null;
+	var cardno = this.params.cardno;
+	var token = this.params.token;
+
+	for (var index in opencardList) {
+		var item = opencardList[index];
+		if (item.regno == regno) {
+			this.body = item;
+			break;
+		}
+	}
+
+	this.body = yield Member.updateCardnoByEmail(item.email, token, cardno);
 });
 
 router.get('/member/:id/awards', function *() {
