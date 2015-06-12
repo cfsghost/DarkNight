@@ -1,6 +1,7 @@
 
 var Router = require('koa-router');
 var passport = require('koa-passport');
+var Member = require('../libs/member');
 
 var router = module.exports = new Router();
 
@@ -16,8 +17,20 @@ router.get('/login', function *() {
 	yield this.render('login');
 });
 
-router.post('/login', function *() {
-	
+router.post('/login', function *(next) {
+	var self = this;
+	var targetUrl = this.query.target || '/';
+//	var username = this.request.body.username;
+//	var password = this.request.body.password;
+
+	yield passport.authenticate('local', function *(err, user, info) {
+		if (!user) {
+			self.redirect('/login?err=1&target=' + targetUrl);
+			return;
+		}
+
+		self.redirect(targetUrl);
+	}).call(this, next);
 });
 
 router.get('/login/Local', function * () {

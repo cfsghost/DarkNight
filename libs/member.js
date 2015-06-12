@@ -60,14 +60,24 @@ module.exports = {
 	},
 	authorizeMember: function(username, password) {
 		return function(done) {
-			Membe.findOne({ email: username }, function(err, member) {
+
+			Member.findOne({ email: username }, function(err, member) {
 				if (err)
 					return done(err);
 
+				// First time to login
+				if (!member.password) {
+					if (member.phone == password)
+						return done(null, member);
+					else
+						return done(null, null);
+				}
+
+				// Check password
 				if (encryptPassword(member.salt, password) == member.password)
-					return done(null, true);
+					return done(null, member);
 				else
-					return done(null, false);
+					return done(null, null);
 			});
 		};
 	},

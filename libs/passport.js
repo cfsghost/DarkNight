@@ -1,9 +1,32 @@
-// load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
+var co = require('co');
+var LocalStrategy = require('passport-local').Strategy;
+var Member = require('./member');
 
-// load up the user model
-var Member       = require('../models/member');
+module.exports = {
+	init: function(passport) {
+		passport.serializeUser(function(user, done) {
+			done(null, user.id);
+		})
 
+		passport.deserializeUser(function(id, done) {
+			done(null, user);
+		})
+	},
+	local: function(passport) {
+
+		passport.use(new LocalStrategy(function(username, password, done) {
+
+			co(function *() {
+				return yield Member.authorizeMember(username, password);
+			}).then(function(member) {
+				done(null, member);
+			}, function(err) {
+				done(err);
+			};
+		}));
+	}
+};
+/*
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
         done(null, user.id);
@@ -112,3 +135,4 @@ module.exports = function (passport) {
         });
     }));
 };
+*/

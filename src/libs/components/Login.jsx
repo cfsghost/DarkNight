@@ -24,7 +24,7 @@ var Login = React.createClass({
 
 			      		<form action="/login" method="post">
 			      			<div className="form-group">
-			      				<Input type="text" label="Email or Username" name="email" autoFocus/>
+			      				<Input type="text" label="Email or Username" name="username" autoFocus/>
 			      			</div>
 			      			<div className="form-group">
 			      				<Input type="password" label="Password" name="password"/>

@@ -11,13 +11,12 @@ var passport = require('koa-passport');
 var jsonp = require('koa-safe-jsonp');
 
 var Database = require('./libs/database');
+var Passport = require('./libs/passport');
 
 var app = koa();
 
 // Static file path
 app.use(serve(__dirname + '/public'));
-
-require('./libs/passport')(passport);
 
 // Enabling BODY
 app.use(bodyParser());
@@ -44,7 +43,9 @@ app.use(views(__dirname + '/views', {
 app.keys = settings.general.session.keys || [];
 app.use(session(app));
 
-// Passport
+// Initializing passport
+Passport.init(passport);
+Passport.local(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
