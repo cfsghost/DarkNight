@@ -93,7 +93,6 @@ router.get('/card/:token', function *() {
 	try {
 		this.body = yield Member.checkCard(token);
 	} catch(e) {
-		console.log(e);
 		this.status = 404;
 		this.body = 'Not Found';
 	}

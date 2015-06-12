@@ -65,6 +65,9 @@ module.exports = {
 				if (err)
 					return done(err);
 
+				if (!member)
+					return done(new Error('Not Found'));
+
 				return done(null, member);
 			});
 		};
