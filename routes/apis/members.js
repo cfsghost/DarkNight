@@ -87,6 +87,18 @@ router.post('/members', function *() {
 	this.body = yield Member.create(memberData);
 });
 
+router.get('/card/:token', function *() {
+	var token = this.params.token || null;
+
+	try {
+		this.body = yield Member.checkCard(token);
+	} catch(e) {
+		console.log(e);
+		this.status = 404;
+		this.body = 'Not Found';
+	}
+});
+
 router.put('/member/:id', function *() {
 
 	var memberId = this.params.id;

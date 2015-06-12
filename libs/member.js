@@ -58,6 +58,17 @@ module.exports = {
 			}, done);
 		};
 	},
+	checkCard: function(token) {
+		return function(done) {
+
+			Member.findOne({ tokens: token }, function(err, member) {
+				if (err)
+					return done(err);
+
+				return done(null, member);
+			});
+		};
+	},
 	authorizeMember: function(username, password) {
 		return function(done) {
 
