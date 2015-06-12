@@ -51,11 +51,11 @@ app.use(passport.session());
 
 // Routes
 app.use(require('./routes/home').middleware());
-app.use(require('./routes/admin').middleware());
 app.use(require('./routes/apis/endpoints').middleware());
 app.use(require('./routes/apis/members').middleware());
 app.use(require('./routes/apis/awards').middleware());
 app.use(require('./routes/apis/uploads').middleware());
+app.use(require('./routes/admin').middleware());
 
 // Conenct to database
 var dbTask = Database();

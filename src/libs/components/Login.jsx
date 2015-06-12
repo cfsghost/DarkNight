@@ -11,9 +11,6 @@ var Label = Bootstrap.Label;
 var Button = Bootstrap.Button;
 
 var Login = React.createClass({
-	submit: function() {
-		console.log(132123);
-	},
 	render: function() {
 		return (
 			<div>

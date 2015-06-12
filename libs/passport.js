@@ -9,7 +9,7 @@ module.exports = {
 		})
 
 		passport.deserializeUser(function(id, done) {
-			done(null, user);
+			done(null, id);
 		})
 	},
 	local: function(passport) {
@@ -22,7 +22,7 @@ module.exports = {
 				done(null, member);
 			}, function(err) {
 				done(err);
-			};
+			});
 		}));
 	}
 };

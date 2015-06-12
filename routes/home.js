@@ -9,10 +9,6 @@ router.get('/', function *() {
     yield this.render('index');
 });
 
-router.post('/', function *() {
-    this.body = 'done';
-});
-
 router.get('/login', function *() {
 	yield this.render('login');
 });
@@ -20,8 +16,6 @@ router.get('/login', function *() {
 router.post('/login', function *(next) {
 	var self = this;
 	var targetUrl = this.query.target || '/';
-//	var username = this.request.body.username;
-//	var password = this.request.body.password;
 
 	yield passport.authenticate('local', function *(err, user, info) {
 		if (!user) {
@@ -29,6 +23,8 @@ router.post('/login', function *(next) {
 			return;
 		}
 
+		// Store login information in session
+		yield self.login(user);
 		self.redirect(targetUrl);
 	}).call(this, next);
 });
