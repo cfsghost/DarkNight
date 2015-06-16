@@ -3322,7 +3322,8 @@ var Button = _react2['default'].createClass({
 
     classes = _extends({
       active: this.props.active,
-      'btn-block': this.props.block }, classes);
+      'btn-block': this.props.block
+    }, classes);
 
     if (this.props.navItem) {
       return this.renderNavItem(classes);
@@ -7911,7 +7912,8 @@ var Popover = _react2['default'].createClass({
     var _classes;
 
     var classes = (_classes = {
-      'popover': true }, _defineProperty(_classes, this.props.placement, true), _defineProperty(_classes, 'in', !this.props.animation && (this.props.positionLeft != null || this.props.positionTop != null)), _defineProperty(_classes, 'fade', this.props.animation), _classes);
+      'popover': true
+    }, _defineProperty(_classes, this.props.placement, true), _defineProperty(_classes, 'in', !this.props.animation && (this.props.positionLeft != null || this.props.positionTop != null)), _defineProperty(_classes, 'fade', this.props.animation), _classes);
 
     var style = {
       'left': this.props.positionLeft,
@@ -8154,25 +8156,6 @@ var _utilsEventListener2 = _interopRequireDefault(_utilsEventListener);
 
 // TODO: Merge this logic with dropdown logic once #526 is done.
 
-/**
- * Checks whether a node is within
- * a root nodes tree
- *
- * @param {DOMElement} node
- * @param {DOMElement} root
- * @returns {boolean}
- */
-function isNodeInRoot(node, root) {
-  while (node) {
-    if (node === root) {
-      return true;
-    }
-    node = node.parentNode;
-  }
-
-  return false;
-}
-
 var RootCloseWrapper = (function (_React$Component) {
   function RootCloseWrapper(props) {
     _classCallCheck(this, RootCloseWrapper);
@@ -8199,7 +8182,7 @@ var RootCloseWrapper = (function (_React$Component) {
       // If the click originated from within this component, don't do anything.
       // e.srcElement is required for IE8 as e.target is undefined
       var target = e.target || e.srcElement;
-      if (isNodeInRoot(target, _react2['default'].findDOMNode(this))) {
+      if (_utilsDomUtils2['default'].contains(_react2['default'].findDOMNode(this), target)) {
         return;
       }
 
@@ -8515,8 +8498,6 @@ var SubNav = _react2['default'].createClass({
   },
 
   isChildActive: function isChildActive(child) {
-    var _this = this;
-
     if (child.props.active) {
       return true;
     }
@@ -8530,21 +8511,15 @@ var SubNav = _react2['default'].createClass({
     }
 
     if (child.props.children) {
-      var _ret = (function () {
-        var isActive = false;
+      var isActive = false;
 
-        _utilsValidComponentChildren2['default'].forEach(child.props.children, function (grandchild) {
-          if (this.isChildActive(grandchild)) {
-            isActive = true;
-          }
-        }, _this);
+      _utilsValidComponentChildren2['default'].forEach(child.props.children, function (grandchild) {
+        if (this.isChildActive(grandchild)) {
+          isActive = true;
+        }
+      }, this);
 
-        return {
-          v: isActive
-        };
-      })();
-
-      if (typeof _ret === 'object') return _ret.v;
+      return isActive;
     }
 
     return false;
@@ -9055,7 +9030,8 @@ var Tooltip = _react2['default'].createClass({
     var _classes;
 
     var classes = (_classes = {
-      'tooltip': true }, _defineProperty(_classes, this.props.placement, true), _defineProperty(_classes, 'in', !this.props.animation && (this.props.positionLeft != null || this.props.positionTop != null)), _defineProperty(_classes, 'fade', this.props.animation), _classes);
+      'tooltip': true
+    }, _defineProperty(_classes, this.props.placement, true), _defineProperty(_classes, 'in', !this.props.animation && (this.props.positionLeft != null || this.props.positionTop != null)), _defineProperty(_classes, 'fade', this.props.animation), _classes);
 
     var style = {
       'left': this.props.positionLeft,
@@ -9490,7 +9466,7 @@ var CustomPropTypes = {
    *
    * The element can be provided in two forms:
    * - Directly passed
-   * - Or passed an object which has a `getDOMNode` method which will return the required DOM element
+   * - Or passed an object that has a `render` method
    *
    * @param props
    * @param propName
@@ -10112,7 +10088,7 @@ function deprecationWarning(oldname, newname, link) {
     console.warn(message);
 
     if (link) {
-      console.warn('You can read more about it here ' + link);
+      console.warn('You can read more about it at ' + link);
     }
   }
 }
@@ -10243,7 +10219,28 @@ function offsetParentFunc(elem) {
   return offsetParent || docElem;
 }
 
+/**
+ * Cross browser .contains() polyfill
+ * @param  {HTMLElement} elem
+ * @param  {HTMLElement} inner
+ * @return {bool}
+ */
+function contains(elem, inner) {
+  function ie8Contains(root, node) {
+    while (node) {
+      if (node === root) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
+  }
+
+  return elem && elem.contains ? elem.contains(inner) : elem && elem.compareDocumentPosition ? elem === inner || !!(elem.compareDocumentPosition(inner) & 16) : ie8Contains(elem, inner);
+}
+
 exports['default'] = {
+  contains: contains,
   ownerDocument: ownerDocument,
   getComputedStyles: getComputedStyles,
   getOffset: getOffset,
@@ -34442,11 +34439,17 @@ module.exports = MemberAwardsManager;
 /** @jsx React.DOM */
 
 var React = require('react');
+var Router = require('react-router');
 var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
+var Panel = Bootstrap.Panel;
+var Col = Bootstrap.Col;
+var Row = Bootstrap.Row;
 var Glyphicon = Bootstrap.Glyphicon;
 var ButtonToolbar = Bootstrap.ButtonToolbar;
 var Button = Bootstrap.Button;
+var DropdownButton = Bootstrap.DropdownButton;
+var MenuItem = Bootstrap.MenuItem;
 var Input = Bootstrap.Input;
 var Navbar = Bootstrap.Navbar;
 var Nav = Bootstrap.Nav;
@@ -34458,19 +34461,93 @@ var NewModal = require('./Member-NewModal');
 var ListView = require('./Member-ListView');
 
 var Toolbar = React.createClass({displayName: "Toolbar",
+	mixins: [ Router.State, Router.Navigation ],
+	getInitialState: function() {
+		return {
+			filter: 'name'
+		};
+	},
 	newModal: function() {
 		MemberActions.New();
 	},
+	changeFilter: function() {
+		var filter = this.refs.filter.getValue();
+		this.setState({
+			filter: filter
+		});
+	},
+	search: function() {
+
+		var text = this.refs.searchTxt.getValue() || null;
+
+		var query = this.getQuery();
+		delete query.page;
+		delete query.perPage;
+		if (!text) {
+			delete query.queries;
+		} else {
+			var queries = {}
+			queries[this.state.filter] = this.refs.searchTxt.getValue();
+			query.queries = JSON.stringify(queries);
+		}
+
+		this.replaceWith(this.getPathname(), this.getParams(), query);
+	},
+	handleKeyUp: function(e) {
+
+		// Enter
+		if (e.which == 13) {
+			this.search();
+		}
+	},
+	handleSearchTxtChange: function() {
+		var queries = this.props.queries;
+		queries[this.state.filter] = this.refs.searchTxt.getValue();
+		this.setProps({
+			queries: queries
+		});
+	},
 	render: function() {
+
+		var searchButton = React.createElement(Button, {onClick: this.search}, React.createElement(Glyphicon, {glyph: "search"}));
+
+		var queries = this.props.queries || {};
+		var searchTxt = '';
+		if (Object.keys(queries).length > 0) {
+			field = Object.keys(queries)[0];
+			this.state.filter = field;
+			searchTxt = queries[field];
+		}
+
 		return (
-			React.createElement(ButtonToolbar, null, 
-				React.createElement(Button, {bsStyle: "primary", onClick: this.newModal}, React.createElement(Glyphicon, {glyph: "plus"}), " Add")
+			React.createElement(Panel, null, 
+				React.createElement(ButtonToolbar, null, 
+					React.createElement(Col, {md: 8}, 
+						React.createElement(Button, {onClick: this.newModal}, React.createElement(Glyphicon, {glyph: "plus"}), " Add")
+					), 
+					React.createElement(Col, {md: 4}, 
+						React.createElement(Col, {md: 4}, 
+							React.createElement(Input, {type: "select", value: this.state.filter, ref: "filter", onChange: this.changeFilter}, 
+								React.createElement("option", {value: "name"}, "Name"), 
+								React.createElement("option", {value: "email"}, "E-mail"), 
+								React.createElement("option", {value: "phone"}, "Phone"), 
+								React.createElement("option", {value: "cardno"}, "Card No"), 
+								React.createElement("option", {value: "idno"}, "ID No"), 
+								React.createElement("option", {value: "token"}, "Token")
+							)
+						), 
+						React.createElement(Col, {md: 8}, 
+							React.createElement(Input, {type: "text", ref: "searchTxt", placeholder: "Search...", value: searchTxt, buttonAfter: searchButton, onChange: this.handleSearchTxtChange, onKeyUp: this.handleKeyUp})
+						)
+					)
+				)
 			)
 		);
 	}
 });
 
 var Pagination = React.createClass({displayName: "Pagination",
+	mixins: [ Router.State, Router.Navigation ],
 	getInitialState: function() {
 		return {
 			page: 1,
@@ -34515,24 +34592,41 @@ var Pagination = React.createClass({displayName: "Pagination",
 			prev = 1;
 		}
 
+		// Page list
 		for (var i = start; i <= end; i++) {
-			if (i == this.state.page)
-				pageItems.push(React.createElement("li", {className: "active"}, React.createElement("a", {href: '#/members?page=' + i + '&perPage=' + this.state.perPage}, i, React.createElement("span", {class: "sr-only"}))));
-			else
-				pageItems.push(React.createElement("li", null, React.createElement("a", {href: '#/members?page=' + i + '&perPage=' + this.state.perPage}, i)));
+			var query = this.getQuery();
+			query.page = i;
+			query.perPage = this.state.perPage;
+
+			if (i == this.state.page) {
+				pageItems.push(React.createElement("li", {className: "active"}, React.createElement("a", {href: this.makeHref(this.getPathname(), this.getParams(), query)}, i, React.createElement("span", {class: "sr-only"}))));
+			} else {
+				pageItems.push(React.createElement("li", null, React.createElement("a", {href: this.makeHref(this.getPathname(), this.getParams(), query)}, i)));
+			}
 		}
+
+		var query = this.getQuery();
+		query.perPage = this.state.perPage;
+
+		// Previous 10 page
+		query.page = prev;
+		var prevHref = this.makeHref(this.getPathname(), this.getParams(), query);
+
+		// Next 10 page
+		query.page = next;
+		var nextHref = this.makeHref(this.getPathname(), this.getParams(), query);
 
 		return (
 			React.createElement("nav", null, 
 				React.createElement("ul", {className: "pagination"}, 
 					React.createElement("li", null, 
-						React.createElement("a", {href: '#/members?page=' + prev + '&perPage=' + this.state.perPage, "aria-label": "Previous"}, 
+						React.createElement("a", {href: prevHref, "aria-label": "Previous"}, 
 							React.createElement("span", {"aria-hidden": "true"}, "«")
 						)
 					), 
 					pageItems, 
 					React.createElement("li", null, 
-						React.createElement("a", {href: '#/members?page=' + next + '&perPage=' + this.state.perPage, "aria-label": "Next"}, 
+						React.createElement("a", {href: nextHref, "aria-label": "Next"}, 
 							React.createElement("span", {"aria-hidden": "true"}, "»")
 						)
 					)
@@ -34553,9 +34647,12 @@ var Pagination = React.createClass({displayName: "Pagination",
 });
 
 var Member = React.createClass({displayName: "Member",
+	mixins: [ Router.State, Router.Navigation ],
+	/*
 	contextTypes: {
 		router: React.PropTypes.func
 	},
+	*/
 	getInitialState: function() {
 		return {
 			//isOpen: false
@@ -34574,17 +34671,22 @@ var Member = React.createClass({displayName: "Member",
 		if (!this.state.isOpen)
 			return (React.createElement("span", null));
 
-		var page = this.context.router.getCurrentQuery().page || 1;
-		var perPage = this.context.router.getCurrentQuery().perPage || 100;
-
+		var page = this.getQuery().page || 1;
+		var perPage = this.getQuery().perPage || 100;
+		var queries = this.getQuery().queries;
+		if (queries)
+			queries = JSON.parse(queries);
+		else
+			queries = {};
+		
 		return (
 			React.createElement("div", null, 
 				React.createElement(NewModal, null), 
 				React.createElement("div", {className: "text-center"}, 
-					React.createElement(Toolbar, null), 
+					React.createElement(Toolbar, {queries: queries}), 
 					React.createElement(Pagination, null)
 				), 
-				React.createElement(ListView, {page: page, perPage: perPage})
+				React.createElement(ListView, {page: page, perPage: perPage, queries: queries})
 			)
 		);
 	},
@@ -34603,7 +34705,7 @@ var Member = React.createClass({displayName: "Member",
 module.exports = Member;
 
 
-},{"../../actions/Member":279,"../../stores/Member":301,"./Member-ListView":296,"./Member-NewModal":297,"react":275,"react-bootstrap":68}],295:[function(require,module,exports){
+},{"../../actions/Member":279,"../../stores/Member":301,"./Member-ListView":296,"./Member-NewModal":297,"react":275,"react-bootstrap":68,"react-router":106}],295:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');
@@ -34866,7 +34968,8 @@ var ListView = React.createClass({displayName: "ListView",
 	getDefaultProps: function() {
 		return {
 			page: 1,
-			perPage: 100
+			perPage: 100,
+			queries: {}
 		};
 	},
 	componentDidMount: function() {
@@ -34894,7 +34997,7 @@ var ListView = React.createClass({displayName: "ListView",
 		MemberStore.on('Loading', this._loading);
 
 		// Fetching member list 
-		MemberActions.Fetch(this.props.page, this.props.perPage);
+		MemberActions.Fetch(this.props.page, this.props.perPage, this.props.queries);
 	},
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);
@@ -34903,7 +35006,7 @@ var ListView = React.createClass({displayName: "ListView",
 	},
 	componentWillReceiveProps: function(nextProps) {
 
-		MemberActions.Fetch(nextProps.page, nextProps.perPage);
+		MemberActions.Fetch(nextProps.page, nextProps.perPage, nextProps.queries);
 	},
 	render: function() {
 		var rows = [];
@@ -35260,13 +35363,14 @@ Fluxer.on('Member.GetInfo', function() {
 	MemberStore.emit('InfoUpdated', info);
 });
 
-Fluxer.on('Member.Fetch', function(page, perPage) {
+Fluxer.on('Member.Fetch', function(page, perPage, queries) {
 
-	$.get('/members?page=' + page + '&perpage=' + perPage, function(results) {
+	$.get('/members?page=' + page + '&perpage=' + perPage + ((Object.keys(queries).length) ? '&q=' + JSON.stringify(queries) : '') , function(results) {
 
 		info.page = results.page;
 		info.perPage = results.perPage;
 		info.pageCount = results.pageCount;
+		info.queries = queries;
 
 		// Refresh list
 		members = {};

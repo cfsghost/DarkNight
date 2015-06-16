@@ -21,13 +21,14 @@ Fluxer.on('Member.GetInfo', function() {
 	MemberStore.emit('InfoUpdated', info);
 });
 
-Fluxer.on('Member.Fetch', function(page, perPage) {
+Fluxer.on('Member.Fetch', function(page, perPage, queries) {
 
-	$.get('/members?page=' + page + '&perpage=' + perPage, function(results) {
+	$.get('/members?page=' + page + '&perpage=' + perPage + ((Object.keys(queries).length) ? '&q=' + JSON.stringify(queries) : '') , function(results) {
 
 		info.page = results.page;
 		info.perPage = results.perPage;
 		info.pageCount = results.pageCount;
+		info.queries = queries;
 
 		// Refresh list
 		members = {};

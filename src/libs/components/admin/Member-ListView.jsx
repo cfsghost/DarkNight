@@ -52,7 +52,8 @@ var ListView = React.createClass({
 	getDefaultProps: function() {
 		return {
 			page: 1,
-			perPage: 100
+			perPage: 100,
+			queries: {}
 		};
 	},
 	componentDidMount: function() {
@@ -80,7 +81,7 @@ var ListView = React.createClass({
 		MemberStore.on('Loading', this._loading);
 
 		// Fetching member list 
-		MemberActions.Fetch(this.props.page, this.props.perPage);
+		MemberActions.Fetch(this.props.page, this.props.perPage, this.props.queries);
 	},
 	componentWillUnmount: function() {
 		MemberStore.removeListener('MembersUpdated', this._update);
@@ -89,7 +90,7 @@ var ListView = React.createClass({
 	},
 	componentWillReceiveProps: function(nextProps) {
 
-		MemberActions.Fetch(nextProps.page, nextProps.perPage);
+		MemberActions.Fetch(nextProps.page, nextProps.perPage, nextProps.queries);
 	},
 	render: function() {
 		var rows = [];

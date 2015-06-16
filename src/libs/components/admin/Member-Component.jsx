@@ -1,11 +1,17 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var Router = require('react-router');
 var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
+var Panel = Bootstrap.Panel;
+var Col = Bootstrap.Col;
+var Row = Bootstrap.Row;
 var Glyphicon = Bootstrap.Glyphicon;
 var ButtonToolbar = Bootstrap.ButtonToolbar;
 var Button = Bootstrap.Button;
+var DropdownButton = Bootstrap.DropdownButton;
+var MenuItem = Bootstrap.MenuItem;
 var Input = Bootstrap.Input;
 var Navbar = Bootstrap.Navbar;
 var Nav = Bootstrap.Nav;
@@ -17,19 +23,94 @@ var NewModal = require('./Member-NewModal');
 var ListView = require('./Member-ListView');
 
 var Toolbar = React.createClass({
+	mixins: [ Router.State, Router.Navigation ],
+	getInitialState: function() {
+		return {
+			filter: 'name'
+		};
+	},
 	newModal: function() {
 		MemberActions.New();
 	},
+	changeFilter: function() {
+		var filter = this.refs.filter.getValue();
+		this.setState({
+			filter: filter
+		});
+	},
+	search: function() {
+
+		var text = this.refs.searchTxt.getValue() || null;
+
+		var query = this.getQuery();
+		delete query.page;
+		delete query.perPage;
+		if (!text) {
+			delete query.queries;
+		} else {
+			var queries = {}
+			queries[this.state.filter] = this.refs.searchTxt.getValue();
+			query.queries = JSON.stringify(queries);
+		}
+
+		this.replaceWith(this.getPathname(), this.getParams(), query);
+	},
+	handleKeyUp: function(e) {
+
+		// Enter
+		if (e.which == 13) {
+			this.search();
+		}
+	},
+	handleSearchTxtChange: function() {
+		var queries = this.props.queries;
+		queries[this.state.filter] = this.refs.searchTxt.getValue();
+
+		this.setProps({
+			queries: queries
+		});
+	},
 	render: function() {
+
+		var searchButton = <Button onClick={this.search}><Glyphicon glyph='search' /></Button>;
+
+		var queries = this.props.queries || {};
+		var searchTxt = '';
+		if (Object.keys(queries).length > 0) {
+			field = Object.keys(queries)[0];
+			this.state.filter = field;
+			searchTxt = queries[field];
+		}
+
 		return (
-			<ButtonToolbar>
-				<Button bsStyle='primary' onClick={this.newModal}><Glyphicon glyph='plus' /> Add</Button>
-			</ButtonToolbar>
+			<Panel>
+				<ButtonToolbar>
+					<Col md={8}>
+						<Button onClick={this.newModal}><Glyphicon glyph='plus' /> Add</Button>
+					</Col>
+					<Col md={4}>
+						<Col md={4}>
+							<Input type='select' value={this.state.filter} ref='filter' onChange={this.changeFilter}>
+								<option value='name'>Name</option>
+								<option value='email'>E-mail</option>
+								<option value='phone'>Phone</option>
+								<option value='cardno'>Card No</option>
+								<option value='idno'>ID No</option>
+								<option value='token'>Token</option>
+							</Input>
+						</Col>
+						<Col md={8}>
+							<Input type='text' ref='searchTxt' placeholder='Search...' value={searchTxt} buttonAfter={searchButton} onChange={this.handleSearchTxtChange} onKeyUp={this.handleKeyUp}/>
+						</Col>
+					</Col>
+				</ButtonToolbar>
+			</Panel>
 		);
 	}
 });
 
 var Pagination = React.createClass({
+	mixins: [ Router.State, Router.Navigation ],
 	getInitialState: function() {
 		return {
 			page: 1,
@@ -74,24 +155,41 @@ var Pagination = React.createClass({
 			prev = 1;
 		}
 
+		// Page list
 		for (var i = start; i <= end; i++) {
-			if (i == this.state.page)
-				pageItems.push(<li className='active'><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}<span class='sr-only'></span></a></li>);
-			else
-				pageItems.push(<li><a href={'#/members?page=' + i + '&perPage=' + this.state.perPage}>{i}</a></li>);
+			var query = this.getQuery();
+			query.page = i;
+			query.perPage = this.state.perPage;
+
+			if (i == this.state.page) {
+				pageItems.push(<li className='active'><a href={this.makeHref(this.getPathname(), this.getParams(), query)}>{i}<span class='sr-only'></span></a></li>);
+			} else {
+				pageItems.push(<li><a href={this.makeHref(this.getPathname(), this.getParams(), query)}>{i}</a></li>);
+			}
 		}
+
+		var query = this.getQuery();
+		query.perPage = this.state.perPage;
+
+		// Previous 10 page
+		query.page = prev;
+		var prevHref = this.makeHref(this.getPathname(), this.getParams(), query);
+
+		// Next 10 page
+		query.page = next;
+		var nextHref = this.makeHref(this.getPathname(), this.getParams(), query);
 
 		return (
 			<nav>
 				<ul className='pagination'>
 					<li>
-						<a href={'#/members?page=' + prev + '&perPage=' + this.state.perPage} aria-label='Previous'>
+						<a href={prevHref} aria-label='Previous'>
 							<span aria-hidden='true'>&laquo;</span>
 						</a>
 					</li>
 					{pageItems}
 					<li>
-						<a href={'#/members?page=' + next + '&perPage=' + this.state.perPage} aria-label='Next'>
+						<a href={nextHref} aria-label='Next'>
 							<span aria-hidden='true'>&raquo;</span>
 						</a>
 					</li>
@@ -112,9 +210,12 @@ var Pagination = React.createClass({
 });
 
 var Member = React.createClass({
+	mixins: [ Router.State, Router.Navigation ],
+	/*
 	contextTypes: {
 		router: React.PropTypes.func
 	},
+	*/
 	getInitialState: function() {
 		return {
 			//isOpen: false
@@ -133,17 +234,22 @@ var Member = React.createClass({
 		if (!this.state.isOpen)
 			return (<span />);
 
-		var page = this.context.router.getCurrentQuery().page || 1;
-		var perPage = this.context.router.getCurrentQuery().perPage || 100;
-
+		var page = this.getQuery().page || 1;
+		var perPage = this.getQuery().perPage || 100;
+		var queries = this.getQuery().queries;
+		if (queries)
+			queries = JSON.parse(queries);
+		else
+			queries = {};
+		
 		return (
 			<div>
 				<NewModal />
 				<div className='text-center'>
-					<Toolbar />
+					<Toolbar queries={queries} />
 					<Pagination />
 				</div>
-				<ListView page={page} perPage={perPage} />
+				<ListView page={page} perPage={perPage} queries={queries} />
 			</div>
 		);
 	},
