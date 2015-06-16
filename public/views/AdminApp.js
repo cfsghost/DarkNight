@@ -35032,7 +35032,7 @@ var ListView = React.createClass({displayName: "ListView",
 							React.createElement("th", null, "Birthday"), 
 							React.createElement("th", null, "Email"), 
 							React.createElement("th", null, "Phone"), 
-							React.createElement("th", null, "Card Number"), 
+							React.createElement("th", null, "Card No"), 
 							React.createElement("th", null, "Points"), 
 							React.createElement("th", null, "Updated Time"), 
 							React.createElement("th", null, "Created")

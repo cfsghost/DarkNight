@@ -115,7 +115,7 @@ var ListView = React.createClass({
 							<th>Birthday</th>
 							<th>Email</th>
 							<th>Phone</th>
-							<th>Card Number</th>
+							<th>Card No</th>
 							<th>Points</th>
 							<th>Updated Time</th>
 							<th>Created</th>
