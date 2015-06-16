@@ -34503,6 +34503,7 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 	handleSearchTxtChange: function() {
 		var queries = this.props.queries;
 		queries[this.state.filter] = this.refs.searchTxt.getValue();
+
 		this.setProps({
 			queries: queries
 		});
@@ -35376,6 +35377,7 @@ Fluxer.on('Member.Fetch', function(page, perPage, queries) {
 		members = {};
 		for (var index in results.members) {
 			var member = results.members[index];
+			member.created = member.created.split('T')[0];
 			members[member._id] = member;
 		}
 
