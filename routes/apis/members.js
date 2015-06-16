@@ -110,6 +110,7 @@ router.put('/member/:id', function *() {
 
 	var name = this.request.body.name;
 	var email = this.request.body.email;
+	var phone = this.request.body.phone;
 	var gender = this.request.body.gender;
 	var idno = this.request.body.idno;
 	var birthday = this.request.body.birthday;
@@ -119,6 +120,7 @@ router.put('/member/:id', function *() {
 	var memberData = {
 		name: name,
 		email: email,
+		phone: phone,
 		gender: gender,
 		idno: idno,
 		birthday: birthday,

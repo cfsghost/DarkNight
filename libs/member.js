@@ -105,7 +105,7 @@ module.exports = {
 				gender: member.gender,
 				idno: member.idno,
 				birthday: member.birthday,
-				cardno: member.cardno,
+				cardno: member.cardno || null,
 				tokens: member.tokens,
 				updated: Date.now()
 			}, done);
