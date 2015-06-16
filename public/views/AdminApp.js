@@ -34953,6 +34953,7 @@ var Item = React.createClass({displayName: "Item",
 				React.createElement("td", null, this.props.member.phone), 
 				React.createElement("td", null, this.props.member.cardno), 
 				React.createElement("td", null, this.props.member.points ? this.props.member.points : 0), 
+				React.createElement("td", null, this.props.member.updated), 
 				React.createElement("td", null, this.props.member.created)
 			)
 		);
@@ -35033,6 +35034,7 @@ var ListView = React.createClass({displayName: "ListView",
 							React.createElement("th", null, "Phone"), 
 							React.createElement("th", null, "Card Number"), 
 							React.createElement("th", null, "Points"), 
+							React.createElement("th", null, "Updated Time"), 
 							React.createElement("th", null, "Created")
 						)
 					), 
@@ -35377,6 +35379,7 @@ Fluxer.on('Member.Fetch', function(page, perPage, queries) {
 		members = {};
 		for (var index in results.members) {
 			var member = results.members[index];
+			member.updated = member.created.replace('T', ' ').split('.')[0];
 			member.created = member.created.split('T')[0];
 			members[member._id] = member;
 		}
