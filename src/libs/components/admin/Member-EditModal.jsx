@@ -101,7 +101,9 @@ var EditModal = React.createClass({
 						birthday: this.state.birthday,
 						idno: this.state.idno,
 						cardno: this.state.cardno,
-						tokens: [ this.state.token ]
+						tokens: [ this.state.token ],
+						created: r.created.split('T')[0],
+						updated: r.updated.replace('T', ' ').split('.')[0]
 					}
 				]);
 				this.close();

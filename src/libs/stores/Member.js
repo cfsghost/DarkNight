@@ -34,7 +34,7 @@ Fluxer.on('Member.Fetch', function(page, perPage, queries) {
 		members = {};
 		for (var index in results.members) {
 			var member = results.members[index];
-			member.updated = member.created.replace('T', ' ').split('.')[0];
+			member.updated = member.updated.replace('T', ' ').split('.')[0];
 			member.created = member.created.split('T')[0];
 			members[member._id] = member;
 		}

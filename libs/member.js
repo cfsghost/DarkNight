@@ -98,7 +98,9 @@ module.exports = {
 	save: function(id, member) {
 
 		return function(done) {
-			Member.update({ _id: id }, {
+			var updated = Date.now();
+
+			Member.findOneAndUpdate({ _id: id }, {
 				name: member.name,
 				email: member.email,
 				phone: member.phone,
@@ -107,8 +109,14 @@ module.exports = {
 				birthday: member.birthday,
 				cardno: member.cardno || null,
 				tokens: member.tokens,
-				updated: Date.now()
-			}, done);
+				updated: updated
+			}, function(err, _member) {
+
+				if (err)
+					return done(err);
+
+				done(null, _member);
+			});
 		};
 	},
 	list: function() {
