@@ -45,6 +45,12 @@ router.get('/members', function *() {
 	if (q.phone) {
 		conditions.phone = new RegExp(q.phone, 'i');
 	}
+	if (q.cardno) {
+		conditions.cardno = q.cardno;
+	}
+	if (q.idno) {
+		conditions.idno = q.idno;
+	}
 	if (q.token) {
 		conditions.tokens = new RegExp(q.token, 'i');
 	}
