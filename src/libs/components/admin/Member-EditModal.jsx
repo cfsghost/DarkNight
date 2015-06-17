@@ -7,11 +7,12 @@ var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
 var TabbedArea = Bootstrap.TabbedArea;
 var TabPane = Bootstrap.TabPane;
+var Row = Bootstrap.Row;
+var Col = Bootstrap.Col;
 //var Select = require('react-bootstrap-select');
 var MemberAwardsManager = require('./Member-AwardsManager');
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
-
 
 var EditModal = React.createClass({
 	getInitialState: function() {
@@ -153,20 +154,42 @@ var EditModal = React.createClass({
 		}
 
 		return (
-			<Modal bsStyle='primary' title='Member Details' onRequestHide={this.close} animation={true} backdrop='static'>
+			<Modal bsStyle='primary' title='Member Details' onRequestHide={this.close} animation={true} backdrop='static' bsSize='large'>
 				<div className='modal-body'>
 					<TabbedArea defaultActiveKey={1}>
 						<TabPane eventKey={1} tab='Profile'>
 
-							<form>
-								<Input type='text' ref='name' label='Name' placeholder='Fred Chien' value={this.state.name} onChange={this.handleChange} autoFocus />
+							<form className='form-horizontal'>
+								<Input type='text'
+									ref='name'
+									label='Name'
+									placeholder='Fred Chien'
+									labelClassName='col-xs-2'
+									wrapperClassName='col-xs-9'
+									value={this.state.name}
+									onChange={this.handleChange}
+									autoFocus />
 
-								<Input label='Gender'>
-									<Input type='radio' ref='male' name='gender' label='Male' defaultChecked={this.state.gender ? false : true}  />
-									<Input type='radio' ref='female' name='gender' label='Female' defaultChecked={this.state.gender ? true : false} />
+								<Input label='Gender' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
+									<Row>
+										<Col xs={3}>
+											<Input type='radio'
+												ref='male'
+												name='gender'
+												label='Male'
+												defaultChecked={this.state.gender ? false : true}  />
+										</Col>
+										<Col xs={3}>
+										<Input type='radio'
+											ref='female'
+											name='gender'
+											label='Female'
+											defaultChecked={this.state.gender ? true : false} />
+										</Col>
+									</Row>
 								</Input>
 
-								<Input label='Birth'>
+								<Input label='Birth' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
 									<div>
 										<select ref='birthYear' value={birth.getFullYear()} onChange={this.handleChange}>
 											{year}
@@ -181,13 +204,54 @@ var EditModal = React.createClass({
 										</select>
 									</div>
 								</Input>
-								<Input type='text' ref='idno' label='ID Number' placeholder='F126622222' value={this.state.idno} onChange={this.handleChange} />
+								<Input type='text'
+									ref='idno'
+									label='ID Number'
+									placeholder='F126622222'
+									labelClassName='col-xs-2'
+									wrapperClassName='col-xs-9'
+									value={this.state.idno}
+									onChange={this.handleChange} />
 
-								<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' value={this.state.email} onChange={this.handleChange} />
-								<Input type='text' ref='phone' label='Phone' placeholder='0926333572' value={this.state.phone} onChange={this.handleChange} />
+								<Input type='text'
+									ref='email'
+									label='E-mail'
+									placeholder='cfsghost@gmail.com'
+									labelClassName='col-xs-2'
+									wrapperClassName='col-xs-9'
+									value={this.state.email}
+									onChange={this.handleChange} />
+								<Input type='text'
+									ref='phone'
+									label='Phone'
+									placeholder='0926333572'
+									labelClassName='col-xs-2'
+									wrapperClassName='col-xs-9'
+									value={this.state.phone}
+									onChange={this.handleChange} />
 
-								<Input type='text' ref='cardno' label='Card Number' placeholder='1' value={this.state.cardno} onChange={this.handleChange} />
-								<Input type='text' ref='token' label='Token' placeholder='0a020e01' value={this.state.token} onChange={this.handleChange} />
+								<Row>
+									<Col xs={4}>
+										<Input type='text'
+											ref='cardno'
+											label='Card No'
+											placeholder='1'
+											labelClassName='col-xs-6'
+											wrapperClassName='col-xs-6'
+											value={this.state.cardno}
+											onChange={this.handleChange} />
+									</Col>
+									<Col xs={4}>
+										<Input type='text'
+											ref='token'
+											label='Token'
+											placeholder='0a020e01'
+											labelClassName='col-xs-3'
+											wrapperClassName='col-xs-9'
+											value={this.state.token}
+											onChange={this.handleChange} />
+									</Col>
+								</Row>
 							</form>
 						</TabPane>
 						<TabPane eventKey={2} tab='Awards'>
