@@ -57,6 +57,12 @@ var AdminHeader = React.createClass({
 					<NavItem eventKey={2} href='#/members' onClick={this.manageMember} active={this.state.member}>Member</NavItem>
 					<NavItem eventKey={2} href='#/awards' onClick={this.manageAward} active={this.state.award}>Award</NavItem>
 				</Nav>
+				<Nav right>
+					<DropdownButton eventKey={4} title='Fred'>
+						<MenuItem divider />
+						<NavItem href='/logout'>Sign Out</NavItem>
+					</DropdownButton>
+				</Nav>
 			</Navbar>
 		);
 	}

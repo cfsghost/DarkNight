@@ -35016,6 +35016,12 @@ var AdminHeader = React.createClass({displayName: "AdminHeader",
 					React.createElement(NavItem, {eventKey: 1, href: "#/endpoints", onClick: this.manageEndpoint, active: this.state.endpoint}, "Endpoint"), 
 					React.createElement(NavItem, {eventKey: 2, href: "#/members", onClick: this.manageMember, active: this.state.member}, "Member"), 
 					React.createElement(NavItem, {eventKey: 2, href: "#/awards", onClick: this.manageAward, active: this.state.award}, "Award")
+				), 
+				React.createElement(Nav, {right: true}, 
+					React.createElement(DropdownButton, {eventKey: 4, title: "Fred"}, 
+						React.createElement(MenuItem, {divider: true}), 
+						React.createElement(NavItem, {href: "/logout"}, "Sign Out")
+					)
 				)
 			)
 		);

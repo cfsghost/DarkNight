@@ -9,6 +9,11 @@ router.get('/', function *() {
     yield this.render('index');
 });
 
+router.get('/logout', function *() {
+	this.logout();
+	this.redirect('/');
+});
+
 router.get('/login', function *() {
 	yield this.render('login');
 });
