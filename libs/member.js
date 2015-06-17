@@ -31,6 +31,17 @@ module.exports = {
 			});
 		};
 	},
+	deleteMembers: function(ids) {
+		return function(done) {
+			Member.remove({
+				_id: {
+					$in: ids
+				}
+			}, function(err) {
+				done(err);
+			});
+		};
+	},
 	insert: function(members) {
 		return function(done) {
 
