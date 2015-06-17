@@ -34916,11 +34916,11 @@ var EditModal = React.createClass({displayName: "EditModal",
 												defaultChecked: this.state.gender ? false : true})
 										), 
 										React.createElement(Col, {xs: 3}, 
-										React.createElement(Input, {type: "radio", 
-											ref: "female", 
-											name: "gender", 
-											label: "Female", 
-											defaultChecked: this.state.gender ? true : false})
+											React.createElement(Input, {type: "radio", 
+												ref: "female", 
+												name: "gender", 
+												label: "Female", 
+												defaultChecked: this.state.gender ? true : false})
 										)
 									)
 								), 
@@ -35172,6 +35172,8 @@ var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
 var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
+var Row = Bootstrap.Row;
+var Col = Bootstrap.Col;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
 
@@ -35282,17 +35284,35 @@ var NewMemberModal = React.createClass({displayName: "NewMemberModal",
 		}
 
 		return (
-			React.createElement(Modal, {bsStyle: "primary", title: "New Member", onRequestHide: this.close, animation: true}, 
+			React.createElement(Modal, {bsStyle: "primary", title: "New Member", onRequestHide: this.close, animation: true, backdrop: "static", bsSize: "large"}, 
 				React.createElement("div", {className: "modal-body"}, 
-					React.createElement("form", null, 
-						React.createElement(Input, {type: "text", ref: "name", label: "Name", placeholder: "Fred Chien", autoFocus: true}), 
+					React.createElement("form", {className: "form-horizontal"}, 
+						React.createElement(Input, {type: "text", 
+							ref: "name", 
+							label: "Name", 
+							placeholder: "Fred Chien", 
+							labelClassName: "col-xs-2", 
+							wrapperClassName: "col-xs-9", 
+							autoFocus: true}), 
 
-						React.createElement(Input, {label: "Gender"}, 
-							React.createElement(Input, {type: "radio", ref: "male", name: "gender", label: "Male"}), 
-							React.createElement(Input, {type: "radio", ref: "female", name: "gender", label: "Female"})
+						React.createElement(Input, {label: "Gender", labelClassName: "col-xs-2", wrapperClassName: "col-xs-9"}, 
+							React.createElement(Row, null, 
+								React.createElement(Col, {xs: 3}, 
+									React.createElement(Input, {type: "radio", 
+										ref: "male", 
+										name: "gender", 
+										label: "Male"})
+								), 
+								React.createElement(Col, {xs: 3}, 
+									React.createElement(Input, {type: "radio", 
+										ref: "female", 
+										name: "gender", 
+										label: "Female"})
+								)
+							)
 						), 
 
-						React.createElement(Input, {label: "Birth"}, 
+						React.createElement(Input, {label: "Birth", labelClassName: "col-xs-2", wrapperClassName: "col-xs-9"}, 
 							React.createElement("div", null, 
 								React.createElement("select", {ref: "birthYear", onChange: this.handleChange}, 
 									year
@@ -35307,13 +35327,45 @@ var NewMemberModal = React.createClass({displayName: "NewMemberModal",
 								)
 							)
 						), 
-						React.createElement(Input, {type: "text", ref: "idno", label: "ID Number", placeholder: "F126622222", value: this.state.idno, onChange: this.handleChange}), 
 
-						React.createElement(Input, {type: "text", ref: "email", label: "E-mail", placeholder: "cfsghost@gmail.com"}), 
-						React.createElement(Input, {type: "text", ref: "phone", label: "Phone", placeholder: "0926333572"}), 
+						React.createElement(Input, {type: "text", 
+							ref: "idno", 
+							label: "ID Number", 
+							placeholder: "F126622222", 
+							labelClassName: "col-xs-2", 
+							wrapperClassName: "col-xs-9"}), 
 
-						React.createElement(Input, {type: "text", ref: "cardno", label: "Card Number", placeholder: "1"}), 
-						React.createElement(Input, {type: "text", ref: "token", label: "Token", placeholder: "0a020e01"})
+						React.createElement(Input, {type: "text", 
+							ref: "email", 
+							label: "E-mail", 
+							placeholder: "cfsghost@gmail.com", 
+							labelClassName: "col-xs-2", 
+							wrapperClassName: "col-xs-9"}), 
+						React.createElement(Input, {type: "text", 
+							ref: "phone", 
+							label: "Phone", 
+							placeholder: "0926333572", 
+							labelClassName: "col-xs-2", 
+							wrapperClassName: "col-xs-9"}), 
+
+						React.createElement(Row, null, 
+							React.createElement(Col, {xs: 4}, 
+								React.createElement(Input, {type: "text", 
+									ref: "cardno", 
+									label: "Card No", 
+									placeholder: "1", 
+									labelClassName: "col-xs-6", 
+									wrapperClassName: "col-xs-6"})
+							), 
+							React.createElement(Col, {xs: 4}, 
+								React.createElement(Input, {type: "text", 
+									ref: "token", 
+									label: "Token", 
+									placeholder: "0a020e01", 
+									labelClassName: "col-xs-3", 
+									wrapperClassName: "col-xs-9"})
+							)
+						)
 					)
 				), 
 				React.createElement("div", {className: "modal-footer"}, 

@@ -5,6 +5,8 @@ var Bootstrap = require('react-bootstrap');
 var Modal = Bootstrap.Modal;
 var Button = Bootstrap.Button;
 var Input = Bootstrap.Input;
+var Row = Bootstrap.Row;
+var Col = Bootstrap.Col;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
 
@@ -115,17 +117,35 @@ var NewMemberModal = React.createClass({
 		}
 
 		return (
-			<Modal bsStyle='primary' title='New Member' onRequestHide={this.close} animation={true}>
+			<Modal bsStyle='primary' title='New Member' onRequestHide={this.close} animation={true} backdrop='static' bsSize='large'>
 				<div className='modal-body'>
-					<form>
-						<Input type='text' ref='name' label='Name' placeholder='Fred Chien' autoFocus />
+					<form className='form-horizontal'>
+						<Input type='text'
+							ref='name'
+							label='Name'
+							placeholder='Fred Chien'
+							labelClassName='col-xs-2'
+							wrapperClassName='col-xs-9'
+							autoFocus />
 
-						<Input label='Gender'>
-							<Input type='radio' ref='male' name='gender' label='Male' />
-							<Input type='radio' ref='female' name='gender' label='Female' />
+						<Input label='Gender' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
+							<Row>
+								<Col xs={3}>
+									<Input type='radio'
+										ref='male'
+										name='gender'
+										label='Male' />
+								</Col>
+								<Col xs={3}>
+									<Input type='radio'
+										ref='female'
+										name='gender'
+										label='Female' />
+								</Col>
+							</Row>
 						</Input>
 
-						<Input label='Birth'>
+						<Input label='Birth' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
 							<div>
 								<select ref='birthYear' onChange={this.handleChange}>
 									{year}
@@ -140,13 +160,45 @@ var NewMemberModal = React.createClass({
 								</select>
 							</div>
 						</Input>
-						<Input type='text' ref='idno' label='ID Number' placeholder='F126622222' value={this.state.idno} onChange={this.handleChange} />
 
-						<Input type='text' ref='email' label='E-mail' placeholder='cfsghost@gmail.com' />
-						<Input type='text' ref='phone' label='Phone' placeholder='0926333572' />
+						<Input type='text'
+							ref='idno'
+							label='ID Number'
+							placeholder='F126622222'
+							labelClassName='col-xs-2'
+							wrapperClassName='col-xs-9' />
 
-						<Input type='text' ref='cardno' label='Card Number' placeholder='1' />
-						<Input type='text' ref='token' label='Token' placeholder='0a020e01' />
+						<Input type='text'
+							ref='email'
+							label='E-mail'
+							placeholder='cfsghost@gmail.com'
+							labelClassName='col-xs-2'
+							wrapperClassName='col-xs-9' />
+						<Input type='text'
+							ref='phone'
+							label='Phone'
+							placeholder='0926333572'
+							labelClassName='col-xs-2'
+							wrapperClassName='col-xs-9' />
+
+						<Row>
+							<Col xs={4}>
+								<Input type='text'
+									ref='cardno'
+									label='Card No'
+									placeholder='1'
+									labelClassName='col-xs-6'
+									wrapperClassName='col-xs-6' />
+							</Col>
+							<Col xs={4}>
+								<Input type='text'
+									ref='token'
+									label='Token'
+									placeholder='0a020e01'
+									labelClassName='col-xs-3'
+									wrapperClassName='col-xs-9' />
+							</Col>
+						</Row>
 					</form>
 				</div>
 				<div className='modal-footer'>

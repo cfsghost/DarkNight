@@ -180,11 +180,11 @@ var EditModal = React.createClass({
 												defaultChecked={this.state.gender ? false : true}  />
 										</Col>
 										<Col xs={3}>
-										<Input type='radio'
-											ref='female'
-											name='gender'
-											label='Female'
-											defaultChecked={this.state.gender ? true : false} />
+											<Input type='radio'
+												ref='female'
+												name='gender'
+												label='Female'
+												defaultChecked={this.state.gender ? true : false} />
 										</Col>
 									</Row>
 								</Input>
