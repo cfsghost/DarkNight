@@ -34464,20 +34464,43 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 	mixins: [ Router.State, Router.Navigation ],
 	getInitialState: function() {
 		return {
-			filter: 'name'
+			field: 'name',
+			keywords: ''
 		};
+	},
+	componentDidMount: function() {
+
+		var queries = this.props.queries || {};
+		var searchTxt = '';
+		var field = this.state.field;
+		if (Object.keys(queries).length > 0) {
+			field = Object.keys(queries)[0];
+			searchTxt = queries[field];
+		}
+
+		this.setState({
+			field: field,
+			keywords: searchTxt
+		});
 	},
 	newModal: function() {
 		MemberActions.New();
 	},
 	changeFilter: function() {
 		var filter = this.refs.filter.getValue();
+
+		// Update property
+		var queries = {};
+		queries[filter] = this.refs.searchTxt.getValue();
+		this.props.queries = queries;
+
 		this.setState({
-			filter: filter
+			field: this.refs.filter.getValue()
 		});
 	},
 	search: function() {
 
+		var filter = this.refs.filter.getValue() || 'name';
 		var text = this.refs.searchTxt.getValue() || null;
 
 		var query = this.getQuery();
@@ -34487,7 +34510,7 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 			delete query.queries;
 		} else {
 			var queries = {}
-			queries[this.state.filter] = this.refs.searchTxt.getValue();
+			queries[filter] = this.refs.searchTxt.getValue();
 			query.queries = JSON.stringify(queries);
 		}
 
@@ -34501,24 +34524,36 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 		}
 	},
 	handleSearchTxtChange: function() {
-		var queries = this.props.queries;
-		queries[this.state.filter] = this.refs.searchTxt.getValue();
-
+/*
+		var filter = this.refs.filter.getValue() || 'name';
+		var queries = {};
+		queries[filter] = this.refs.searchTxt.getValue();
 		this.setProps({
 			queries: queries
+		});
+*/
+		this.setState({
+			keywords: this.refs.searchTxt.getValue()
+		});
+	},
+	componentWillReceiveProps: function(nextProps) {
+console.log(nextProps);
+		var queries = nextProps.queries || {};
+		var searchTxt = '';
+		var field = 'name';
+		if (Object.keys(queries).length > 0) {
+			field = Object.keys(queries)[0];
+			searchTxt = queries[field];
+		}
+
+		this.setState({
+			field: field,
+			keywords: searchTxt
 		});
 	},
 	render: function() {
 
 		var searchButton = React.createElement(Button, {onClick: this.search}, React.createElement(Glyphicon, {glyph: "search"}));
-
-		var queries = this.props.queries || {};
-		var searchTxt = '';
-		if (Object.keys(queries).length > 0) {
-			field = Object.keys(queries)[0];
-			this.state.filter = field;
-			searchTxt = queries[field];
-		}
 
 		return (
 			React.createElement(Panel, null, 
@@ -34528,7 +34563,7 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 					), 
 					React.createElement(Col, {md: 4}, 
 						React.createElement(Col, {md: 4}, 
-							React.createElement(Input, {type: "select", value: this.state.filter, ref: "filter", onChange: this.changeFilter}, 
+							React.createElement(Input, {type: "select", value: this.state.field, ref: "filter", onChange: this.changeFilter}, 
 								React.createElement("option", {value: "name"}, "Name"), 
 								React.createElement("option", {value: "email"}, "E-mail"), 
 								React.createElement("option", {value: "phone"}, "Phone"), 
@@ -34538,7 +34573,7 @@ var Toolbar = React.createClass({displayName: "Toolbar",
 							)
 						), 
 						React.createElement(Col, {md: 8}, 
-							React.createElement(Input, {type: "text", ref: "searchTxt", placeholder: "Search...", value: searchTxt, buttonAfter: searchButton, onChange: this.handleSearchTxtChange, onKeyUp: this.handleKeyUp})
+							React.createElement(Input, {type: "text", ref: "searchTxt", placeholder: "Search...", value: this.state.keywords, buttonAfter: searchButton, onChange: this.handleSearchTxtChange, onKeyUp: this.handleKeyUp})
 						)
 					)
 				)
