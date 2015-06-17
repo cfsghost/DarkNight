@@ -6,6 +6,7 @@ var Table = Bootstrap.Table;
 var Label = Bootstrap.Label;
 var MemberStore = require('../../stores/Member');
 var MemberActions = require('../../actions/Member');
+var crypto = require('crypto');
 
 var EditModal = require('./Member-EditModal');
 
@@ -26,10 +27,12 @@ var Item = React.createClass({
 		else
 			gender = <Label bsStyle='default'>unknown</Label>;
 
+		var hash = crypto.createHash('md5').update(this.props.member.email).digest('hex');
+
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
-				<td>{this.props.member.name}</td>
+				<td><img src={'https://secure.gravatar.com/avatar/' + hash + '?s=16&d=mm'} className='img-circle' /> {this.props.member.name}</td>
 				<td>{gender}</td>
 				<td>{this.props.member.birthday ? this.props.member.birthday.substring(0, 10) : ''}</td>
 				<td>{this.props.member.email}</td>
