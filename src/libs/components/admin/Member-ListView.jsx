@@ -32,7 +32,7 @@ var Item = React.createClass({
 		return (
 			<tr href='#' style={styles} onClick={this.editModal}>
 				<td>{this.props.serialno}</td>
-				<td><img src={'https://secure.gravatar.com/avatar/' + hash + '?s=16&d=mm'} className='img-circle' /> {this.props.member.name}</td>
+				<td><img src={'https://secure.gravatar.com/avatar/' + hash + '?s=32&d=mm'} width={16} height={16} className='img-circle' /> {this.props.member.name}</td>
 				<td>{gender}</td>
 				<td>{this.props.member.birthday ? this.props.member.birthday.substring(0, 10) : ''}</td>
 				<td>{this.props.member.email}</td>

@@ -35015,7 +35015,7 @@ var AdminHeader = React.createClass({displayName: "AdminHeader",
 	},
 	render: function() {
 		var hash = crypto.createHash('md5').update(user.email).digest('hex');
-		var avatar = React.createElement("img", {src: 'https://secure.gravatar.com/avatar/' + hash + '?s=32&d=mm', width: 20, height: 20, className: "img-circle"});
+		var avatar = React.createElement("img", {src: 'https://secure.gravatar.com/avatar/' + hash + '?s=64&d=mm', width: 20, height: 20, className: "img-circle"});
 		var loginState = React.createElement("span", null, avatar, " ", React.createElement("span", null, user.name));
 
 		return (
@@ -36897,7 +36897,7 @@ var Item = React.createClass({displayName: "Item",
 		return (
 			React.createElement("tr", {href: "#", style: styles, onClick: this.editModal}, 
 				React.createElement("td", null, this.props.serialno), 
-				React.createElement("td", null, React.createElement("img", {src: 'https://secure.gravatar.com/avatar/' + hash + '?s=16&d=mm', className: "img-circle"}), " ", this.props.member.name), 
+				React.createElement("td", null, React.createElement("img", {src: 'https://secure.gravatar.com/avatar/' + hash + '?s=32&d=mm', width: 16, height: 16, className: "img-circle"}), " ", this.props.member.name), 
 				React.createElement("td", null, gender), 
 				React.createElement("td", null, this.props.member.birthday ? this.props.member.birthday.substring(0, 10) : ''), 
 				React.createElement("td", null, this.props.member.email), 
