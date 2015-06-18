@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var crypto = require('crypto');
 
 // Router
 var ReactRouter = require('react-router');
@@ -50,6 +51,10 @@ var AdminHeader = React.createClass({
 		});
 	},
 	render: function() {
+		var hash = crypto.createHash('md5').update(user.email).digest('hex');
+		var avatar = <img src={'https://secure.gravatar.com/avatar/' + hash + '?s=64&d=mm'} width={20} height={20} className='img-circle' />;
+		var loginState = <span>{avatar} <span>{user.name}</span></span>;
+
 		return (
 			<Navbar brand='DarkNight' inverse fixedTop>
 				<Nav>
@@ -58,7 +63,7 @@ var AdminHeader = React.createClass({
 					<NavItem eventKey={2} href='#/awards' onClick={this.manageAward} active={this.state.award}>Award</NavItem>
 				</Nav>
 				<Nav right>
-					<DropdownButton eventKey={4} title='Fred'>
+					<DropdownButton eventKey={4} title={loginState}>
 						<MenuItem divider />
 						<NavItem href='/logout'>Sign Out</NavItem>
 					</DropdownButton>

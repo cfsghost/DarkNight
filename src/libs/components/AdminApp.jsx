@@ -14,6 +14,9 @@ var AdminApp = React.createClass({
 			'paddingTop': '50px'
 		};
 
+		console.log(222222);
+		console.log(this.props);
+
 		return (
 			<div>
 				<AdminHeader />

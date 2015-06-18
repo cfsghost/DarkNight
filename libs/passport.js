@@ -5,11 +5,15 @@ var Member = require('./member');
 module.exports = {
 	init: function(passport) {
 		passport.serializeUser(function(user, done) {
-			done(null, user.id);
+			done(null, {
+				id: user.id,
+				name: user.name,
+				email: user.email
+			});
 		})
 
-		passport.deserializeUser(function(id, done) {
-			done(null, id);
+		passport.deserializeUser(function(user, done) {
+			done(null, user);
 		})
 	},
 	local: function(passport) {

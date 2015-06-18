@@ -34943,6 +34943,9 @@ var AdminApp = React.createClass({displayName: "AdminApp",
 			'paddingTop': '50px'
 		};
 
+		console.log(222222);
+		console.log(this.props);
+
 		return (
 			React.createElement("div", null, 
 				React.createElement(AdminHeader, null), 
@@ -34961,6 +34964,7 @@ module.exports = AdminApp;
 /** @jsx React.DOM */
 
 var React = require('react');
+var crypto = require('crypto');
 
 // Router
 var ReactRouter = require('react-router');
@@ -35010,6 +35014,10 @@ var AdminHeader = React.createClass({displayName: "AdminHeader",
 		});
 	},
 	render: function() {
+		var hash = crypto.createHash('md5').update(user.email).digest('hex');
+		var avatar = React.createElement("img", {src: 'https://secure.gravatar.com/avatar/' + hash + '?s=32&d=mm', width: 20, height: 20, className: "img-circle"});
+		var loginState = React.createElement("span", null, avatar, " ", React.createElement("span", null, user.name));
+
 		return (
 			React.createElement(Navbar, {brand: "DarkNight", inverse: true, fixedTop: true}, 
 				React.createElement(Nav, null, 
@@ -35018,7 +35026,7 @@ var AdminHeader = React.createClass({displayName: "AdminHeader",
 					React.createElement(NavItem, {eventKey: 2, href: "#/awards", onClick: this.manageAward, active: this.state.award}, "Award")
 				), 
 				React.createElement(Nav, {right: true}, 
-					React.createElement(DropdownButton, {eventKey: 4, title: "Fred"}, 
+					React.createElement(DropdownButton, {eventKey: 4, title: loginState}, 
 						React.createElement(MenuItem, {divider: true}), 
 						React.createElement(NavItem, {href: "/logout"}, "Sign Out")
 					)
@@ -35031,7 +35039,7 @@ var AdminHeader = React.createClass({displayName: "AdminHeader",
 module.exports = AdminHeader;
 
 
-},{"../actions/Endpoint":287,"../actions/Member":288,"react":284,"react-bootstrap":77,"react-router":115}],291:[function(require,module,exports){
+},{"../actions/Endpoint":287,"../actions/Member":288,"crypto":9,"react":284,"react-bootstrap":77,"react-router":115}],291:[function(require,module,exports){
 /** @jsx React.DOM */
 
 var React = require('react');

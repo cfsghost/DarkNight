@@ -49,6 +49,12 @@ Passport.local(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Initializing locals to make template be able to get
+app.use(function *(next) {
+	this.state.user = this.req.user || undefined;
+	yield next;
+});
+
 // Routes
 app.use(require('./routes/home').middleware());
 app.use(require('./routes/apis/endpoints').middleware());
