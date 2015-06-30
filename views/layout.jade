@@ -15,7 +15,7 @@ html(ng-app='DarkNight')
 		//script(src='/vendor/angular/angular.min.js')
 		script(src='/vendor/bootstrap/dist/js/bootstrap.min.js')
 		script(type='text/javascript').
-			var user = !{JSON.stringify(user)};
+			var user = !{user ? JSON.stringify(user) : 'null'};
 
 		block head
 
