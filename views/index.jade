@@ -2,13 +2,13 @@ extends layout
 
 block body
 	div#App
-	.container
-		.row
-			.col-md-6
-				ul(ng-repeat="member in members")
-					li 
-						p {{ member._id }}
-						p {{ member.name }}
+	//
+		.container
+			.row
+				.col-md-6
+					ul(ng-repeat="member in members")
+						li 
+							p {{ member._id }}
+							p {{ member.name }}
 
 	script(type='text/javascript', src='/views/HomeApp.js')
-	script(type='text/javascript', src='/views/LoginApp.js')

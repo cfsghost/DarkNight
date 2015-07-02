@@ -30,8 +30,7 @@ var Login = React.createClass({
 			      			<Button type="submit" className="btn btn-primary">Sign In</Button>
 			      		</form>
 
-					    <p>Need an account? <a href="/signup/Local">Signup</a></p>
-					    <p>Or go <a href="/">home</a>.</p>
+					    <p>Need an account? <a href="/signup/Local">Sign up</a></p>
 			    	</Col>
 				</Grid>
 			</div>
