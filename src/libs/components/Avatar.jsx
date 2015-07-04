@@ -30,9 +30,24 @@ var Avatar = React.createClass({
 	render: function() {
 		var hash = crypto.createHash('md5').update(this.props.email).digest('hex');
 
+		if (this.props.size == -1) {
+			var style = {
+				width: '100%'
+			};
+
+			return (
+				<img
+					src={'https://secure.gravatar.com/avatar/' + hash + '?s=' + 256 + '&d=mm'}
+					style={style}
+					className='img-circle' />
+			);
+		}
+
+		var requestSize = nearestSize(this.props.size);
+
 		return (
 			<img
-				src={'https://secure.gravatar.com/avatar/' + hash + '?s=' + nearestSize(this.props.size)  + '&d=mm'}
+				src={'https://secure.gravatar.com/avatar/' + hash + '?s=' + requestSize  + '&d=mm'}
 				width={this.props.size}
 				height={this.props.size}
 				className='img-circle' />

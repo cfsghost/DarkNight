@@ -10,17 +10,15 @@ var Avatar = require('./Avatar');
 
 var HomeMain = React.createClass({
 	render: function() {
-		var VideoStyle = {
-			width: window.innerWidth,
-			height: window.innerHeight - 50
-		};
 		return (
 			<Grid ClassName='container-fuild'>
-			    <Row>
-			      <Col xs={12} md={12}>
-					<Avatar email='cfsghost@gmail.com' />
-			      </Col>
-			    </Row>
+				<Row>
+					<Col xs={12} mdOffset={5} md={2} className='text-center'>
+						<Avatar email='cfsghost@gmail.com' size={-1} />
+						<span>Fred Chien</span>
+						<span>004</span>
+					</Col>
+				</Row>
 			</Grid>
 		);
 	}

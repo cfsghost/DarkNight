@@ -7,10 +7,16 @@ var UserProfile = require('./UserProfile.jsx');
 
 var HomeApp = React.createClass({
 	render: function() {
+		var contentStyle = {
+			'paddingTop': '50px'
+		};
+
 		return (
 			<div>
 				<Header />
-				<UserProfile />
+				<div style={contentStyle}>
+					<UserProfile />
+				</div>
 			</div>
 		);
 	}

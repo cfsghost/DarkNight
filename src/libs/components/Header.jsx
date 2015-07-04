@@ -18,6 +18,7 @@ var Header = React.createClass({
 
 			loginStateItem = (
 				<DropdownButton eventKey={4} title={loginState}>
+					<NavItem href='/'>Profile</NavItem>
 					<MenuItem divider />
 					<NavItem href='/logout'>Sign Out</NavItem>
 				</DropdownButton>
@@ -25,7 +26,7 @@ var Header = React.createClass({
 		}
 
 		return (
-			<Navbar brand="DarkNight">
+			<Navbar brand="DarkNight" inverse fixedTop>
 				<Nav>
 					<NavItem eventKey={1} href="/">Home</NavItem>
 					<DropdownButton eventKey={2} title="Signup">
