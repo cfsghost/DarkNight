@@ -165,7 +165,7 @@ var EditModal = React.createClass({
 
 								<Row>
 									<Col xs={1} xsPush={8}>
-										<Avatar email={user.email} />
+										<Avatar email={this.state.email} />
 									</Col>
 
 									<Col xs={8} xsPull={1}>
