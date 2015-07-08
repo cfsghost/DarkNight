@@ -9,6 +9,7 @@ var TabbedArea = Bootstrap.TabbedArea;
 var TabPane = Bootstrap.TabPane;
 var Row = Bootstrap.Row;
 var Col = Bootstrap.Col;
+var Avatar = require('../Avatar');
 //var Select = require('react-bootstrap-select');
 var MemberAwardsManager = require('./Member-AwardsManager');
 var MemberStore = require('../../stores/Member');
@@ -159,97 +160,113 @@ var EditModal = React.createClass({
 					<TabbedArea defaultActiveKey={1}>
 						<TabPane eventKey={1} tab='Profile'>
 
+							<br />
 							<form className='form-horizontal'>
-								<Input type='text'
-									ref='name'
-									label='Name'
-									placeholder='Fred Chien'
-									labelClassName='col-xs-2'
-									wrapperClassName='col-xs-9'
-									value={this.state.name}
-									onChange={this.handleChange}
-									autoFocus />
-
-								<Input label='Gender' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
-									<Row>
-										<Col xs={3}>
-											<Input type='radio'
-												ref='male'
-												name='gender'
-												label='Male'
-												defaultChecked={this.state.gender ? false : true}  />
-										</Col>
-										<Col xs={3}>
-											<Input type='radio'
-												ref='female'
-												name='gender'
-												label='Female'
-												defaultChecked={this.state.gender ? true : false} />
-										</Col>
-									</Row>
-								</Input>
-
-								<Input label='Birth' labelClassName='col-xs-2' wrapperClassName='col-xs-9'>
-									<div>
-										<select ref='birthYear' value={birth.getFullYear()} onChange={this.handleChange}>
-											{year}
-										</select>
-										<span> / </span>
-										<select ref='birthMonth' value={birth.getMonth() + 1} onChange={this.handleChange}>
-											{month}
-										</select>
-										<span> / </span>
-										<select ref='birthDate' value={birth.getDate()} onChange={this.handleChange}>
-											{date}
-										</select>
-									</div>
-								</Input>
-								<Input type='text'
-									ref='idno'
-									label='ID Number'
-									placeholder='F126622222'
-									labelClassName='col-xs-2'
-									wrapperClassName='col-xs-9'
-									value={this.state.idno}
-									onChange={this.handleChange} />
-
-								<Input type='text'
-									ref='email'
-									label='E-mail'
-									placeholder='cfsghost@gmail.com'
-									labelClassName='col-xs-2'
-									wrapperClassName='col-xs-9'
-									value={this.state.email}
-									onChange={this.handleChange} />
-								<Input type='text'
-									ref='phone'
-									label='Phone'
-									placeholder='0926333572'
-									labelClassName='col-xs-2'
-									wrapperClassName='col-xs-9'
-									value={this.state.phone}
-									onChange={this.handleChange} />
 
 								<Row>
-									<Col xs={4}>
-										<Input type='text'
-											ref='cardno'
-											label='Card No'
-											placeholder='1'
-											labelClassName='col-xs-6'
-											wrapperClassName='col-xs-6'
-											value={this.state.cardno}
-											onChange={this.handleChange} />
+									<Col xs={1} xsPush={8}>
+										<Avatar email={user.email} />
 									</Col>
-									<Col xs={4}>
+
+									<Col xs={8} xsPull={1}>
+
 										<Input type='text'
-											ref='token'
-											label='Token'
-											placeholder='0a020e01'
+											ref='name'
+											label='Name'
+											placeholder='Fred Chien'
 											labelClassName='col-xs-3'
 											wrapperClassName='col-xs-9'
-											value={this.state.token}
+											value={this.state.name}
+											onChange={this.handleChange}
+											autoFocus />
+
+										<Input label='Gender' labelClassName='col-xs-3' wrapperClassName='col-xs-9'>
+											<Row>
+												<Col xs={3}>
+													<Input type='radio'
+														ref='male'
+														name='gender'
+														label='Male'
+														defaultChecked={this.state.gender ? false : true}  />
+												</Col>
+												<Col xs={3}>
+													<Input type='radio'
+														ref='female'
+														name='gender'
+														label='Female'
+														defaultChecked={this.state.gender ? true : false} />
+												</Col>
+											</Row>
+										</Input>
+
+										<Input label='Birth' labelClassName='col-xs-3' wrapperClassName='col-xs-9'>
+											<div>
+												<select ref='birthYear' value={birth.getFullYear()} onChange={this.handleChange}>
+													{year}
+												</select>
+												<span> / </span>
+												<select ref='birthMonth' value={birth.getMonth() + 1} onChange={this.handleChange}>
+													{month}
+												</select>
+												<span> / </span>
+												<select ref='birthDate' value={birth.getDate()} onChange={this.handleChange}>
+													{date}
+												</select>
+											</div>
+										</Input>
+
+										<Input type='text'
+											ref='idno'
+											label='ID Number'
+											placeholder='F126622222'
+											labelClassName='col-xs-3'
+											wrapperClassName='col-xs-9'
+											value={this.state.idno}
 											onChange={this.handleChange} />
+
+										<Input type='text'
+											ref='email'
+											label='E-mail'
+											placeholder='cfsghost@gmail.com'
+											labelClassName='col-xs-3'
+											wrapperClassName='col-xs-9'
+											value={this.state.email}
+											onChange={this.handleChange} />
+									</Col>
+
+									<Col xs={12}>
+
+										<Input type='text'
+											ref='phone'
+											label='Phone'
+											placeholder='0926333572'
+											labelClassName='col-xs-2'
+											wrapperClassName='col-xs-9'
+											value={this.state.phone}
+											onChange={this.handleChange} />
+
+										<Row>
+											<Col xs={4}>
+												<Input type='text'
+													ref='cardno'
+													label='Card No'
+													placeholder='1'
+													labelClassName='col-xs-6'
+													wrapperClassName='col-xs-6'
+													value={this.state.cardno}
+													onChange={this.handleChange} />
+											</Col>
+											<Col xs={4}>
+												<Input type='text'
+													ref='token'
+													label='Token'
+													placeholder='0a020e01'
+													labelClassName='col-xs-3'
+													wrapperClassName='col-xs-9'
+													value={this.state.token}
+													onChange={this.handleChange} />
+											</Col>
+										</Row>
 									</Col>
 								</Row>
 							</form>
