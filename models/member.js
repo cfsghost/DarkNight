@@ -4,7 +4,7 @@ var Member = new mongoose.Schema({
 	name: String,
 	gender: Number,
 	birthday: Date,
-	email: String,
+	email: { type: String, unique: true },
 	phone: String,
 	idno: String,
 	password: String,
