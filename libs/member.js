@@ -134,7 +134,7 @@ module.exports = {
 
 		var conditions = {};
 		var columns;
-		var opts;
+		var opts = {};
 		if (arguments.length == 2) {
 			if (arguments[0] instanceof Array) {
 				columns = arguments[0];
@@ -143,7 +143,7 @@ module.exports = {
 				conditions = arguments[0];
 				opts = arguments[1];
 			}
-		} else {
+		} else if (arguments.length == 1) {
 			columns = null;
 			opts = arguments[0];
 		}
@@ -155,6 +155,15 @@ module.exports = {
 				cols = columns.join(' ');
 
 			Member.count(conditions, function(err, count) {
+				if (err) {
+					done(err);
+					return;
+				}
+
+				if (!count) {
+					done(err, { count: 0 });
+					return;
+				}
 
 				Member.find(conditions, cols, opts, function(err, members) {
 

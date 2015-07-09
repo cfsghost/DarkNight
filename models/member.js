@@ -4,6 +4,7 @@ var Member = new mongoose.Schema({
 	name: String,
 	gender: Number,
 	birthday: Date,
+	hashname: { type: String },
 	email: { type: String, unique: true },
 	phone: String,
 	idno: String,
